@@ -12,7 +12,7 @@ global $wpdb;
 $message = "";
 if (isset($_GET['u']) && $_GET['u'] != '')
 {
-    $wpdb->query('UPDATE `'.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` SET conwer='.$_GET["owner"].',`'.CPABC_TDEAPP_CONFIG_USER.'`="'.$_GET["name"].'" WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`='.$_GET['u']);           
+    $wpdb->query('UPDATE `'.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` SET conwer='.intval($_GET["owner"]).',`'.CPABC_TDEAPP_CONFIG_USER.'`="'.$_GET["name"].'" WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`='.intval($_GET['u']));           
     $message = "Item updated";        
 }
 else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
@@ -24,7 +24,7 @@ else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
     update_option( 'CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR', "1" );
     if ($_GET["chs"] != '')
     {
-        $target_charset = $_GET["chs"];
+        $target_charset = esc_sql($_GET["chs"]);
         $tables = array( $wpdb->prefix.CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX
                          , $wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_DISCOUNT_CODES_TABLE_NAME_NO_PREFIX );                
         foreach ($tables as $tab)

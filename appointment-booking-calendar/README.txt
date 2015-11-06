@@ -108,6 +108,9 @@ The current translations are already available in the appointment calendar plugi
 
 If you want to add a new translation you can add a new PO/MO file into the "languages" folder. If you want to provide the translation for a new language you can send us the texts and we will create the PO/MO files for you. We will appreciate if you allow sharing your translation with other WordPress users.
 
+= Updates =
+
+New features has been published in the current Appointment Booking Calendar version 1.1.3 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over the 37,000 downloads/installations and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
 
 == Installation ==
 
@@ -328,6 +331,16 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 * Tested and fully compatible with WordPress 3.7.x
 * Language updates to make them compatible with the latest WP versions
 
+= 1.1.3 =
+* Interface modifications.
+* New admin settings
+* New translations added
+* Fixed bug in multisite installations
+* PayPal Sandbox mode added
+* Fixed warning that appeared with PHP safe mode restrictions 
+* Sanitized GET parameters used in queries
+* Fixed issue with the site home URL in WP with folders in non-default locations
+
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
 
 
@@ -335,8 +348,14 @@ Important note: If you are using the Professional version don't update via the W
 
 Very Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
 
-= 1.0.1 =
+= 1.1.3 =
 * Interface modifications.
-* Language updates to make them compatible with the latest WP versions
+* New admin settings
+* New translations added
+* Fixed bug in multisite installations
+* PayPal Sandbox mode added
+* Fixed warning that appeared with PHP safe mode restrictions 
+* Sanitized GET parameters used in queries
+* Fixed issue with the site home URL in WP with folders in non-default locations
  
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
