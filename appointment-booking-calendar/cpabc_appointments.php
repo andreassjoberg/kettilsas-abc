@@ -889,7 +889,7 @@ function cpabc_appointments_check_posted_data()
 <form action="<?php echo $ppurl; ?>" name="ppform3" method="post">
 <input type="hidden" name="cmd" value="_xclick" />
 <input type="hidden" name="business" value="<?php echo cpabc_get_option('paypal_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL); ?>" />
-<input type="hidden" name="item_name" value="<?php echo iconv("utf-8","iso-8859-1",cpabc_get_option('paypal_product_name', CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME).(@$_POST["services"]?": ".trim($services_formatted[1]):"").$discount_note); ?>" />
+<input type="hidden" name="item_name" value="<?php echo iconv("utf-8","iso-8859-1",cpabc_get_option('paypal_product_name', CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME).(@$_POST["services"]?": ".trim($services_formatted[1]):"")); ?>" />
 <!--<input type="hidden" name="item_number" value="<?php echo $item_number; ?>" />-->
 <input type="hidden" name="amount" value="<?php echo $price; ?>" />
 <input type="hidden" name="page_style" value="Primary" />
@@ -947,8 +947,9 @@ function cpabc_appointments_check_IPN_verification() {
 	if ($payment_type == 'echeck' && $payment_status == 'Completed')
 	    return;
     */
+    //$wpdb->get_results("ALTER TABLE `wp_cpabc_appointment_calendars_data` CHANGE `reference` `reference` VARCHAR(21)");
     $itemnumber = explode(";",$_GET["itemnumber"]);
-    $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." WHERE reference=".$itemnumber[0] );
+    $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." WHERE reference='".intval($itemnumber[0])."'" );
     if (count($myrows))
     {
         echo 'OK - Already processed';
@@ -1248,29 +1249,46 @@ function cpabc_appointments_export_csv ()
 
     $form_data = json_decode(cpabc_appointment_cleanJSON(cpabc_get_option('form_structure', CPABC_APPOINTMENTS_DEFAULT_form_structure)));
 
-    $cond = '';
+    if (@$_GET["cancelled_by"] != '')
+        $cond = '';
+    else
+        $cond = " AND (is_cancelled<>'1')";
     if ($_GET["search"] != '') $cond .= " AND (buffered_date like '%".esc_sql($_GET["search"])."%')";
     if ($_GET["dfrom"] != '') $cond .= " AND (`booked_time_unformatted` >= '".esc_sql($_GET["dfrom"])."')";
     if ($_GET["dto"] != '') $cond .= " AND (`booked_time_unformatted` <= '".esc_sql($_GET["dto"])." 23:59:59')";
-    if (CP_CALENDAR_ID != 0) $cond .= " AND calendar=".CP_CALENDAR_ID;
 
-    $events = $wpdb->get_results( "SELECT ".CPABC_APPOINTMENTS_TABLE_NAME.".* FROM ".CPABC_APPOINTMENTS_TABLE_NAME." INNER JOIN  ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." on  ".CPABC_APPOINTMENTS_TABLE_NAME.".id=".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".reference  WHERE 1=1 ".$cond." ORDER BY `time` DESC" );
+    if (@$_GET["added_by"] != '') $cond .= " AND (who_added >= '".esc_sql($_GET["added_by"])."')";
+    if (@$_GET["edited_by"] != '') $cond .= " AND (who_edited >= '".esc_sql($_GET["edited_by"])."')";
+    if (@$_GET["cancelled_by"] != '') $cond .= " AND (is_cancelled='1' AND who_cancelled >= '".esc_sql($_GET["cancelled_by"])."')";
 
-    $fields = array("Calendar ID", "Time");
-    $values = array();
+    if (CP_CALENDAR_ID != 0) $cond .= " AND appointment_calendar_id=".CP_CALENDAR_ID;
+
+    $events = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." INNER JOIN ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." ON ".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".appointment_calendar_id=".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.".id LEFT JOIN ".CPABC_APPOINTMENTS_TABLE_NAME." ON ".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".reference=".CPABC_APPOINTMENTS_TABLE_NAME.".id  WHERE 1=1 ".$cond );
+
+    $fields = array("Calendar ID","Calendar Name", "Time");
+    $values = array();    
+    
     foreach ($events as $item)
     {
-        $value = array($item->calendar, $item->time);
+        $value = array($item->appointment_calendar_id, $item->uname, $item->datatime);
+
         $data = array();
         $data = unserialize($item->buffered_date);
 
+        if (!is_array($data))
+        {
+            $data = array(
+              'title' => $item->title,
+              'description' => $item->description
+            );
+        }        
         $end = count($fields);
-        for ($i=0; $i<$end; $i++)
+        for ($i=3; $i<$end; $i++)
             if (isset($data[$fields[$i]]) ){
                 $value[$i] = $data[$fields[$i]];
                 unset($data[$fields[$i]]);
             }
-
+            else $value[$i] = '';        
         foreach ($data as $k => $d)
         {
            $fields[] = $k;
@@ -1278,7 +1296,6 @@ function cpabc_appointments_export_csv ()
         }
         $values[] = $value;
     }
-
 
     header("Content-type: application/octet-stream");
     header("Content-Disposition: attachment; filename=export.csv");
@@ -1496,8 +1513,8 @@ function cpabc_appointment_get_FULL_site_url($admin = false)
     $pos = strpos($url, "://");
     if ($pos === false)
         $url = 'http://'.$_SERVER["HTTP_HOST"].$url;
-    if (!empty($_SERVER['HTTPS']))     
-        $url = str_replace("http://","https://",$url);        
+//    if (!empty($_SERVER['HTTPS']))     
+//        $url = str_replace("http://","https://",$url);        
     return $url;
 }
 
