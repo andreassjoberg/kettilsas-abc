@@ -110,7 +110,7 @@ If you want to add a new translation you can add a new PO/MO file into the "lang
 
 = Updates =
 
-New features has been published in the current Appointment Booking Calendar version 1.1.8 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over 55,000 downloads/installations and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
+New features has been published in the current Appointment Booking Calendar version 1.1.8 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over 55,000 downloads/installations (6000+ active installs) and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
 
 == Installation ==
 
@@ -372,9 +372,12 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 * Fixed bug in admin area
 * New options for appointments slots
 
+= 1.1.11 =
+* New options for adding appointments.
+
 == Upgrade Notice ==
 
-= 1.1.10 =
-* Fixed bug in admin area
+= 1.1.11 =
+* New options for adding appointments.
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support

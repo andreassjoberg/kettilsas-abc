@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.10
+Version: 1.1.11
 Author: CodePeople.net
 Author URI: http://codepeople.net
 License: GPL
@@ -563,11 +563,11 @@ if ( is_admin() ) {
 
     function cpabc_appointments_admin_menu() {
         add_options_page('Appointment Booking Calendar Options', 'Appointment Booking Calendar', 'manage_options', 'cpabc_appointments', 'cpabc_appointments_html_post_page' );
-        add_menu_page( 'Appointment Booking Calendar Options', 'Appointment Booking Calendar', 'edit_pages', 'cpabc_appointments', 'cpabc_appointments_html_post_page' );
+        add_menu_page( 'Appointment Booking Calendar Options', 'Appointment Booking Calendar', 'read', 'cpabc_appointments', 'cpabc_appointments_html_post_page' );
         
-        add_submenu_page( 'cpabc_appointments', 'Manage Calendar', 'Manage Calendar', 'edit_pages', "cpabc_appointments",  'cpabc_appointments_html_post_page' );
-        add_submenu_page( 'cpabc_appointments', 'Help: Online demo', 'Help: Online demo', 'edit_pages', "cpabc_appointments_demo", 'cpabc_appointments_html_post_page' );       
-        add_submenu_page( 'cpabc_appointments', 'Upgrade', 'Upgrade', 'edit_pages', "cpabc_appointments_upgrade", 'cpabc_appointments_html_post_page' );
+        add_submenu_page( 'cpabc_appointments', 'Manage Calendar', 'Manage Calendar', 'read', "cpabc_appointments",  'cpabc_appointments_html_post_page' );
+        add_submenu_page( 'cpabc_appointments', 'Help: Online demo', 'Help: Online demo', 'read', "cpabc_appointments_demo", 'cpabc_appointments_html_post_page' );       
+        add_submenu_page( 'cpabc_appointments', 'Upgrade', 'Upgrade', 'read', "cpabc_appointments_upgrade", 'cpabc_appointments_html_post_page' );
          
     }
 }
