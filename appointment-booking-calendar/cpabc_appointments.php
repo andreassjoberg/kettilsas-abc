@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.3
+Version: 1.1.4
 Author: CodePeople.net
 Author URI: http://codepeople.net
 License: GPL
@@ -294,16 +294,12 @@ function _cpabc_appointments_install() {
     $wpdb->query($sql);
 
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    //dbDelta($sql);
 
 }
 
 
 
 /* Filter for placing the maps into the contents */
-
-
-
 function cpabc_appointments_filter_content($atts) {
     global $wpdb;
     extract( shortcode_atts( array(
@@ -653,7 +649,7 @@ function cpabc_export_iCal() {
     define('CPABC_CAL_TIME_SLOT_SIZE'," +".get_option('CPABC_CAL_TIME_SLOT_SIZE_SET',"15")." minutes");
 
     echo "BEGIN:VCALENDAR\n";
-    echo "PRODID:-//CodePeople//Appointment Booking Calendar for WordPress//EN\n";
+    echo "PRODID:-//Net-Factor CodePeople//Appointment Booking Calendar for WordPress//EN\n";
     echo "VERSION:2.0\n";
     echo "CALSCALE:GREGORIAN\n";
     echo "METHOD:PUBLISH\n";
@@ -844,17 +840,6 @@ function cpabc_appointments_check_posted_data()
     $params["PHONE"] = $_POST["phone"];
     $params["COMMENTS"] = $_POST["question"];
 
-    /**
-    $buffer = $_POST["selYearcal".$selectedCalendar].",".$_POST["selMonthcal".$selectedCalendar].",".$_POST["selDaycal".$selectedCalendar]."\n".
-    $_POST["selHourcal".$selectedCalendar].":".($_POST["selMinutecal".$selectedCalendar]<10?"0":"").$_POST["selMinutecal".$selectedCalendar]."\n".
-    "Name: ".$_POST["name"]."\n".
-    "Email: ".$_POST["email"]."\n".
-    "Phone: ".$_POST["phone"]."\n".
-    "Question: ".$_POST["question"]."\n".
-            (@$_POST["services"]?"\nService:".trim($services_formatted[1])."\n":"").
-            ($coupon?"\nCoupon code:".$coupon->code.$discount_note."\n":"").
-    "*-*\n";
-    */
     $buffer_A = $_POST["question"];
     $to = "email";
 
@@ -886,8 +871,6 @@ function cpabc_appointments_check_posted_data()
             $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX."` ADD `booked_time_unformatted` text;"; $wpdb->query($sql);
             exit;
         }
-
-        //$myrows = $wpdb->get_results( "SELECT MAX(id) as max_id FROM ".CPABC_APPOINTMENTS_TABLE_NAME );
 
  	    // save data here
         $item_number[] = $wpdb->insert_id;
@@ -1199,11 +1182,11 @@ function cpabc_appointments_save_options()
          'url_cancel' => $_POST["url_cancel"],
          'paypal_language' => $_POST["paypal_language"],
 
-         'nuser_emailformat' => $_POST["nuser_emailformat"],
+         'nuser_emailformat' => @$_POST["nuser_emailformat"],
          'nadmin_emailformat' => $_POST["nadmin_emailformat"],
          'nremind_emailformat' => $_POST["nremind_emailformat"],
 
-         'vs_use_validation' => $_POST['vs_use_validation'],
+         //'vs_use_validation' => $_POST['vs_use_validation'],
          'vs_text_is_required' => $_POST['vs_text_is_required'],
          'vs_text_is_email' => $_POST['vs_text_is_email'],
          'vs_text_datemmddyyyy' => $_POST['vs_text_datemmddyyyy'],
