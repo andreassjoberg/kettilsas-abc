@@ -648,7 +648,7 @@ for ($k=1;$k<100;$k++)
                                if (code == '') { alert('Please enter a code'); return; }
                                if (parseInt(discount)+"" != discount) { alert('Please numeric discount percent'); return; }
                                if (expires == '') { alert('Please enter an expiration date for the code'); return; }
-                               var params = '&add=1&expires='+encodeURI(expires)+'&discount='+encodeURI(discount)+'&code='+encodeURI(code);
+                               var params = '&add=1&expires='+encodeURIComponent(expires)+'&discount='+encodeURIComponent(discount)+'&code='+encodeURIComponent(code);
                                $j('#cpabc_nocodes_availmsg').load('<?php echo cpabc_appointment_get_site_url(true); ?>/?cpabc_app=cpabc_loadcoupons&inAdmin=1&cpabc_item=<?php echo CP_CALENDAR_ID; ?>'+params);
                                $j('#cpabc_dc_code').val();
                              });

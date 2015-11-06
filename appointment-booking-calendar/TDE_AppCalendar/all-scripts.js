@@ -1242,7 +1242,9 @@ YAHOO.TDE.tabView.weekdaytag = function(day,calendarId) {
 
 	selectInterval = function(name){
 		var str = '<select name="'+name+'" id="'+name+'">';
+		str += '<option value="1">1</option>';
 		str += '<option value="5">5</option>';
+		str += '<option value="7">7</option>';
 		str += '<option value="10">10</option>';
 		str += '<option value="15">15</option>';
 		str += '<option value="20">20</option>';

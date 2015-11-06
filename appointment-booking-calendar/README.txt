@@ -366,11 +366,15 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 * Fixed XSS and SQL injection vulneravilities
 
 = 1.1.9 =
-* Fixed bug in settings submission.
+* Fixed bug in settings submission
+
+= 1.1.10 =
+* Fixed bug in admin area
+* New options for appointments slots
 
 == Upgrade Notice ==
 
-= 1.1.9 =
-* Fixed bug in settings submission.
+= 1.1.10 =
+* Fixed bug in admin area
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
