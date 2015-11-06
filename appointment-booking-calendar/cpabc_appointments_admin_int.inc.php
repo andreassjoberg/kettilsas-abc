@@ -46,7 +46,7 @@ for ($k=1;$k<100;$k++)
 <?php } ?>
 
 <form method="post" name="dexconfigofrm" action=""> 
-<input name="cpabc_appointments_post_options" type="hidden" id="1" />
+<input name="cpabc_appointments_post_options" type="hidden" value="1" />
 <input name="cpabc_item" type="hidden" value="<?php echo CP_CALENDAR_ID; ?>" />
    
 <div id="normal-sortables" class="meta-box-sortables">

@@ -64,14 +64,14 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
  {
     if (confirm('Are you sure that you want to delete this item?'))
     {        
-        document.location = 'admin.php?page=cpabc_appointments&cal=<?php echo $_GET["cal"]; ?>&list=1&ld='+id+'&r='+Math.random();
+        document.location = 'admin.php?page=cpabc_appointments&cal=<?php echo intval($_GET["cal"]); ?>&list=1&ld='+id+'&r='+Math.random();
     }
  }
  function do_dexapp_deleteall()
  {
     if (confirm('Are you sure that you want to delete ALL bookings for this calendar?'))
     {        
-        document.location = 'admin.php?page=cpabc_appointments&cal=<?php echo $_GET["cal"]; ?>&list=1&del=all&r='+Math.random();
+        document.location = 'admin.php?page=cpabc_appointments&cal=<?php echo intval($_GET["cal"]); ?>&list=1&del=all&r='+Math.random();
     }    
  }
 </script>
@@ -124,7 +124,7 @@ echo paginate_links(  array(
 <div id="cpabc_printable_contents">
 <form name="dex_table_form" id="dex_table_form" action="admin.php" method="get">
  <input type="hidden" name="page" value="cpabc_appointments" />
- <input type="hidden" name="cal" value="<?php echo $_GET["cal"]; ?>" />
+ <input type="hidden" name="cal" value="<?php echo intval($_GET["cal"]); ?>" />
  <input type="hidden" name="list" value="1" />
  <input type="hidden" name="delmark" value="1" />
 <table class="wp-list-table widefat fixed pages" cellspacing="0">
