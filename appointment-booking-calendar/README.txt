@@ -375,9 +375,12 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.11 =
 * New options for adding appointments.
 
+= 1.1.12 =
+* Added access to the calendars for subscribers
+
 == Upgrade Notice ==
 
-= 1.1.11 =
-* New options for adding appointments.
+= 1.1.12 =
+* Added access to the calendars for subscribers
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
