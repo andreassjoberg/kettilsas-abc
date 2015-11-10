@@ -64,21 +64,21 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
  {
     if (confirm('Are you sure that you want to delete this item?'))
     {        
-        document.location = 'admin.php?page=cpabc_appointments&cal=<?php echo intval($_GET["cal"]); ?>&list=1&ld='+id+'&r='+Math.random();
+        document.location = 'admin.php?page=cpabc_appointments.php&cal=<?php echo intval($_GET["cal"]); ?>&list=1&ld='+id+'&r='+Math.random();
     }
  }
  function do_dexapp_deleteall()
  {
     if (confirm('Are you sure that you want to delete ALL bookings for this calendar?'))
     {        
-        document.location = 'admin.php?page=cpabc_appointments&cal=<?php echo intval($_GET["cal"]); ?>&list=1&del=all&r='+Math.random();
+        document.location = 'admin.php?page=cpabc_appointments.php&cal=<?php echo intval($_GET["cal"]); ?>&list=1&del=all&r='+Math.random();
     }    
  }
 </script>
 <div class="wrap">
 <h1>Appointment Booking Calendar - Bookings List</h1>
 
-<input type="button" name="backbtn" value="Back to items list..." onclick="document.location='admin.php?page=cpabc_appointments';">
+<input type="button" name="backbtn" value="Back to items list..." onclick="document.location='admin.php?page=cpabc_appointments.php';">
 
 
 <div id="normal-sortables" class="meta-box-sortables">
@@ -88,7 +88,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
 
 
 <form action="admin.php" method="get">
- <input type="hidden" name="page" value="cpabc_appointments" />
+ <input type="hidden" name="page" value="cpabc_appointments.php" />
  <input type="hidden" name="cal" value="<?php echo CP_CALENDAR_ID; ?>" />
  <input type="hidden" name="list" value="1" />
  Search for: <input type="text" name="search" value="<?php echo esc_attr($_GET["search"]); ?>" /> &nbsp; &nbsp; &nbsp; 
@@ -105,7 +105,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
 
 
 echo paginate_links(  array(
-    'base'         => 'admin.php?page=cpabc_appointments&cal='.CP_CALENDAR_ID.'&list=1%_%&dfrom='.urlencode($_GET["dfrom"]).'&dto='.urlencode($_GET["dto"]).'&search='.urlencode($_GET["search"]),
+    'base'         => 'admin.php?page=cpabc_appointments.php&cal='.CP_CALENDAR_ID.'&list=1%_%&dfrom='.urlencode($_GET["dfrom"]).'&dto='.urlencode($_GET["dto"]).'&search='.urlencode($_GET["search"]),
     'format'       => '&p=%#%',
     'total'        => $total_pages,
     'current'      => $current_page,
@@ -123,7 +123,7 @@ echo paginate_links(  array(
 
 <div id="cpabc_printable_contents">
 <form name="dex_table_form" id="dex_table_form" action="admin.php" method="get">
- <input type="hidden" name="page" value="cpabc_appointments" />
+ <input type="hidden" name="page" value="cpabc_appointments.php" />
  <input type="hidden" name="cal" value="<?php echo intval($_GET["cal"]); ?>" />
  <input type="hidden" name="list" value="1" />
  <input type="hidden" name="delmark" value="1" />

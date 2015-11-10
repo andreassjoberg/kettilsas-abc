@@ -42,7 +42,7 @@ for ($k=1;$k<100;$k++)
 <h1>Appointment Booking Calendar - Manage Calendar Availability</h1>
 
 <?php if (!defined('CPABC_CALENDAR_ON_PUBLIC_WEBSITE')) { ?>
-<input type="button" name="backbtn" value="Back to items list..." onclick="document.location='admin.php?page=cpabc_appointments';">
+<input type="button" name="backbtn" value="Back to items list..." onclick="document.location='admin.php?page=cpabc_appointments.php';">
 <?php } ?>
 
 <form method="post" name="dexconfigofrm" action=""> 

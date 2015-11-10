@@ -1,7 +1,7 @@
 === Appointment Booking Calendar ===
 Contributors: codepeople
 Donate link: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
-Tags: booking form,booking calendar,appointment,appointment calendar,page,paypal calendar,plugin,calendar,paypal bookings,paypal appointments,booking,bookings,meeting,meet
+Tags: booking form,booking calendar,appointment,appointment calendar,page,paypal calendar,plugin,calendar,paypal bookings,paypal appointments,booking,bookings,meeting,meet,scheduler,scheduler calendar,availability,availability calendar,agenda,reservation form,reservation calendar
 Requires at least: 3.0.5
 Tested up to: 4.3
 Stable tag: trunk
@@ -378,9 +378,12 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.12 =
 * Added access to the calendars for subscribers
 
+= 1.1.13 =
+* Fixed menu slug to match the plugin name.
+
 == Upgrade Notice ==
 
-= 1.1.12 =
-* Added access to the calendars for subscribers
+= 1.1.13 =
+* Fixed menu slug to match the plugin name.
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support

@@ -55,7 +55,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
  function cp_addItem()
  {
     var calname = document.getElementById("cp_itemname").value;
-    document.location = 'admin.php?page=cpabc_appointments&a=1&r='+Math.random()+'&name='+encodeURIComponent(calname);       
+    document.location = 'admin.php?page=cpabc_appointments.php&a=1&r='+Math.random()+'&name='+encodeURIComponent(calname);       
  }
  
  function cp_updateItem(id)
@@ -64,29 +64,29 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
     var owner = document.getElementById("calowner_"+id).options[document.getElementById("calowner_"+id).options.selectedIndex].value;    
     if (owner == '')
         owner = 0;
-    document.location = 'admin.php?page=cpabc_appointments&u='+id+'&r='+Math.random()+'&owner='+owner+'&name='+encodeURIComponent(calname);    
+    document.location = 'admin.php?page=cpabc_appointments.php&u='+id+'&r='+Math.random()+'&owner='+owner+'&name='+encodeURIComponent(calname);    
  }
  
  function cp_manageSettings(id)
  {
-    document.location = 'admin.php?page=cpabc_appointments&cal='+id+'&r='+Math.random();
+    document.location = 'admin.php?page=cpabc_appointments.php&cal='+id+'&r='+Math.random();
  }
  
  function cp_cloneItem(id)
  {
-    document.location = 'admin.php?page=cpabc_appointments&c='+id+'&r='+Math.random();  
+    document.location = 'admin.php?page=cpabc_appointments.php&c='+id+'&r='+Math.random();  
  }  
  
  function cp_BookingsList(id)
  {
-    document.location = 'admin.php?page=cpabc_appointments&cal='+id+'&list=1&r='+Math.random();
+    document.location = 'admin.php?page=cpabc_appointments.php&cal='+id+'&list=1&r='+Math.random();
  }
  
  function cp_deleteItem(id)
  {
     if (confirm('Are you sure that you want to delete this item?'))
     {        
-        document.location = 'admin.php?page=cpabc_appointments&d='+id+'&r='+Math.random();
+        document.location = 'admin.php?page=cpabc_appointments.php&d='+id+'&r='+Math.random();
     }
  }
  
@@ -99,7 +99,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
         var ccf = document.getElementById("ccformrender").value; 
         var ict = document.getElementById("icaltimediff").value; 
         var ics = document.getElementById("icaltimeslotsize").value; 
-        document.location = 'admin.php?page=cpabc_appointments&ac=st&scr='+scr+'&chs='+chs+'&ccf='+ccf+'&ict='+ict+'&ics='+ics+'&r='+Math.random();
+        document.location = 'admin.php?page=cpabc_appointments.php&ac=st&scr='+scr+'&chs='+chs+'&ccf='+ccf+'&ict='+ict+'&ics='+ics+'&r='+Math.random();
     }    
  } 
  
