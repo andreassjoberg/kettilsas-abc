@@ -252,7 +252,7 @@ for ($k=1;$k<100;$k++)
         <td>
          <?php $option = @intval (cpabc_get_option('max_slots', '1')); if ($option=='') $option = 1;  ?>
           <select name="max_slots" onchange="cpabc_updatemaxslots();">
-           <?php for ($k=1; $k<=24; $k++) { ?>
+           <?php for ($k=1; $k<=26; $k++) { ?>
            <option value="<?php echo $k; ?>"<?php if ($option == $k) echo ' selected'; ?>><?php echo $k; ?></option>
            <?php } ?>
           </select>
