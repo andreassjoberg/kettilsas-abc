@@ -381,9 +381,12 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.13 =
 * Fixed menu slug to match the plugin name.
 
+= 1.1.14 =
+* Increased max number of slots in a single booking
+
 == Upgrade Notice ==
 
-= 1.1.13 =
-* Fixed menu slug to match the plugin name.
+= 1.1.14 =
+* Increased max number of slots in a single booking
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
