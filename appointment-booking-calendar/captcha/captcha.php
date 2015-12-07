@@ -104,11 +104,6 @@ for ($i=0;$i<$noise;$i++)
 
 $font = dirname( __FILE__ ) . "/font-1.ttf"; // font
 if ($_GET["font"]) $font = dirname( __FILE__ ) . "/".$_GET["font"];       
-/**if (!file_exists($font))
-    $font = $_SERVER["DOCUMENT_ROOT"]."/HDWFormCaptcha/".$font;
-if (!file_exists($font))
-    $font = dirname(__FILE__)."/".$font;   
-*/
 
 $font_size = rand($min_size, $max_size);
   

@@ -2,8 +2,8 @@
 /*
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: http://www.kettilsas.se/
-Description: Appointment Booking Calendar 1.1.14 with modifications for Kettilsas.se
-Version: 3.1.1.14
+Description: Appointment Booking Calendar 1.1.17 with modifications for Kettilsas.se
+Version: 3.1.1.17
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -1251,7 +1251,7 @@ function cpabc_appointments_export_csv ()
     if (@$_GET["cancelled_by"] != '')
         $cond = '';
     else
-        $cond = " AND (is_cancelled<>'1')";
+        $cond = " AND ((is_cancelled<>'1') OR is_cancelled is null)";
     if ($_GET["search"] != '') $cond .= " AND (buffered_date like '%".esc_sql($_GET["search"])."%')";
     if ($_GET["dfrom"] != '') $cond .= " AND (`booked_time_unformatted` >= '".esc_sql($_GET["dfrom"])."')";
     if ($_GET["dto"] != '') $cond .= " AND (`booked_time_unformatted` <= '".esc_sql($_GET["dto"])." 23:59:59')";
