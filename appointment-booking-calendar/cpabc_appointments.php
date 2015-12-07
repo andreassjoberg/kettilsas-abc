@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.14
+Version: 1.1.17
 Author: CodePeople.net
 Author URI: http://codepeople.net
 License: GPL
@@ -1251,7 +1251,7 @@ function cpabc_appointments_export_csv ()
     if (@$_GET["cancelled_by"] != '')
         $cond = '';
     else
-        $cond = " AND (is_cancelled<>'1')";
+        $cond = " AND ((is_cancelled<>'1') OR is_cancelled is null)";
     if ($_GET["search"] != '') $cond .= " AND (buffered_date like '%".esc_sql($_GET["search"])."%')";
     if ($_GET["dfrom"] != '') $cond .= " AND (`booked_time_unformatted` >= '".esc_sql($_GET["dfrom"])."')";
     if ($_GET["dto"] != '') $cond .= " AND (`booked_time_unformatted` <= '".esc_sql($_GET["dto"])." 23:59:59')";

@@ -3,7 +3,7 @@ Contributors: codepeople
 Donate link: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
 Tags: booking form,booking calendar,appointment,appointment calendar,page,paypal calendar,plugin,calendar,paypal bookings,paypal appointments,booking,bookings,meeting,meet,scheduler,scheduler calendar,availability,availability calendar,agenda,reservation form,reservation calendar
 Requires at least: 3.0.5
-Tested up to: 4.3
+Tested up to: 4.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -384,9 +384,20 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.14 =
 * Increased max number of slots in a single booking
 
+= 1.1.15 =
+* Tested and compatible with WordPress 4.4
+* Fixed bug in query filter
+
+= 1.1.16 =
+* Fixed CSS issues in the new WP theme
+
+= 1.1.17 =
+* Fixed issues in captcha filess
+
+
 == Upgrade Notice ==
 
-= 1.1.14 =
-* Increased max number of slots in a single booking
+= 1.1.17 =
+* Fixed issues in captcha filess
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support

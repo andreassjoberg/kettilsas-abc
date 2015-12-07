@@ -531,3 +531,4 @@ color:#ffffff;
 #cp_contactformpp_pform .yui-calendar{width:100%}
 
 #cp_contactformpp_pform .yui-calcontainer tr td,#cp_contactformpp_pform .yui-calcontainer tr th{padding:5px 0px}
+.yui-calendar a{box-shadow:none !important}
