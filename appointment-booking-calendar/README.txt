@@ -394,10 +394,15 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.17 =
 * Fixed issues in captcha filess
 
+= 1.1.18 =
+* Fixed typo in settings
+* Fixed null value issue in query
+
 
 == Upgrade Notice ==
 
-= 1.1.17 =
-* Fixed issues in captcha filess
+= 1.1.18 =
+* Fixed typo in settings
+* Fixed null value issue in query
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support

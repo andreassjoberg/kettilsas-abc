@@ -550,7 +550,7 @@ for ($k=1;$k<100;$k++)
         </td>
         </tr>
         <tr valign="top">
-        <th scope="row">Remainder email subject</th>
+        <th scope="row">Reminder email subject</th>
         <td><input type="text" name="reminder_subject"  disabled readonly size="70" value="<?php echo esc_attr(cpabc_get_option('reminder_subject', CPABC_APPOINTMENTS_DEFAULT_REMINDER_SUBJECT)); ?>" /></td>
         </tr>
         <tr valign="top">
@@ -564,7 +564,7 @@ for ($k=1;$k<100;$k++)
         </td>
         </tr>          
         <tr valign="top">
-        <th scope="row">Remainder email message</th>
+        <th scope="row">Reminder email message</th>
         <td><textarea cols="70" rows="3"  disabled readonly name="reminder_content"><?php echo cpabc_get_option('reminder_content', CPABC_APPOINTMENTS_DEFAULT_REMINDER_CONTENT); ?></textarea></td>
         </tr>                                                
      </table>

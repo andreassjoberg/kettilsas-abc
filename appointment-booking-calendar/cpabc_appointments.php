@@ -2,8 +2,8 @@
 /*
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: http://www.kettilsas.se/
-Description: Appointment Booking Calendar 1.1.17 with modifications for Kettilsas.se
-Version: 3.1.1.17
+Description: Appointment Booking Calendar 1.1.18 with modifications for Kettilsas.se
+Version: 3.1.1.18
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -857,9 +857,9 @@ function cpabc_appointments_check_posted_data()
                                                                         'time' => current_time('mysql'),
                                                                         'booked_time' => $_POST["Date"][$n],
                                                                         'booked_time_unformatted' => $_POST["dateAndTime"][$n],
-                                                                        'name' => @$_POST["name"],
-                                                                        'email' => @$_POST[$to],
-                                                                        'phone' => @$_POST["phone"],
+                                                                        'name' => "".@$_POST["name"],
+                                                                        'email' => "".@$_POST[$to],
+                                                                        'phone' => "".@$_POST["phone"],
                                                                         'question' => $buffer_A,
                                                                         'quantity' => (isset($_POST["abc_capacity"])?$_POST["abc_capacity"]:1),
                                                                         'buffered_date' => serialize($params)
