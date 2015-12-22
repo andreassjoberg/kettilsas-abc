@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
-Plugin URI: http://www.kettilsas.se/
-Description: Appointment Booking Calendar 1.1.18 with modifications for Kettilsas.se
-Version: 3.1.1.18
+Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
+Description: Appointment Booking Calendar with modifications for Kettilsas.se
+Version: 3.1.1.19
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL

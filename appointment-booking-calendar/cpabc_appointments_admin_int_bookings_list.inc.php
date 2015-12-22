@@ -30,7 +30,7 @@ else if (isset($_GET['ld']) && $_GET['ld'] != '')
 } 
 else if (isset($_GET['del']) && $_GET['del'] == 'all')
 {    
-    $wpdb->query('DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE appointment_calendar_id='.CP_CALENDAR_ID);           
+    $wpdb->query('DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE appointment_calendar_id='.intval(CP_CALENDAR_ID));           
     $message = "All items deleted";
 }
 
