@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.1.19
+Version: 3.1.1.21
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -609,7 +609,7 @@ function cpabc_appointments_html_post_page() {
     {
         if (isset($_GET["page"]) &&$_GET["page"] == 'cpabc_appointments_upgrade')
         {
-            echo("Redirecting to upgrade page...<script type='text/javascript'>document.location='http://wordpress.dwbooster.com/calendars/appointment-booking-calendar#download';</script>");
+            echo("Redirecting to upgrade page...<script type='text/javascript'>document.location='http://wordpress.dwbooster.com/calendars/appointment-booking-calendar?ref=upgradelink#download';</script>");
             exit;
         }
         else if (isset($_GET["page"]) &&$_GET["page"] == 'cpabc_appointments_demo')
