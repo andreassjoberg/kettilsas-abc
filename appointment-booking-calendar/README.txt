@@ -407,9 +407,15 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.21 =
 * Fixed captcha issue in Win serve
 
+= 1.1.22 =
+* Improved captcha security
+
+= 1.1.23 =
+* Admin intf. updates.
+
 == Upgrade Notice ==
 
-= 1.1.21 =
-* Fixed captcha issue in Win servers
+= 1.1.23 =
+* Admin intf. updates.
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support

@@ -13,7 +13,7 @@ global $wpdb;
 
 $message = "";
 
-$records_per_page = 50;                                                                                  
+$records_per_page = 25;                                                                                  
 
 
 if (isset($_GET['delmark']) && $_GET['delmark'] != '')

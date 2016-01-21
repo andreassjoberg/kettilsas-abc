@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.1.21
+Version: 3.1.1.23
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -770,6 +770,7 @@ function cpabc_appointments_check_posted_data()
        )
     {
         $_SESSION['rand_code'] = '';
+        setCookie('rand_code', '', time()+36000,"/");                
         echo 'captchafailed';
         exit;
     }
@@ -843,7 +844,9 @@ function cpabc_appointments_check_posted_data()
     $buffer_A = $_POST["question"];
     $to = "email";
 
-
+    $_SESSION['rand_code'] = '';
+    setCookie('rand_code', '', time()+36000,"/"); 
+        
     // insert into database
     //---------------------------
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_TABLE_NAME, 'quantity', "VARCHAR(25) DEFAULT '1' NOT NULL");
