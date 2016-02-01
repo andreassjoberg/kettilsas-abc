@@ -12,38 +12,50 @@ global $wpdb;
 $message = "";
 if (isset($_GET['u']) && $_GET['u'] != '')
 {
-    $wpdb->query('UPDATE `'.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` SET conwer='.intval($_GET["owner"]).',`'.CPABC_TDEAPP_CONFIG_USER.'`="'.esc_sql($_GET["name"]).'" WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`='.intval($_GET['u']));           
-    $message = "Item updated";        
+    if (!wp_verify_nonce( $_REQUEST['_wpnonce'], 'uname_abc' ))    
+        $message = "Access verification error. Cannot update settings.";
+    else
+    {
+        $wpdb->query('UPDATE `'.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` SET conwer='.intval($_GET["owner"]).',`'.CPABC_TDEAPP_CONFIG_USER.'`="'.esc_sql($_GET["name"]).'" WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`='.intval($_GET['u']));           
+        $message = "Item updated";        
+    }    
 }
 else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
 {   
-    update_option( 'CPABC_CAL_TIME_ZONE_MODIFY_SET', $_GET["ict"] );
-    update_option( 'CPABC_CAL_TIME_SLOT_SIZE_SET', $_GET["ics"] );
-    
-    update_option( 'CPABC_APPOINTMENTS_LOAD_SCRIPTS', ($_GET["scr"]=="1"?"1":"2") );   
-    update_option( 'CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR', "1" );
-    if ($_GET["chs"] != '')
+    if (!wp_verify_nonce( $_REQUEST['_wpnonce'], 'uname_abc' ))    
+        $message = "Access verification error. Cannot update settings.";
+    else
     {
-        $target_charset = esc_sql($_GET["chs"]);
-        $tables = array( $wpdb->prefix.CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX
-                         , $wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_DISCOUNT_CODES_TABLE_NAME_NO_PREFIX );                
-        foreach ($tables as $tab)
-        {  
-            $myrows = $wpdb->get_results( "DESCRIBE {$tab}" );                                                                                 
-            foreach ($myrows as $item)
-	        {
-	            $name = $item->Field;
-		        $type = $item->Type;
-		        if (preg_match("/^varchar\((\d+)\)$/i", $type, $mat) || !strcasecmp($type, "CHAR") || !strcasecmp($type, "TEXT") || !strcasecmp($type, "MEDIUMTEXT"))
-		        {
-	                $wpdb->query("ALTER TABLE {$tab} CHANGE {$name} {$name} {$type} COLLATE {$target_charset}");	            
+        update_option( 'CPABC_CAL_TIME_ZONE_MODIFY_SET', $_GET["ict"] );
+        update_option( 'CPABC_CAL_TIME_SLOT_SIZE_SET', $_GET["ics"] );
+        
+        update_option( 'CPABC_APPOINTMENTS_LOAD_SCRIPTS', ($_GET["scr"]=="1"?"1":"2") );   
+        update_option( 'CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR', "1" );
+        if ($_GET["chs"] != '')
+        {
+            $target_charset = esc_sql($_GET["chs"]);
+            $tables = array( $wpdb->prefix.CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX
+                             , $wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_DISCOUNT_CODES_TABLE_NAME_NO_PREFIX );                
+            foreach ($tables as $tab)
+            {  
+                $myrows = $wpdb->get_results( "DESCRIBE {$tab}" );                                                                                 
+                foreach ($myrows as $item)
+	            {
+	                $name = $item->Field;
+	    	        $type = $item->Type;
+	    	        if (preg_match("/^varchar\((\d+)\)$/i", $type, $mat) || !strcasecmp($type, "CHAR") || !strcasecmp($type, "TEXT") || !strcasecmp($type, "MEDIUMTEXT"))
+	    	        {
+	                    $wpdb->query("ALTER TABLE {$tab} CHANGE {$name} {$name} {$type} COLLATE {$target_charset}");	            
+	                }
 	            }
-	        }
+            }
         }
-    }
-    $message = "Troubleshoot settings updated";
+        $message = "Troubleshoot settings updated";
+    }   
+    
 }
 
+$nonce_un = wp_create_nonce( 'uname_abc' );
 
 if ($message) echo "<div id='setting-error-settings_updated' class='updated settings-error'><p><strong>".$message."</strong></p></div>";
 
@@ -55,7 +67,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
  function cp_addItem()
  {
     var calname = document.getElementById("cp_itemname").value;
-    document.location = 'admin.php?page=cpabc_appointments.php&a=1&r='+Math.random()+'&name='+encodeURIComponent(calname);       
+    document.location = 'admin.php?page=cpabc_appointments.php&_wpnonce=<?php echo $nonce_un; ?>&a=1&r='+Math.random()+'&name='+encodeURIComponent(calname);       
  }
  
  function cp_updateItem(id)
@@ -64,7 +76,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
     var owner = document.getElementById("calowner_"+id).options[document.getElementById("calowner_"+id).options.selectedIndex].value;    
     if (owner == '')
         owner = 0;
-    document.location = 'admin.php?page=cpabc_appointments.php&u='+id+'&r='+Math.random()+'&owner='+owner+'&name='+encodeURIComponent(calname);    
+    document.location = 'admin.php?page=cpabc_appointments.php&_wpnonce=<?php echo $nonce_un; ?>&u='+id+'&r='+Math.random()+'&owner='+owner+'&name='+encodeURIComponent(calname);    
  }
  
  function cp_manageSettings(id)
@@ -99,7 +111,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
         var ccf = document.getElementById("ccformrender").value; 
         var ict = document.getElementById("icaltimediff").value; 
         var ics = document.getElementById("icaltimeslotsize").value; 
-        document.location = 'admin.php?page=cpabc_appointments.php&ac=st&scr='+scr+'&chs='+chs+'&ccf='+ccf+'&ict='+ict+'&ics='+ics+'&r='+Math.random();
+        document.location = 'admin.php?page=cpabc_appointments.php&_wpnonce=<?php echo $nonce_un; ?>&ac=st&scr='+scr+'&chs='+chs+'&ccf='+ccf+'&ict='+ict+'&ics='+ics+'&r='+Math.random();
     }    
  } 
  
