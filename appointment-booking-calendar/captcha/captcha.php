@@ -56,7 +56,7 @@ function cpcff_similarColors($c1, $c2)
    return sqrt( pow($c1["r"]-$c2["r"],2) + pow($c1["g"]-$c2["g"],2) + pow($c1["b"]-$c2["b"],2)) < 125;
 }
 
-session_start();
+if (function_exists('session_start')) @session_start();
 
 function cpcff_make_seed() {
     list($usec, $sec) = explode(' ', microtime());

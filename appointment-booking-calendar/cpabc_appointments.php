@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.1.23
+Version: 3.1.1.25
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -365,7 +365,7 @@ function cpabc_appointments_filter_list($atts) {
     $group = strtolower($group);
 
     if ($calendar != '')
-        define ('CPABC_CALENDAR_FIXED_ID',$calendar);
+        define ('CPABC_CALENDAR_FIXED_ID', intval($calendar));
     else if ($user != '')
     {
         $users = $wpdb->get_results( "SELECT user_login,ID FROM ".$wpdb->users." WHERE user_login='".esc_sql($user)."'" );
@@ -755,7 +755,7 @@ function cpabc_appointments_check_posted_data()
             return;
 
 
-    session_start();
+    if (function_exists('session_start')) @session_start();
 
     if (!isset($_GET["hdcaptcha"]) || $_GET['hdcaptcha'] == '') $_GET['hdcaptcha'] = @$_POST['hdcaptcha'];
     if (
@@ -987,7 +987,7 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
    cpabc_appointments_add_field_verify(CPABC_TDEAPP_CALENDAR_DATA_TABLE, 'reference', "VARCHAR(20) DEFAULT '' NOT NULL");
 
    $itemnumber = explode(";",$itemnumber);
-   $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_TABLE_NAME." WHERE id=".$itemnumber[0] );
+   $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_TABLE_NAME." WHERE id=".intval($itemnumber[0]) );
    $mycalendarrows = $wpdb->get_results( 'SELECT * FROM '.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME .' WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`='.$myrows[0]->calendar);
    $reminder_timeline = date( "Y-m-d H:i:s", strtotime (date("Y-m-d H:i:s")." +".$mycalendarrows[0]->reminder_hours." hours") );
    if (!defined('CP_CALENDAR_ID'))
@@ -1018,7 +1018,7 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
    $buffered_dates = array();
    for ($n=0;$n<count($itemnumber);$n++)
    {
-       $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_TABLE_NAME." WHERE id=".$itemnumber[$n] );
+       $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_TABLE_NAME." WHERE id=".intval($itemnumber[$n]) );
        $buffered_dates[] = $myrows[0]->booked_time;
        $information = $mycalendarrows[0]->uname."\n".
                       $myrows[0]->booked_time."\n".
@@ -1038,7 +1038,7 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
                                                                             'reminder' => $reminder,
                                                                             'quantity' =>  (isset($myrows[0]->quantity)?$myrows[0]->quantity:1),
                                                                             'description' => str_replace("\n","<br />", $information),
-                                                                            'reference' => $itemnumber[$n]
+                                                                            'reference' => intval($itemnumber[$n])
                                                                              ) );
        // SEND EMAILS START
        if ($n == count($itemnumber)-1) // send emails only once
@@ -1416,7 +1416,7 @@ function cpabc_appointments_calendar_update() {
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header("Pragma: no-cache");
     if ( $user_ID )
-        $wpdb->query("update  ".CPABC_TDEAPP_CONFIG." set specialDates='".$_POST["specialDates"]."',".CPABC_TDEAPP_CONFIG_WORKINGDATES."='".$_POST["workingDates"]."',".CPABC_TDEAPP_CONFIG_RESTRICTEDDATES."='".$_POST["restrictedDates"]."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES0."='".$_POST["timeWorkingDates0"]."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES1."='".$_POST["timeWorkingDates1"]."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES2."='".$_POST["timeWorkingDates2"]."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES3."='".$_POST["timeWorkingDates3"]."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES4."='".$_POST["timeWorkingDates4"]."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES5."='".$_POST["timeWorkingDates5"]."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES6."='".$_POST["timeWorkingDates6"]."'  where ".CPABC_TDEAPP_CONFIG_ID."=".$calid);
+        $wpdb->query("update  ".CPABC_TDEAPP_CONFIG." set specialDates='".esc_sql($_POST["specialDates"])."',".CPABC_TDEAPP_CONFIG_WORKINGDATES."='".esc_sql($_POST["workingDates"])."',".CPABC_TDEAPP_CONFIG_RESTRICTEDDATES."='".esc_sql($_POST["restrictedDates"])."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES0."='".esc_sql($_POST["timeWorkingDates0"])."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES1."='".esc_sql($_POST["timeWorkingDates1"])."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES2."='".esc_sql($_POST["timeWorkingDates2"])."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES3."='".esc_sql($_POST["timeWorkingDates3"])."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES4."='".esc_sql($_POST["timeWorkingDates4"])."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES5."='".esc_sql($_POST["timeWorkingDates5"])."',".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES6."='".esc_sql($_POST["timeWorkingDates6"])."'  where ".CPABC_TDEAPP_CONFIG_ID."=".$calid);
 
     exit();
 }
