@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.1.25
+Version: 3.1.1.28
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -307,7 +307,7 @@ function cpabc_appointments_filter_content($atts) {
         'user' => '',
     ), $atts ) );
     if ($calendar != '')
-        define ('CPABC_CALENDAR_FIXED_ID',$calendar);
+        define ('CPABC_CALENDAR_FIXED_ID',intval($calendar));
     else if ($user != '')
     {
         $users = $wpdb->get_results( "SELECT user_login,ID FROM ".$wpdb->users." WHERE user_login='".esc_sql($user)."'" );
@@ -634,7 +634,7 @@ function set_cpabc_apps_insert_adminScripts($hook) {
         wp_enqueue_script( 'jquery-ui-core' );
         wp_enqueue_script( 'jquery-ui-datepicker' );
 
-        wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+        wp_enqueue_style('jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
     }
     if( 'post.php' != $hook  && 'post-new.php' != $hook )
         return;

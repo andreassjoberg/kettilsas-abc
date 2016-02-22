@@ -420,9 +420,18 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.25 =
 * Added nonces and other security updates
 
+= 1.1.26 =
+* Fixed PHP session issues
+
+= 1.1.27 =
+* Shortcode paramters sanitization
+
+= 1.1.28 =
+* Updated API URLs
+
 == Upgrade Notice ==
 
-= 1.1.25 =
-* Added nonces and other security updates
+= 1.1.28 =
+* Updated API URLs
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
