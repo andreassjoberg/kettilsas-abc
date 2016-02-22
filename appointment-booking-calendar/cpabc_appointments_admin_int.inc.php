@@ -35,7 +35,7 @@ for ($k=1;$k<100;$k++)
 <?php if (!CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING) { ?>
 <script type='text/javascript' src='../wp-content/plugins/appointment-booking-calendar/js/jQuery.stringify.js'></script>
 <script type='text/javascript' src='../wp-content/plugins/appointment-booking-calendar/js/fbuilder-pro.jquery.js'></script>
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />   
+<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />   
 <?php } ?>
 
 <div class="wrap">
@@ -105,6 +105,7 @@ for ($k=1;$k<100;$k++)
                <option value="PT" <?php if ($value == 'PT') echo ' selected="selected"'; ?>>Portuguese</option>
                <option value="RU" <?php if ($value == 'RU') echo ' selected="selected"'; ?>>Russian</option>
                <option value="SP" <?php if ($value == 'SP') echo ' selected="selected"'; ?>>Spanish</option>
+               <option value="CA" <?php if ($value == 'CA') echo ' selected="selected"'; ?>>Spanish - Catalan</option>
                <option value="SK" <?php if ($value == 'SK') echo ' selected="selected"'; ?>>Slovak</option>
                <option value="SE" <?php if ($value == 'SE') echo ' selected="selected"'; ?>>Swedish</option>
                <option value="TR" <?php if ($value == 'TR') echo ' selected="selected"'; ?>>Turkish</option>

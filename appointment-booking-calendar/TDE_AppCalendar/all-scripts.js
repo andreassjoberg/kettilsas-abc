@@ -404,6 +404,14 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 						wm = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
 						wl = ["Domingo", "Lunes", "Martes", "Mi&eacute;rcoles", "Jueves", "Viernes", "S&acute;bado"];
 					break;
+					case "CA":
+						ms = ["Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Des"];
+						ml = ["Gener", "Febrer", "Marc", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre"];
+						wc = ["Dg", "Dl", "Dt", "Dc", "Dj", "Dv", "Ds"];
+						ws = ["Dg", "Dl", "Dt", "Dc", "Dj", "Dv", "Ds"];
+						wm = ["Dg", "Dl", "Dt", "Dc", "Dj", "Dv", "Ds"];
+						wl = ["Diumenge", "Dilluns", "Dimarts", "Dimecres", "Dijous", "Divendres", "Dissabte"];
+					break;	
 					case "FR":
 						ms = ["Jan", "F&eacute;v", "Mar", "Avr", "Mai", "Jui", "Jui", "Ao&ucirc;", "Sep", "Oct", "Nov", "D&eacute;c"];
 						ml = ["Janvier", "F&eacute;vrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Ao&ucirc;t", "Septembre", "Octobre", "Novembre", "D&eacute;cembre"];
