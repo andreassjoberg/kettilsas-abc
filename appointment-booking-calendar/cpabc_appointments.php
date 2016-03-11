@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.28
+Version: 1.1.31
 Author: CodePeople.net
 Author URI: http://codepeople.net
 License: GPL
@@ -741,7 +741,7 @@ function cpabc_appointments_check_posted_data()
     }
 
     if (!defined('CP_CALENDAR_ID') && isset($_POST["cpabc_item"]))
-        define ('CP_CALENDAR_ID', $_POST["cpabc_item"]);
+        define ('CP_CALENDAR_ID', intval($_POST["cpabc_item"]));
 
     if ( 'POST' == $_SERVER['REQUEST_METHOD'] && isset( $_POST['cpabc_appointments_post_options'] ) && (is_admin() || cpabc_appointments_user_access_to(CP_CALENDAR_ID) ))
     {
@@ -1104,8 +1104,14 @@ function cpabc_appointments_save_options()
 {
     global $wpdb;
     if (!defined('CP_CALENDAR_ID'))
-        define ('CP_CALENDAR_ID',$_POST["cpabc_item"]);
+        define ('CP_CALENDAR_ID', intval($_POST["cpabc_item"]));
 
+    if (!wp_verify_nonce( $_REQUEST['_wpnonce'], 'uname_abc' ))    
+    {
+        echo "Access verification error. Cannot update settings.";
+        return;
+    }  
+    
     if ( ! current_user_can('edit_pages') && !cpabc_appointments_user_access_to(CP_CALENDAR_ID) ) // prevent loading coupons from outside admin area
     {
         echo 'No enough privilegies to load this content.';

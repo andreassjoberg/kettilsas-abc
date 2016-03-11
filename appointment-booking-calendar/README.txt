@@ -429,9 +429,18 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.28 =
 * Updated API URLs
 
+= 1.1.29 =
+* Added Catalan language
+
+= 1.1.30 =
+* Additional POST params sanitization
+
+= 1.1.31 =
+* Added nonces to calendar settings
+
 == Upgrade Notice ==
 
-= 1.1.28 =
-* Updated API URLs
+= 1.1.31 =
+* Added nonces to calendar settings
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
