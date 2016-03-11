@@ -30,6 +30,8 @@ for ($k=1;$k<100;$k++)
    else
        $request_costs_exploded .= ",'".str_replace("'","\'",$request_costs[0]*($k+1))."'";
 
+$nonce_un = wp_create_nonce( 'uname_abc' );
+
 ?>
 
 <?php if (!CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING) { ?>
@@ -48,6 +50,7 @@ for ($k=1;$k<100;$k++)
 <form method="post" name="dexconfigofrm" action=""> 
 <input name="cpabc_appointments_post_options" type="hidden" value="1" />
 <input name="cpabc_item" type="hidden" value="<?php echo CP_CALENDAR_ID; ?>" />
+<input name="_wpnonce" type="hidden" value="<?php echo $nonce_un; ?>" />
    
 <div id="normal-sortables" class="meta-box-sortables">
 
