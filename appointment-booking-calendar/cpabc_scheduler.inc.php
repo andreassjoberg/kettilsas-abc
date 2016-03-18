@@ -1,6 +1,6 @@
 <?php if ( !defined('CPABC_AUTH_INCLUDE') ) { echo 'Direct access not allowed.'; exit; } ?>
 <form class="cpp_form" name="FormEdit" action="<?php get_site_url(); ?>" method="post" onsubmit="return doValidate(this);">
-<input name="cpabc_appointments_post" type="hidden" id="1" />
+<input name="cpabc_appointments_post" type="hidden" value="1" />
 <?php echo $quant_buffer; ?>
 <div <?php if (count($myrows) < 2) echo 'style="display:none"'; ?>>
   <?php _e("Calendar",'cpabc').":"; ?><br />

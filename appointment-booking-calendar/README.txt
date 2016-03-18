@@ -438,9 +438,12 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.31 =
 * Added nonces to calendar settings
 
+= 1.1.32 =
+* Fixed bug in booking form
+
 == Upgrade Notice ==
 
-= 1.1.31 =
-* Added nonces to calendar settings
+= 1.1.32 =
+* Fixed bug in booking form
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
