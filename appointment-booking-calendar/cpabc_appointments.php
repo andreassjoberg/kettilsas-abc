@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.1.32
+Version: 3.1.1.34
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -1061,6 +1061,7 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
            $email_content2 = str_replace("%CANCEL%", $cancel_link, $email_content2);
 
            // SEND EMAIL TO USER
+           $replyto = $myrows[0]->email;
            if ('html' == cpabc_get_option('nuser_emailformat', CPABC_APPOINTMENTS_DEFAULT_email_format)) $content_type = "Content-Type: text/html; charset=utf-8\n"; else $content_type = "Content-Type: text/plain; charset=utf-8\n";
            wp_mail($myrows[0]->email, $email_subject1, $email_content1,
                     "From: \"$SYSTEM_EMAIL\" <".$SYSTEM_EMAIL.">\r\n".
@@ -1081,6 +1082,7 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
                 {
                     wp_mail(trim($item), $email_subject2, $email_content2,
                         "From: \"$SYSTEM_EMAIL\" <".$SYSTEM_EMAIL.">\r\n".
+                        ($replyto!=''?"Reply-To: \"$replyto\" <".$replyto.">\r\n":'').
                         $content_type.
                         "X-Mailer: PHP/" . phpversion(), $attachments);
                 }
