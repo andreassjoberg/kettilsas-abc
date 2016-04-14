@@ -447,9 +447,12 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.34 =
 * Tested in WP 4.5
 
+= 1.1.35 =
+* Added Stripcslashes to post
+
 == Upgrade Notice ==
 
-= 1.1.34 =
-* Tested in WP 4.5
+= 1.1.35 =
+* Added Stripcslashes to post
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
