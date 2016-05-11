@@ -210,8 +210,8 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
     
       Script load method:<br />
        <select id="ccscriptload" name="ccscriptload">
-        <option value="1" <?php if (get_option('CPABC_APPOINTMENTS_LOAD_SCRIPTS',"1") == "1") echo 'selected'; ?>>Classic (Recommended)</option>
-        <option value="2" <?php if (get_option('CPABC_APPOINTMENTS_LOAD_SCRIPTS',"1") != "1") echo 'selected'; ?>>Direct</option>
+        <option value="1" <?php if (get_option('CPABC_APPOINTMENTS_LOAD_SCRIPTS',(CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING?"1":"0")) == "1") echo 'selected'; ?>>Classic (Recommended)</option>
+        <option value="2" <?php if (get_option('CPABC_APPOINTMENTS_LOAD_SCRIPTS',(CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING?"1":"0")) != "1") echo 'selected'; ?>>Direct</option>
        </select><br />
        <em>* Change the script load method if the form doesn't appear in the public website.</em>
       

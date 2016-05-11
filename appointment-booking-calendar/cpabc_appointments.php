@@ -3,12 +3,11 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.1.35
+Version: 3.1.1.39
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
 */
-
 
 /* initialization / install / uninstall functions */
 
@@ -204,83 +203,73 @@ function _cpabc_appointments_install() {
 
     $sql = "CREATE TABLE `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` (`".CPABC_TDEAPP_CONFIG_ID."` int(10) unsigned NOT NULL auto_increment, `".CPABC_TDEAPP_CONFIG_TITLE."` varchar(255) NOT NULL default '',`".CPABC_TDEAPP_CONFIG_USER."` varchar(100) default NULL,`".CPABC_TDEAPP_CONFIG_PASS."` varchar(100) default NULL,`".CPABC_TDEAPP_CONFIG_LANG."` varchar(5) default NULL,`".CPABC_TDEAPP_CONFIG_CPAGES."` tinyint(3) unsigned default NULL,`".CPABC_TDEAPP_CONFIG_TYPE."` tinyint(3) unsigned default NULL,`".CPABC_TDEAPP_CONFIG_MSG."` varchar(255) NOT NULL default '',`".CPABC_TDEAPP_CONFIG_WORKINGDATES."` varchar(255) NOT NULL default '',`".CPABC_TDEAPP_CONFIG_RESTRICTEDDATES."` text,`".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES0."` text,`".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES1."` text,`".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES2."` text,`".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES3."` text,`".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES4."` text,`".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES5."` text,`".CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES6."` text,`".CPABC_TDEAPP_CALDELETED_FIELD."` tinyint(3) unsigned default NULL,PRIMARY KEY (`".CPABC_TDEAPP_CONFIG_ID."`)); ";
     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `conwer` INT NOT NULL AFTER  `id`;";
+    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD (".
+    "`conwer` INT NOT NULL, ".
+    "`form_structure` mediumtext, ".
+    "`specialDates` text, ".
+    "`vs_use_validation` VARCHAR(10) DEFAULT '' NOT NULL, ".
+    "`vs_text_is_required` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`vs_text_is_email` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`vs_text_datemmddyyyy` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`vs_text_dateddmmyyyy` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`vs_text_number` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`vs_text_digits` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`vs_text_max` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`vs_text_min` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`vs_text_submitbtn` VARCHAR(250) DEFAULT '' NOT NULL, ".    
+    "`calendar_language` text, ".
+    "`calendar_dateformat` text, ".
+    "`calendar_pages` text, ".
+    "`calendar_militarytime` text, ".
+    "`calendar_weekday` text, ".
+    "`calendar_mindate` text, ".
+    "`calendar_maxdate` text, ".
+    "`calendar_startmonth` VARCHAR(20) DEFAULT '' NOT NULL, ".
+    "`calendar_startyear` VARCHAR(20) DEFAULT '' NOT NULL, ".
+    "`calendar_theme` text, ".
+    "`min_slots` VARCHAR(10) DEFAULT '' NOT NULL, ".
+    "`max_slots` VARCHAR(10) DEFAULT '' NOT NULL, ".
+    "`close_fpanel` VARCHAR(10) DEFAULT '' NOT NULL, ".
+    "`quantity_field` VARCHAR(10) DEFAULT '' NOT NULL, ".
+    "`paypal_mode` VARCHAR(10) DEFAULT '' NOT NULL, ".
+    "`enable_paypal` text, ".
+    "`paypal_email` text, ".
+    "`request_cost` text, ".
+    "`paypal_product_name` text, ".
+    "`currency` text, ".
+    "`url_ok` text, ".
+    "`url_cancel` text, ".
+    "`paypal_language` text, ".
+    "`cu_user_email_field` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`notification_from_email` text, ".
+    "`notification_destination_email` text, ".
+    "`email_subject_confirmation_to_user` text, ".
+    "`email_confirmation_to_user` text, ".
+    "`email_subject_notification_to_admin` text, ".
+    "`email_notification_to_admin` text, ".
+    "`enable_reminder` text, ".
+    "`reminder_hours` text, ".
+    "`reminder_subject` text, ".
+    "`reminder_content` text, ".
+    "`dexcv_enable_captcha` text, ".
+    "`dexcv_width` text, ".
+    "`dexcv_height` text, ".
+    "`dexcv_chars` text, ".
+    "`dexcv_min_font_size` text, ".
+    "`dexcv_max_font_size` text, ".
+    "`dexcv_noise` text, ".
+    "`dexcv_noise_length` text, ".
+    "`dexcv_background` text, ".
+    "`dexcv_border` text, ".
+    "`dexcv_font` text, ".
+    "`cv_text_enter_valid_captcha` VARCHAR(250) DEFAULT '' NOT NULL, ".
+    "`cp_cal_checkboxes` text, ".
+    "`nuser_emailformat` text, ".
+    "`nadmin_emailformat` text, ".
+    "`nremind_emailformat` text".
+    ")";
 
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `form_structure` mediumtext AFTER  `id`;";     $wpdb->query($sql);
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `specialDates` text AFTER  `id`;";     $wpdb->query($sql);
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_use_validation` VARCHAR(10) DEFAULT '' NOT NULL      AFTER  `id`;";     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_text_is_required` VARCHAR(250) DEFAULT '' NOT NULL   AFTER  `id`;";     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_text_is_email` VARCHAR(250) DEFAULT '' NOT NULL      AFTER  `id`;";     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_text_datemmddyyyy` VARCHAR(250) DEFAULT '' NOT NULL  AFTER  `id`;";     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_text_dateddmmyyyy` VARCHAR(250) DEFAULT '' NOT NULL  AFTER  `id`;";     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_text_number` VARCHAR(250) DEFAULT '' NOT NULL        AFTER  `id`;";     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_text_digits` VARCHAR(250) DEFAULT '' NOT NULL        AFTER  `id`;";     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_text_max` VARCHAR(250) DEFAULT '' NOT NULL           AFTER  `id`;";     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_text_min` VARCHAR(250) DEFAULT '' NOT NULL           AFTER  `id`;";     $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `vs_text_submitbtn` VARCHAR(250) DEFAULT '' NOT NULL           AFTER  `id`;";     $wpdb->query($sql);
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `conwer` INT NOT NULL AFTER  `id`;";     $wpdb->query($sql);
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_language` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_dateformat` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_pages` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_militarytime` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_weekday` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_mindate` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_maxdate` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_startmonth` VARCHAR(20) DEFAULT '' NOT NULL;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_startyear` VARCHAR(20) DEFAULT '' NOT NULL;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `calendar_theme` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `min_slots` VARCHAR(10) DEFAULT '' NOT NULL AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `max_slots` VARCHAR(10) DEFAULT '' NOT NULL AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `close_fpanel` VARCHAR(10) DEFAULT '' NOT NULL AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `quantity_field` VARCHAR(10) DEFAULT '' NOT NULL AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `paypal_mode` VARCHAR(10) DEFAULT '' NOT NULL AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `enable_paypal` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `paypal_email` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `request_cost` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `paypal_product_name` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `currency` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `url_ok` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `url_cancel` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `paypal_language` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `cu_user_email_field` VARCHAR(250) DEFAULT '' NOT NULL AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `notification_from_email` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `notification_destination_email` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `email_subject_confirmation_to_user` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `email_confirmation_to_user` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `email_subject_notification_to_admin` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `email_notification_to_admin` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `enable_reminder` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `reminder_hours` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `reminder_subject` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `reminder_content` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_enable_captcha` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_width` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_height` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_chars` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_min_font_size` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_max_font_size` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_noise` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_noise_length` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_background` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_border` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `dexcv_font` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `cv_text_enter_valid_captcha` VARCHAR(250) DEFAULT '' NOT NULL AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `cp_cal_checkboxes` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `nuser_emailformat` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `nadmin_emailformat` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
-    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD `nremind_emailformat` text AFTER  `timeWorkingDates6`;"; $wpdb->query($sql);
+    $wpdb->query($sql);
 
     $sql = "CREATE TABLE `".$wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME."` (`".CPABC_TDEAPP_DATA_ID."` int(10) unsigned NOT NULL auto_increment,`".CPABC_TDEAPP_DATA_IDCALENDAR."` int(10) unsigned default NULL,`".CPABC_TDEAPP_DATA_DATETIME."`datetime NOT NULL default '0000-00-00 00:00:00',`".CPABC_TDEAPP_DATA_TITLE."` varchar(250) default NULL,`".CPABC_TDEAPP_DATA_DESCRIPTION."` mediumtext,PRIMARY KEY (`".CPABC_TDEAPP_DATA_ID."`)) ;";
     $wpdb->query($sql);
@@ -352,17 +341,17 @@ function cpabc_appointments_filter_edit($atts) {
 function cpabc_appointments_filter_list($atts) {
     global $wpdb;
     extract( shortcode_atts( array(
-        'calendar' => '',
-        'user' => '',
-        'group' => 'no',
-        'fields' => 'DATE,TIME,NAME',
-        'from' => "today",
-        'to' => "today +30 days",
-    ), $atts ) );
+		'calendar' => '',
+		'user' => '',
+		'group' => 'no',
+		'fields' => 'DATE,TIME,NAME',
+		'from' => "today",
+		'to' => "today +30 days",
+	), $atts ) );
 
-    $from = date("Y-m-d 00:00:00", strtotime($from));
-    $to = date("Y-m-d 23:59:59", strtotime($to));
-    $group = strtolower($group);
+	$from = date("Y-m-d 00:00:00", strtotime($from));
+	$to = date("Y-m-d 23:59:59", strtotime($to));
+	$group = strtolower($group);
 
     if ($calendar != '')
         define ('CPABC_CALENDAR_FIXED_ID', intval($calendar));
@@ -566,7 +555,7 @@ if ( is_admin() ) {
         add_menu_page( 'Appointment Booking Calendar Options', 'Appointment Booking Calendar', 'read', 'cpabc_appointments.php', 'cpabc_appointments_html_post_page' );
 
         add_submenu_page( 'cpabc_appointments.php', 'Manage Calendar', 'Manage Calendar', 'read', "cpabc_appointments",  'cpabc_appointments_html_post_page' );
-        add_submenu_page( 'cpabc_appointments.php', 'Help: Online demo', 'Help: Online demo', 'read', "cpabc_appointments_demo", 'cpabc_appointments_html_post_page' );       
+        add_submenu_page( 'cpabc_appointments.php', 'Help: Online demo', 'Help: Online demo', 'read', "cpabc_appointments_demo", 'cpabc_appointments_html_post_page' );
         add_submenu_page( 'cpabc_appointments.php', 'Upgrade', 'Upgrade', 'read', "cpabc_appointments_upgrade", 'cpabc_appointments_html_post_page' );
 
     }
@@ -702,7 +691,7 @@ function cpabc_export_iCal() {
 /* hook for checking posted data for the admin area */
 
 
-add_action( 'init', 'cpabc_appointments_check_posted_data', 11 );
+add_action( 'plugins_loaded', 'cpabc_appointments_check_posted_data', 11 );
 
 function cpabc_appointments_check_posted_data()
 {
@@ -770,7 +759,7 @@ function cpabc_appointments_check_posted_data()
        )
     {
         $_SESSION['rand_code'] = '';
-        setCookie('rand_code', '', time()+36000,"/");                
+        setCookie('rand_code', '', time()+36000,"/");
         echo 'captchafailed';
         exit;
     }
@@ -845,8 +834,8 @@ function cpabc_appointments_check_posted_data()
     $to = "email";
 
     $_SESSION['rand_code'] = '';
-    setCookie('rand_code', '', time()+36000,"/"); 
-        
+    setCookie('rand_code', '', time()+36000,"/");
+
     // insert into database
     //---------------------------
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_TABLE_NAME, 'quantity', "VARCHAR(25) DEFAULT '1' NOT NULL");
@@ -923,7 +912,7 @@ function cpabc_appointments_user_access_to($calendar) {
     return count($myrows);
 }
 
-add_action( 'init', 'cpabc_appointments_check_IPN_verification', 11 );
+add_action( 'plugins_loaded', 'cpabc_appointments_check_IPN_verification', 11 );
 
 function cpabc_appointments_check_IPN_verification() {
 
@@ -1108,12 +1097,12 @@ function cpabc_appointments_save_options()
     if (!defined('CP_CALENDAR_ID'))
         define ('CP_CALENDAR_ID', intval($_POST["cpabc_item"]));
 
-    if (!wp_verify_nonce( $_REQUEST['_wpnonce'], 'uname_abc' ))    
+    if (!wp_verify_nonce( $_REQUEST['_wpnonce'], 'uname_abc' ))
     {
         echo "Access verification error. Cannot update settings.";
         return;
-    }  
-    
+    }
+
     if ( ! current_user_can('edit_pages') && !cpabc_appointments_user_access_to(CP_CALENDAR_ID) ) // prevent loading coupons from outside admin area
     {
         echo 'No enough privilegies to load this content.';
@@ -1333,10 +1322,10 @@ function cpabc_appointments_export_csv ()
 }
 
 
-add_action( 'init', 'cpabc_appointments_calendar_load', 11 );
-add_action( 'init', 'cpabc_appointments_calendar_load2', 11 );
-add_action( 'init', 'cpabc_appointments_calendar_update', 11 );
-add_action( 'init', 'cpabc_appointments_calendar_update2', 11 );
+add_action( 'plugins_loaded', 'cpabc_appointments_calendar_load', 11 );
+add_action( 'plugins_loaded', 'cpabc_appointments_calendar_load2', 11 );
+add_action( 'plugins_loaded', 'cpabc_appointments_calendar_update', 11 );
+add_action( 'plugins_loaded', 'cpabc_appointments_calendar_update2', 11 );
 
 function cpabc_appointments_calendar_load() {
     global $wpdb;
