@@ -318,10 +318,6 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 
 == Changelog ==
 
-= 1.0 =
-* First stable version released.
-* More configuration options added.
-
 = 1.0.1 =
 * Interface modifications.
 * Compatible with WP 3.6
@@ -450,9 +446,21 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.35 =
 * Added Stripcslashes to post
 
+= 1.1.36 =
+* SQL query optimizations
+
+= 1.1.37 =
+* Fixed bug in calendars list
+
+= 1.1.38 =
+* Old changelogs placed in changelog.txt
+
+= 1.1.39 =
+* Changed init actions to plugins_loaded
+
 == Upgrade Notice ==
 
-= 1.1.35 =
-* Added Stripcslashes to post
+= 1.1.39 =
+* Changed init actions to plugins_loaded
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
