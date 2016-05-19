@@ -166,7 +166,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         </tr>        
         
         <tr valign="top">        
-        <th scope="row">Military time</th>
+        <th scope="row">Military time(24 hours or AM/PM)</th>
         <td>
              <?php $value = cpabc_get_option('calendar_militarytime',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MILITARYTIME); ?>
              <select name="calendar_militarytime">               
