@@ -461,9 +461,12 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.40 =
 * Use of less DB queries
 
+= 1.1.41 =
+* Deleted old versions of the Appointment Booking Calenadr
+
 == Upgrade Notice ==
 
-= 1.1.40 =
-* Use of less DB queries
+= 1.1.41 =
+* Deleted old versions of the Appointment Booking Calenadr
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
