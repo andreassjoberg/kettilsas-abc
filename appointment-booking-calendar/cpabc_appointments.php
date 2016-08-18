@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Appointment Booking Calendar
-Plugin URI: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
+Plugin URI: http://abc.dwbooster.com
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.41
+Version: 1.1.52
 Author: CodePeople.net
 Author URI: http://codepeople.net
 License: GPL
@@ -589,6 +589,7 @@ function cpabc_customAdjustmentsLink($links) {
 function cpabc_appointments_html_post_page() {
     if (isset($_GET["cal"]) && $_GET["cal"] != '')
     {
+        $_GET["cal"] = intval($_GET["cal"]);
         if (isset($_GET["list"]) && $_GET["list"] == '1')
             @include_once dirname( __FILE__ ) . '/cpabc_appointments_admin_int_bookings_list.inc.php';
         else
@@ -634,7 +635,7 @@ function cpabc_export_iCal() {
     header("Content-type: application/octet-stream");
     header("Content-Disposition: attachment; filename=events".date("Y-M-D_H.i.s").".ics");
 
-    define('CPABC_CAL_TIME_ZONE_MODIFY',get_option('CPABC_CAL_TIME_ZONE_MODIFY_SET'," +2 hours"));
+    define('CPABC_CAL_TIME_ZONE_MODIFY',get_option('CPABC_CAL_TIME_ZONE_MODIFY_SET'," +0 hours"));
     define('CPABC_CAL_TIME_SLOT_SIZE'," +".get_option('CPABC_CAL_TIME_SLOT_SIZE_SET',"15")." minutes");
 
     echo "BEGIN:VCALENDAR\n";
@@ -1049,17 +1050,20 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
            $email_content1 = str_replace("%CANCEL%", $cancel_link, $email_content1);
            $email_content2 = str_replace("%CANCEL%", $cancel_link, $email_content2);
 
+           if (!strpos($SYSTEM_EMAIL,">"))
+               $SYSTEM_EMAIL = '"'.$SYSTEM_EMAIL.'" <'.$SYSTEM_EMAIL.'>';
+                
            // SEND EMAIL TO USER
            $replyto = $myrows[0]->email;
            if ('html' == cpabc_get_option('nuser_emailformat', CPABC_APPOINTMENTS_DEFAULT_email_format)) $content_type = "Content-Type: text/html; charset=utf-8\n"; else $content_type = "Content-Type: text/plain; charset=utf-8\n";
            wp_mail($myrows[0]->email, $email_subject1, $email_content1,
-                    "From: \"$SYSTEM_EMAIL\" <".$SYSTEM_EMAIL.">\r\n".
+                    "From: ".$SYSTEM_EMAIL."\r\n".
                     $content_type.
                     "X-Mailer: PHP/" . phpversion());
 
            if ($payer_email && strtolower($payer_email) != strtolower($myrows[0]->email))
                wp_mail($payer_email , $email_subject1, $email_content1,
-                        "From: \"$SYSTEM_EMAIL\" <".$SYSTEM_EMAIL.">\r\n".
+                        "From: ".$SYSTEM_EMAIL."\r\n".
                         $content_type.
                         "X-Mailer: PHP/" . phpversion());
 
@@ -1070,7 +1074,7 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
                 if (trim($item) != '')
                 {
                     wp_mail(trim($item), $email_subject2, $email_content2,
-                        "From: \"$SYSTEM_EMAIL\" <".$SYSTEM_EMAIL.">\r\n".
+                        "From: ".$SYSTEM_EMAIL."\r\n".
                         ($replyto!=''?"Reply-To: \"$replyto\" <".$replyto.">\r\n":'').
                         $content_type.
                         "X-Mailer: PHP/" . phpversion(), $attachments);

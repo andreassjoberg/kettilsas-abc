@@ -500,6 +500,14 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 						wm = ["S&ouml;n", "M&aring;n", "Tis", "Ons", "Tor", "Fre", "L&ouml;r"];
 						wl = ["S&ouml;ndag", "M&aring;ndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "L&ouml;rdag"];
 					break;
+					case "NW":
+						ms = ["Jan","Feb","Mar","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Des"];
+						ml = ["Januar","Februar","Mars","April","Mai","Juni","Juli","August","September","Oktober","November","Desember"];
+						wc = ["D", "M", "T", "O", "T", "F", "L"];
+						ws = ["S&ouml;", "Ma", "Ti", "On", "To", "Fr", "L&ouml;"];
+						wm = ["S&ouml;n", "Man", "Tir", "Ons", "Tor", "Fre", "L&ouml;r"];
+						wl = ["S&ouml;ndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "L&ouml;rdag"];
+					break;					
 					case "TR":
 						ms = ["Oca","&THORN;ub","Mar","Nis","May","Haz","Tem","A&eth;u","Eyl","Eki","Kas","Ara"];
 						ml = ["Ocak","&THORN;ubat","Mart","Nisan","May&yacute;s","Haziran","Temmuz","A&eth;ustos","Eyl&uuml;l","Ekim","Kas&#305;m","Aral&yacute;k"];

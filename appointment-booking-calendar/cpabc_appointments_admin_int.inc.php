@@ -104,6 +104,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                <option value="FR" <?php if ($value == 'FR') echo ' selected="selected"'; ?>>French</option>
                <option value="IT" <?php if ($value == 'IT') echo ' selected="selected"'; ?>>Italian</option>
                <option value="JP" <?php if ($value == 'JP') echo ' selected="selected"'; ?>>Japanese</option>
+               <option value="NW" <?php if ($value == 'NW') echo ' selected="selected"'; ?>>Norwegian</option>
                <option value="PL" <?php if ($value == 'PL') echo ' selected="selected"'; ?>>Polish</option>
                <option value="PT" <?php if ($value == 'PT') echo ' selected="selected"'; ?>>Portuguese</option>
                <option value="RU" <?php if ($value == 'RU') echo ' selected="selected"'; ?>>Russian</option>
@@ -195,7 +196,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <tr valign="top">        
         <th scope="row">Minimum  available date</th>
         <td><input type="text" name="calendar_mindate" size="40" value="<?php echo esc_attr(cpabc_get_option('calendar_mindate',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MINDATE)); ?>" /><br />
-         <em style="font-size:11px;">Examples: 2012-10-25, today, today +3 days</em>
+         <em style="font-size:11px;">Examples: 2012-10-25, today, today +3 days, now +30 hours</em>
         </td>
         </tr>
         
