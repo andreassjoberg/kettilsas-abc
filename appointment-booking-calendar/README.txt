@@ -1,9 +1,9 @@
 === Appointment Booking Calendar ===
 Contributors: codepeople
-Donate link: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
+Donate link: http://abc.dwbooster.com/download
 Tags: booking form,booking calendar,appointment,appointment calendar,page,paypal calendar,plugin,calendar,paypal bookings,paypal appointments,booking,bookings,meeting,meet,scheduler,scheduler calendar,availability,availability calendar,agenda,reservation form,reservation calendar
 Requires at least: 3.0.5
-Tested up to: 4.5
+Tested up to: 4.6
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,7 +40,7 @@ Features:
 * You can block specific dates.
 * Pretty modern administration interface.
 
-Please note that this is a plugin originally designed to accept appointment bookings linked to PayPal payments. The feature for accepting appointments without PayPal is implemented/available in the Pro version: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar#download
+Please note that this is a plugin originally designed to accept appointment bookings linked to PayPal payments. The feature for accepting appointments without PayPal is implemented/available in the commercial versions: http://abc.dwbooster.com/download
 
 = Available Languages and Adding New Languages / Translations = 
 
@@ -128,7 +128,7 @@ To install **Appointment Booking Calendar**, follow these steps:
 
 A: The product's page contains detailed information about each appointment calendar field and customization:
 
-http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
+http://abc.dwbooster.com
 
 
 = Q: How can I center the appointment calendar into the page? =
@@ -304,7 +304,7 @@ The free version published in this WordPress directory is a fully-functional ver
 - Email reminders for the appointments
 - Additional drop-down fields for multiple prices/services
 
-Please note that the pro features aren't advised as part of the free plugin in the description shown in this WordPress directory. If you are interested in more information about the pro features go to the plugin's page: http://wordpress.dwbooster.com/calendars/appointment-booking-calendar
+Please note that the pro features aren't advised as part of the free plugin in the description shown in this WordPress directory. If you are interested in more information about the pro features go to the plugin's page: http://abc.dwbooster.com/download
  
 The Appointment Booking Calendar plugin has recently reached **28,000 installations** and we would like to **thank you all the people** that have supported the development of the plugin with feedback messages or by acquiring the pro / developer versions. We are working in a new set of features for all the distributions of the plugin that will be published soon. 
  
@@ -464,9 +464,42 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.41 =
 * Deleted old versions of the Appointment Booking Calenadr
 
+= 1.1.42 =
+* Timezone difference set to zero
+
+= 1.1.43 =
+* Fix in "from" email address
+
+= 1.1.44 =
+* Fixed issues in previous update
+
+= 1.1.45 =
+* iCal bug fixed
+
+= 1.1.46 =
+* GET params sanitized
+
+= 1.1.47 =
+* From email auto-formatted
+
+= 1.1.48 =
+* Added Norwegian language
+
+= 1.1.49 =
+* New options for mindate
+
+= 1.1.50 =
+* New translations
+
+= 1.1.51 =
+* Compatible with WP 4.6
+
+= 1.1.52 =
+* New website and documentation
+
 == Upgrade Notice ==
 
-= 1.1.41 =
-* Deleted old versions of the Appointment Booking Calenadr
+= 1.1.52 =
+* New website and documentation
 
-Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://wordpress.dwbooster.com/support
+Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://abc.dwbooster.com/contact-us
