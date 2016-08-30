@@ -497,9 +497,15 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.52 =
 * New website and documentation
 
+= 1.1.53 =
+* New doc and support URLs
+
+= 1.1.54 =
+* Fix to the placeholder from email for compatibility with WP 4.6
+
 == Upgrade Notice ==
 
-= 1.1.52 =
-* New website and documentation
+= 1.1.54 =
+* Fix to the placeholder from email for compatibility with WP 4.6
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://abc.dwbooster.com/contact-us

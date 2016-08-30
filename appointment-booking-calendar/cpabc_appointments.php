@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: http://abc.dwbooster.com
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.52
+Version: 1.1.54
 Author: CodePeople.net
 Author URI: http://codepeople.net
 License: GPL
@@ -43,7 +43,7 @@ define('CPABC_APPOINTMENTS_DEFAULT_CALENDAR_PAGES', 1);
 define('CPABC_APPOINTMENTS_DEFAULT_cu_user_email_field', 'email');
 define('CPABC_APPOINTMENTS_DEFAULT_email_format', 'text');
 define('CPABC_APPOINTMENTS_DEFAULT_ENABLE_PAYPAL', 1);
-define('CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL','put_your@email_here.com');
+define('CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL','put_your@email.here.com');
 define('CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME','Consultation');
 define('CPABC_APPOINTMENTS_DEFAULT_COST','25');
 define('CPABC_APPOINTMENTS_DEFAULT_OK_URL',get_site_url());
@@ -575,13 +575,13 @@ function cpabc_settingsLink($links) {
 
 
 function cpabc_helpLink($links) {
-    $help_link = '<a href="http://wordpress.dwbooster.com/calendars/appointment-booking-calendar">'.__('Help','cpabc').'</a>';
+    $help_link = '<a href="http://abc.dwbooster.com">'.__('Help','cpabc').'</a>';
 	array_unshift($links, $help_link);
 	return $links;
 }
 
 function cpabc_customAdjustmentsLink($links) {
-    $customAdjustments_link = '<a href="http://wordpress.dwbooster.com/contact-us">'.__('Request custom changes','cpabc').'</a>';
+    $customAdjustments_link = '<a href="http://abc.dwbooster.com/support">'.__('Request custom changes','cpabc').'</a>';
 	array_unshift($links, $customAdjustments_link);
 	return $links;
 }
@@ -599,12 +599,12 @@ function cpabc_appointments_html_post_page() {
     {
         if (isset($_GET["page"]) &&$_GET["page"] == 'cpabc_appointments_upgrade')
         {
-            echo("Redirecting to upgrade page...<script type='text/javascript'>document.location='http://wordpress.dwbooster.com/calendars/appointment-booking-calendar?ref=upgradelink#download';</script>");
+            echo("Redirecting to upgrade page...<script type='text/javascript'>document.location='http://abc.dwbooster.com/download';</script>");
             exit;
         }
         else if (isset($_GET["page"]) &&$_GET["page"] == 'cpabc_appointments_demo')
         {
-            echo("Redirecting to demo page...<script type='text/javascript'>document.location='http://wordpress.dwbooster.com/calendars/appointment-booking-calendar#demo';</script>");
+            echo("Redirecting to demo page...<script type='text/javascript'>document.location='http://abc.dwbooster.com/home#demos';</script>");
             exit;
         }
         else
