@@ -203,7 +203,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
        <select id="ccformrender" name="ccformrender">
         <option value="1" selected>Use classic predefined form</option>        
        </select><br />
-       <em>* The <strong>Visual Form Builder</strong> is available only in the <a href="http://wordpress.dwbooster.com/calendars/appointment-booking-calendar#download">pro version</a>. To edit the form in this basic version you should manually edit the file 'cpabc_scheduler.inc.php'.</em>
+       <em>* The <strong>Visual Form Builder</strong> is available only in the <a href="http://abc.dwbooster.com/download">pro version</a>. To edit the form in this basic version you should manually edit the file 'cpabc_scheduler.inc.php'.</em>
       
       <br /><br />
           
@@ -253,6 +253,6 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
 </div> 
 
 
-[<a href="http://wordpress.dwbooster.com/contact-us" target="_blank">Request Custom Modifications</a>] | [<a href="http://wordpress.dwbooster.com/calendars/appointment-booking-calendar" target="_blank">Help</a>]
+[<a href="http://abc.dwbooster.com/customization" target="_blank">Request Custom Modifications</a>] | [<a href="http://abc.dwbooster.com/support" target="_blank">Help</a>]
 </form>
 </div>

@@ -129,7 +129,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                <option value="light/" <?php if ($value == 'light/') echo ' selected="selected"'; ?>>Light</option>
                <option value="blue/" <?php if ($value == 'blue/') echo ' selected="selected"'; ?>>Blue</option>
             </select><br />
-            * This will modify the calendar appearance in the public website. For other appearance modifications <a target="_blank" href="http://wordpress.dwbooster.com/faq/appointment-booking-calendar">check the FAQ</a>.
+            * This will modify the calendar appearance in the public website. For other appearance modifications <a target="_blank" href="http://abc.dwbooster.com/faq">check the FAQ</a>.
         </td>
         </tr>        
         
@@ -311,7 +311,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         - The styles can be applied into any of the CSS files of your theme or into the CSS file <em>"appointment-booking-calendar\TDE_AppCalendar\all-css.css"</em>. <br />
         - For further modifications, the submit button is located at the end of the file <em>"<?php if (get_option('CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR',"1") != "1") echo 'cpabc_internal.inc.php'; else echo 'cpabc_scheduler.inc.php'; ?>"</em>.<br />
         <?php if (get_option('CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR',"1") != "1") { ?>
-        - For general CSS styles modifications to the form and samples <a href="http://wordpress.dwbooster.com/faq/appointment-booking-calendar#q113" target="_blank">check this FAQ</a>.
+        - For general CSS styles modifications to the form and samples <a href="http://abc.dwbooster.com/faq" target="_blank">check this FAQ</a>.
         <?php } ?>
         </tr>
      </table>
@@ -326,7 +326,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
     <table class="form-table">
         <tr valign="top">        
         <th scope="row">Enable Paypal Payments?</th>
-        <td><input type="checkbox" readonly disabled name="enable_paypal" size="40" value="1" checked /> <em>The feature for working without PayPal is implemented/available in the <a href="http://wordpress.dwbooster.com/calendars/appointment-booking-calendar#download">pro version</a>.</em>
+        <td><input type="checkbox" readonly disabled name="enable_paypal" size="40" value="1" checked /> <em>The feature for working without PayPal is implemented/available in the <a href="http://abc.dwbooster.com/download">pro version</a>.</em>
         </td>
         </tr>                   
     
@@ -390,7 +390,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <tr valign="top">
         <th scope="row">Discount Codes</th>
         <td> 
-           <em>The -discount codes- feature is available in the <a href="http://wordpress.dwbooster.com/calendars/appointment-booking-calendar#download">pro version</a>.</em>
+           <em>The -discount codes- feature is available in the <a href="http://abc.dwbooster.com/download">pro version</a>.</em>
         </td>
         </tr>  
                    
@@ -546,7 +546,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
      <table class="form-table">    
         <tr valign="top">
         <th scope="row">Enable e-mail reminder?</th>
-        <td><input type="checkbox" name="enable_reminder" disabled readonly size="40" value="1" <?php if (cpabc_get_option('enable_reminder',CPABC_APPOINTMENTS_DEFAULT_ENABLE_REMINDER)) echo 'checked'; ?> /> * This feature is available in the <a href="http://wordpress.dwbooster.com/calendars/appointment-booking-calendar#download">pro version</a>.</td>
+        <td><input type="checkbox" name="enable_reminder" disabled readonly size="40" value="1" <?php if (cpabc_get_option('enable_reminder',CPABC_APPOINTMENTS_DEFAULT_ENABLE_REMINDER)) echo 'checked'; ?> /> * This feature is available in the <a href="http://abc.dwbooster.com/download">pro version</a>.</td>
         </tr>              
         <tr valign="top">
         <th scope="row">Send reminder:</th>        
@@ -587,7 +587,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <?php echo str_replace("\n", "<br />", CPABC_APPOINTMENTS_DEFAULT_EXPLAIN_CP_CAL_CHECKBOXES); ?>
         </th>
         <td>
-            <em>This feature is available only in the <a href="http://wordpress.dwbooster.com/calendars/appointment-booking-calendar#download">pro version</a>.</em>
+            <em>This feature is available only in the <a href="http://abc.dwbooster.com/download">pro version</a>.</em>
         </td>
         </tr>             
      </table>  
@@ -612,7 +612,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"  /></p>
 
 <?php if (!defined('CPABC_CALENDAR_ON_PUBLIC_WEBSITE')) { ?> 
-[<a href="http://wordpress.dwbooster.com/support?product=appointment-booking-calendar&ref=dashboard" target="_blank">Request Custom Modifications</a>] | [<a href="http://wordpress.dwbooster.com/calendars/appointment-booking-calendar" target="_blank">Help</a>]
+[<a href="http://abc.dwbooster.com/customization" target="_blank">Request Custom Modifications</a>] | [<a href="http://abc.dwbooster.com/support" target="_blank">Help</a>]
 <?php } ?>
 
 </form>
