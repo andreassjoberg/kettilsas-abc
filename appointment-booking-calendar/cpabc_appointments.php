@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: http://abc.dwbooster.com
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.54
+Version: 1.1.57
 Author: CodePeople.net
 Author URI: http://codepeople.net
 License: GPL
@@ -1112,11 +1112,11 @@ function cpabc_appointments_save_options()
         echo 'No enough privilegies to load this content.';
         exit;
     }
-
+/**
     foreach ($_POST as $item => $value)
         if (!is_array($value))
             $_POST[$item] = stripcslashes($value);    
-
+*/
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'nuser_emailformat');
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'nadmin_emailformat');
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'nremind_emailformat');
@@ -1254,7 +1254,7 @@ function cpabc_appointments_export_csv ()
 
     $events = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." INNER JOIN ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." ON ".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".appointment_calendar_id=".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.".id LEFT JOIN ".CPABC_APPOINTMENTS_TABLE_NAME." ON ".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".reference=".CPABC_APPOINTMENTS_TABLE_NAME.".id  WHERE 1=1 ".$cond );
 
-    $fields = array("Calendar ID","Calendar Name", "Time");
+    $fields = array("Calendar ID","Calendar", "Time");
     $values = array();
 
     foreach ($events as $item)
@@ -1287,7 +1287,7 @@ function cpabc_appointments_export_csv ()
     }
 
     header("Content-type: application/octet-stream");
-    header("Content-Disposition: attachment; filename=export.csv");
+    header("Content-Disposition: attachment; filename=bookings.csv");
 
     $end = count($fields);
     for ($i=0; $i<$end; $i++)
