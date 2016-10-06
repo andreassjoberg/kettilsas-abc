@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Appointment Booking Calendar
-Plugin URI: http://abc.dwbooster.com
-Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.57
-Author: CodePeople.net
-Author URI: http://codepeople.net
+Plugin Name: Appointment Booking Calendar - Kettilsas Mod
+Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
+Description: Appointment Booking Calendar with modifications for Kettilsas.se
+Version: 3.1.1.57
+Author: Andreas Sjoberg
+Author URI: https://www.andreassjoberg.com/
 License: GPL
 */
 
@@ -147,23 +147,23 @@ function cpabc_plugin_init() {
 add_action('plugins_loaded', 'cpabc_plugin_init');
 
 function cpabc_appointments_install($networkwide)  {
-	global $wpdb;
+    global $wpdb;
 
-	if (function_exists('is_multisite') && is_multisite()) {
-		// check if it is a network activation - if so, run the activation function for each blog id
-		if ($networkwide) {
-	                $old_blog = $wpdb->blogid;
-			// Get all blog ids
-			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
-			foreach ($blogids as $blog_id) {
-				switch_to_blog($blog_id);
-				_cpabc_appointments_install();
-			}
-			switch_to_blog($old_blog);
-			return;
-		}
-	}
-	_cpabc_appointments_install();
+    if (function_exists('is_multisite') && is_multisite()) {
+        // check if it is a network activation - if so, run the activation function for each blog id
+        if ($networkwide) {
+                    $old_blog = $wpdb->blogid;
+            // Get all blog ids
+            $blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+            foreach ($blogids as $blog_id) {
+                switch_to_blog($blog_id);
+                _cpabc_appointments_install();
+            }
+            switch_to_blog($old_blog);
+            return;
+        }
+    }
+    _cpabc_appointments_install();
 }
 
 function _cpabc_appointments_install() {
@@ -292,9 +292,9 @@ function _cpabc_appointments_install() {
 function cpabc_appointments_filter_content($atts) {
     global $wpdb;
     extract( shortcode_atts( array(
-		'calendar' => '',
-		'user' => '',
-	), $atts ) );
+        'calendar' => '',
+        'user' => '',
+    ), $atts ) );
     if ($calendar != '')
         define ('CPABC_CALENDAR_FIXED_ID',intval($calendar));
     else if ($user != '')
@@ -318,12 +318,12 @@ function cpabc_appointments_filter_content($atts) {
 function cpabc_appointments_filter_edit($atts) {
     global $wpdb;
     extract( shortcode_atts( array(
-		'calendar' => '',
-		'user' => '',
-	), $atts ) );
-	$buffered_contents = '';
-	$current_user = wp_get_current_user();
-	$myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." where conwer<>'' AND conwer='".esc_sql($current_user->ID )."'" );
+        'calendar' => '',
+        'user' => '',
+    ), $atts ) );
+    $buffered_contents = '';
+    $current_user = wp_get_current_user();
+    $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." where conwer<>'' AND conwer='".esc_sql($current_user->ID )."'" );
     if (count($myrows))
     {
         if (!defined('CP_CALENDAR_ID'))
@@ -569,21 +569,21 @@ else
 
 function cpabc_settingsLink($links) {
     $settings_link = '<a href="options-general.php?page=cpabc_appointments.php">'.__('Settings','cpabc').'</a>';
-	array_unshift($links, $settings_link);
-	return $links;
+    array_unshift($links, $settings_link);
+    return $links;
 }
 
 
 function cpabc_helpLink($links) {
     $help_link = '<a href="http://abc.dwbooster.com">'.__('Help','cpabc').'</a>';
-	array_unshift($links, $help_link);
-	return $links;
+    array_unshift($links, $help_link);
+    return $links;
 }
 
 function cpabc_customAdjustmentsLink($links) {
     $customAdjustments_link = '<a href="http://abc.dwbooster.com/support">'.__('Request custom changes','cpabc').'</a>';
-	array_unshift($links, $customAdjustments_link);
-	return $links;
+    array_unshift($links, $customAdjustments_link);
+    return $links;
 }
 
 function cpabc_appointments_html_post_page() {
@@ -740,9 +740,9 @@ function cpabc_appointments_check_posted_data()
     }
 
     // if this isn't the expected post and isn't the captcha verification then nothing to do
-	if ( 'POST' != $_SERVER['REQUEST_METHOD'] || ! isset( $_POST['cpabc_appointments_post'] ) )
-		if ( 'GET' != $_SERVER['REQUEST_METHOD'] || !isset( $_GET['hdcaptcha'] ) )
-		    return;
+    if ( 'POST' != $_SERVER['REQUEST_METHOD'] || ! isset( $_POST['cpabc_appointments_post'] ) )
+        if ( 'GET' != $_SERVER['REQUEST_METHOD'] || !isset( $_GET['hdcaptcha'] ) )
+            return;
 
 
     if (function_exists('session_start')) @session_start();
@@ -765,14 +765,14 @@ function cpabc_appointments_check_posted_data()
         exit;
     }
 
-	// if this isn't the real post (it was the captcha verification) then echo ok and exit
+    // if this isn't the real post (it was the captcha verification) then echo ok and exit
     if ( 'POST' != $_SERVER['REQUEST_METHOD'] || ! isset( $_POST['cpabc_appointments_post'] ) )
-	{
-	    if (!isset($_GET["abcc"]))
-	        return;
-	    echo 'ok';
+    {
+        if (!isset($_GET["abcc"]))
+            return;
+        echo 'ok';
         exit;
-	}
+    }
 
     $_SESSION['rand_code'] = '';
 
@@ -865,7 +865,7 @@ function cpabc_appointments_check_posted_data()
             exit;
         }
 
- 	    // save data here
+         // save data here
         $item_number[] = $wpdb->insert_id;
     }
     $item_number = implode(";", $item_number);
@@ -877,9 +877,9 @@ function cpabc_appointments_check_posted_data()
 
 ?>
 <html>
-<head><title>Redirecting to Paypal...</title></head>
+<head><title>Redirecting...</title></head>
 <body>
-<form action="<?php echo $ppurl; ?>" name="ppform3" method="post">
+<form action="<?php echo cpabc_appointment_get_FULL_site_url(); ?>/?cpabc_ipncheck=1&itemnumber=<?php echo $item_number; ?>" name="ppform3" method="post">
 <input type="hidden" name="cmd" value="_xclick" />
 <input type="hidden" name="business" value="<?php echo cpabc_get_option('paypal_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL); ?>" />
 <input type="hidden" name="item_name" value="<?php echo iconv("utf-8","iso-8859-1",cpabc_get_option('paypal_product_name', CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME).(@$_POST["services"]?": ".trim($services_formatted[1]):"")); ?>" />
@@ -908,9 +908,9 @@ document.ppform3.submit();
 
 function cpabc_appointments_user_access_to($calendar) {
     global $wpdb;
-	$current_user = wp_get_current_user();
-	$myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." where id='".$calendar."' AND conwer<>'' AND conwer='".esc_sql($current_user->ID)."'" );
-	return count($myrows);
+    $current_user = wp_get_current_user();
+    $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." where id='".$calendar."' AND conwer<>'' AND conwer='".esc_sql($current_user->ID)."'" );
+    return count($myrows);
 }
 
 add_action( 'plugins_loaded', 'cpabc_appointments_check_IPN_verification', 11 );
@@ -919,8 +919,8 @@ function cpabc_appointments_check_IPN_verification() {
 
     global $wpdb;
 
-	if ( ! isset( $_GET['cpabc_ipncheck'] ) || $_GET['cpabc_ipncheck'] != '1' ||  ! isset( $_GET["itemnumber"] ) )
-		return;
+    if ( ! isset( $_GET['cpabc_ipncheck'] ) || $_GET['cpabc_ipncheck'] != '1' ||  ! isset( $_GET["itemnumber"] ) )
+        return;
 
     $item_name = $_POST['item_name'];
     $payment_status = $_POST['payment_status'];
@@ -933,11 +933,11 @@ function cpabc_appointments_check_IPN_verification() {
 
     /**
     // uncomment the following lines to process echecks only after cleared
-	if ($payment_status != 'Completed' && $payment_type != 'echeck')
-	    return;
+    if ($payment_status != 'Completed' && $payment_type != 'echeck')
+        return;
 
-	if ($payment_type == 'echeck' && $payment_status == 'Completed')
-	    return;
+    if ($payment_type == 'echeck' && $payment_status == 'Completed')
+        return;
     */
     //$wpdb->get_results("ALTER TABLE `wp_cpabc_appointment_calendars_data` CHANGE `reference` `reference` VARCHAR(21)");
     $itemnumber = explode(";",$_GET["itemnumber"]);
@@ -950,7 +950,7 @@ function cpabc_appointments_check_IPN_verification() {
 
     cpabc_process_ready_to_go_appointment($_GET["itemnumber"], $payer_email);
 
-    echo 'OK';
+    header("Location: ".cpabc_get_option('url_ok', CPABC_APPOINTMENTS_DEFAULT_OK_URL));
 
     exit();
 
@@ -1214,7 +1214,7 @@ function cpabc_appointments_save_options()
          'dexcv_font' => $_POST["dexcv_font"],
          'cv_text_enter_valid_captcha' => $_POST['cv_text_enter_valid_captcha'],
          'cp_cal_checkboxes' => @$_POST["cp_cal_checkboxes"]
-	);
+    );
     $wpdb->update ( CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, $data, array( 'id' => CP_CALENDAR_ID ));
 }
 
@@ -1317,8 +1317,8 @@ add_action( 'plugins_loaded', 'cpabc_appointments_calendar_update2', 11 );
 
 function cpabc_appointments_calendar_load() {
     global $wpdb;
-	if ( ! isset( $_GET['cpabc_calendar_load'] ) || $_GET['cpabc_calendar_load'] != '1' )
-		return;
+    if ( ! isset( $_GET['cpabc_calendar_load'] ) || $_GET['cpabc_calendar_load'] != '1' )
+        return;
     //@ob_clean();
     @header("Cache-Control: no-store, no-cache, must-revalidate");
     @header("Pragma: no-cache");
@@ -1362,8 +1362,8 @@ function cpabc_appointments_calendar_load() {
 
 function cpabc_appointments_calendar_load2() {
     global $wpdb;
-	if ( ! isset( $_GET['cpabc_calendar_load2'] ) || $_GET['cpabc_calendar_load2'] != '1' )
-		return;
+    if ( ! isset( $_GET['cpabc_calendar_load2'] ) || $_GET['cpabc_calendar_load2'] != '1' )
+        return;
     //@ob_clean();
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header("Pragma: no-cache");
@@ -1390,8 +1390,8 @@ function cpabc_appointments_calendar_load2() {
 function cpabc_appointments_calendar_update() {
     global $wpdb, $user_ID;
 
-	if ( ! isset( $_GET['cpabc_calendar_update'] ) || $_GET['cpabc_calendar_update'] != '1' )
-		return;
+    if ( ! isset( $_GET['cpabc_calendar_update'] ) || $_GET['cpabc_calendar_update'] != '1' )
+        return;
 
     $calid = intval(str_replace  (CPABC_TDEAPP_CAL_PREFIX, "",$_GET["id"]));
     if ( ! current_user_can('edit_pages') && !cpabc_appointments_user_access_to($calid) )
@@ -1411,8 +1411,8 @@ function cpabc_appointments_calendar_update() {
 function cpabc_appointments_calendar_update2() {
     global $wpdb, $user_ID;
 
-	if ( ! isset( $_GET['cpabc_calendar_update2'] ) || $_GET['cpabc_calendar_update2'] != '1' )
-		return;
+    if ( ! isset( $_GET['cpabc_calendar_update2'] ) || $_GET['cpabc_calendar_update2'] != '1' )
+        return;
 
     $calid = intval(str_replace  (CPABC_TDEAPP_CAL_PREFIX, "",$_GET["id"]));
     if ( ! current_user_can('edit_pages') && !cpabc_appointments_user_access_to($calid) )
@@ -1430,9 +1430,9 @@ function cpabc_appointments_calendar_update2() {
             $data = explode("\n", $_POST["appoiments"]);
             $d1 =  explode(",", $data[0]);
             $d2 =  explode(":", $data[1]);
-	        $datetime = $d1[0]."-".$d1[1]."-".$d1[2]." ".$d2[0].":".$d2[1];
-	        $capacity = $data[2];
-	        $title = $data[3];
+            $datetime = $d1[0]."-".$d1[1]."-".$d1[2]." ".$d2[0].":".$d2[1];
+            $capacity = $data[2];
+            $title = $data[3];
             $description = "";
             for ($j=4;$j<count($data);$j++)
             {
@@ -1447,9 +1447,9 @@ function cpabc_appointments_calendar_update2() {
             $data = explode("\n", $_POST["appoiments"]);
             $d1 =  explode(",", $data[0]);
             $d2 =  explode(":", $data[1]);
-	        $datetime = $d1[0]."-".$d1[1]."-".$d1[2]." ".$d2[0].":".$d2[1];
-	        $capacity = $data[2];
-	        $title = $data[3];
+            $datetime = $d1[0]."-".$d1[1]."-".$d1[2]." ".$d2[0].":".$d2[1];
+            $capacity = $data[2];
+            $title = $data[3];
             $description = "";
             for ($j=4;$j<count($data);$j++)
             {
@@ -1469,7 +1469,7 @@ function cpabc_appointments_calendar_update2() {
 function cpabc_appointment_cleanJSON($str)
 {
     $str = str_replace('&qquot;','"',$str);
-    $str = str_replace('	',' ',$str);
+    $str = str_replace('    ',' ',$str);
     $str = str_replace("\n",'\n',$str);
     $str = str_replace("\r",'',$str);
     return $str;
