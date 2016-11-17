@@ -102,6 +102,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                <option value="DU" <?php if ($value == 'DU') echo ' selected="selected"'; ?>>Dutch</option>
                <option value="EN" <?php if ($value == 'EN') echo ' selected="selected"'; ?>>English</option>
                <option value="FR" <?php if ($value == 'FR') echo ' selected="selected"'; ?>>French</option>
+               <option value="HU" <?php if ($value == 'HU') echo ' selected="selected"'; ?>>Hungarian</option>
                <option value="IT" <?php if ($value == 'IT') echo ' selected="selected"'; ?>>Italian</option>
                <option value="JP" <?php if ($value == 'JP') echo ' selected="selected"'; ?>>Japanese</option>
                <option value="NW" <?php if ($value == 'NW') echo ' selected="selected"'; ?>>Norwegian</option>

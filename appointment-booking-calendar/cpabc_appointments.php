@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: http://abc.dwbooster.com
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.54
+Version: 1.1.62
 Author: CodePeople.net
 Author URI: http://codepeople.net
 License: GPL
@@ -43,7 +43,7 @@ define('CPABC_APPOINTMENTS_DEFAULT_CALENDAR_PAGES', 1);
 define('CPABC_APPOINTMENTS_DEFAULT_cu_user_email_field', 'email');
 define('CPABC_APPOINTMENTS_DEFAULT_email_format', 'text');
 define('CPABC_APPOINTMENTS_DEFAULT_ENABLE_PAYPAL', 1);
-define('CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL','put_your@email.here.com');
+define('CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL','sample@email.com');
 define('CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME','Consultation');
 define('CPABC_APPOINTMENTS_DEFAULT_COST','25');
 define('CPABC_APPOINTMENTS_DEFAULT_OK_URL',get_site_url());
@@ -581,7 +581,7 @@ function cpabc_helpLink($links) {
 }
 
 function cpabc_customAdjustmentsLink($links) {
-    $customAdjustments_link = '<a href="http://abc.dwbooster.com/support">'.__('Request custom changes','cpabc').'</a>';
+    $customAdjustments_link = '<a href="http://abc.dwbooster.com/download">'.__('Upgrade To Premium','cpabc').'</a>';
 	array_unshift($links, $customAdjustments_link);
 	return $links;
 }
@@ -938,8 +938,7 @@ function cpabc_appointments_check_IPN_verification() {
 
 	if ($payment_type == 'echeck' && $payment_status == 'Completed')
 	    return;
-    */
-    //$wpdb->get_results("ALTER TABLE `wp_cpabc_appointment_calendars_data` CHANGE `reference` `reference` VARCHAR(21)");
+    */    
     $itemnumber = explode(";",$_GET["itemnumber"]);
     $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." WHERE reference='".intval($itemnumber[0])."'" );
     if (count($myrows))
@@ -1112,11 +1111,12 @@ function cpabc_appointments_save_options()
         echo 'No enough privilegies to load this content.';
         exit;
     }
-
-    foreach ($_POST as $item => $value)
-        if (!is_array($value))
-            $_POST[$item] = stripcslashes($value);    
-
+/**
+    if (get_magic_quotes_gpc())
+        foreach ($_POST as $item => $value)
+            if (!is_array($value))
+                $_POST[$item] = stripcslashes($value);    
+*/
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'nuser_emailformat');
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'nadmin_emailformat');
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'nremind_emailformat');
@@ -1254,7 +1254,7 @@ function cpabc_appointments_export_csv ()
 
     $events = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." INNER JOIN ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." ON ".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".appointment_calendar_id=".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.".id LEFT JOIN ".CPABC_APPOINTMENTS_TABLE_NAME." ON ".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".reference=".CPABC_APPOINTMENTS_TABLE_NAME.".id  WHERE 1=1 ".$cond );
 
-    $fields = array("Calendar ID","Calendar Name", "Time");
+    $fields = array("Calendar ID","Calendar", "Time");
     $values = array();
 
     foreach ($events as $item)
@@ -1287,7 +1287,7 @@ function cpabc_appointments_export_csv ()
     }
 
     header("Content-type: application/octet-stream");
-    header("Content-Disposition: attachment; filename=export.csv");
+    header("Content-Disposition: attachment; filename=bookings.csv");
 
     $end = count($fields);
     for ($i=0; $i<$end; $i++)
@@ -1319,7 +1319,7 @@ function cpabc_appointments_calendar_load() {
     global $wpdb;
 	if ( ! isset( $_GET['cpabc_calendar_load'] ) || $_GET['cpabc_calendar_load'] != '1' )
 		return;
-    //@ob_clean();
+
     @header("Cache-Control: no-store, no-cache, must-revalidate");
     @header("Pragma: no-cache");
     $calid = str_replace  (CPABC_TDEAPP_CAL_PREFIX, "",$_GET["id"]);
@@ -1399,7 +1399,6 @@ function cpabc_appointments_calendar_update() {
 
     cpabc_appointments_add_field_verify(CPABC_TDEAPP_CONFIG, 'specialDates');
 
-    //@ob_clean();
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header("Pragma: no-cache");
     if ( $user_ID )
@@ -1418,7 +1417,6 @@ function cpabc_appointments_calendar_update2() {
     if ( ! current_user_can('edit_pages') && !cpabc_appointments_user_access_to($calid) )
         return;
 
-    //@ob_clean();
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header("Pragma: no-cache");
     if ( $user_ID )

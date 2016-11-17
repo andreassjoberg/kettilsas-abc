@@ -110,7 +110,7 @@ If you want to add a new translation you can add a new PO/MO file into the "lang
 
 = Updates =
 
-New features has been published in the current Appointment Booking Calendar version 1.1.8 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over 55,000 downloads/installations (6000+ active installs) and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
+New features has been published in the current Appointment Booking Calendar version 1.1.8 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over 125,000 downloads/installations (6000+ active installs) and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
 
 == Installation ==
 
@@ -503,9 +503,33 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.54 =
 * Fix to the placeholder from email for compatibility with WP 4.6
 
+= 1.1.55 =
+* Modified POST processing
+
+= 1.1.56 =
+* Updates to export feature
+
+= 1.1.57 =
+* Fixed magic quotes issue
+
+= 1.1.58 =
+* Misc code improvements
+
+= 1.1.59 =
+* Interface update
+
+= 1.1.60 =
+* Update to Hungarian language
+
+= 1.1.61 =
+* Update to French language
+
+= 1.1.62 =
+* Replaced default placeholder email
+
 == Upgrade Notice ==
 
-= 1.1.54 =
-* Fix to the placeholder from email for compatibility with WP 4.6
+= 1.1.62 =
+* Replaced default placeholder email
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://abc.dwbooster.com/contact-us
