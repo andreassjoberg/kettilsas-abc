@@ -444,6 +444,14 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 						wm = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "S&aacute;b"];
 						wl = ["Domingo", "Seg", "Ter", "Quarta", "Qui", "Sex", "S&aacute;bado"];
 					break;
+					case "HU":
+						ms = ["Jan","Feb","M&aacute;r","&Aacute;pr","M&aacute;j","J&uacute;n","J&uacute;l","Aug","Sze","Okt","Nov","Dec"];
+						ml = ["Janu&aacute;r","Febru&aacute;r","M&aacute;rcius","&Aacute;prilis","M&aacute;jus","J&uacute;nius","J&uacute;lius","Augusztus","Szeptember","Okt&oacute;ber","November","December"];
+						wc = ["V","H","K","S","C","P","S"];
+						ws = ["Va","H&eacute;","Ke","Sz","Cs","P&eacute;","Sz"];
+						wm = ["Vas","H&eacute;t","Ked","Sze","Cs&ouml;","P&eacute;n","Szo"];
+						wl = ["Vasárnap","H&eacute;tfo","Kedd","Szerda","Cs&ouml;törtök","P&eacute;ntek","Szombat"];
+					break;					
 					case "JP":
 						ms = ["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"];
 						ml = ["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"];
