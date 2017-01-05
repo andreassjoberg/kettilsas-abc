@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: http://abc.dwbooster.com
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.1.54
+Version: 1.1.74
 Author: CodePeople.net
 Author URI: http://codepeople.net
 License: GPL
@@ -43,7 +43,7 @@ define('CPABC_APPOINTMENTS_DEFAULT_CALENDAR_PAGES', 1);
 define('CPABC_APPOINTMENTS_DEFAULT_cu_user_email_field', 'email');
 define('CPABC_APPOINTMENTS_DEFAULT_email_format', 'text');
 define('CPABC_APPOINTMENTS_DEFAULT_ENABLE_PAYPAL', 1);
-define('CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL','put_your@email.here.com');
+define('CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL','sample@email.com');
 define('CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME','Consultation');
 define('CPABC_APPOINTMENTS_DEFAULT_COST','25');
 define('CPABC_APPOINTMENTS_DEFAULT_OK_URL',get_site_url());
@@ -104,6 +104,8 @@ define("CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES4","timeWorkingDates4");
 define("CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES5","timeWorkingDates5");
 define("CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES6","timeWorkingDates6");
 define("CPABC_TDEAPP_CALDELETED_FIELD","caldeleted");
+
+define('CPABC_TDEAPP_CALENDAR_STEP2_VRFY', false);
 
 define("CPABC_TDEAPP_CALENDAR_DATA_TABLE",CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME);
 define("CPABC_TDEAPP_DATA_ID","id");
@@ -193,7 +195,7 @@ function _cpabc_appointments_install() {
          email VARCHAR(250) DEFAULT '' NOT NULL,
          phone VARCHAR(250) DEFAULT '' NOT NULL,
          question mediumtext,
-         quantity VARCHAR(25) DEFAULT '1' NOT NULL,
+         quantity VARCHAR(30) DEFAULT '1' NOT NULL,
          buffered_date text,
          UNIQUE KEY id (id)
          );";
@@ -231,7 +233,7 @@ function _cpabc_appointments_install() {
     "`max_slots` VARCHAR(10) DEFAULT '' NOT NULL, ".
     "`close_fpanel` VARCHAR(10) DEFAULT '' NOT NULL, ".
     "`quantity_field` VARCHAR(10) DEFAULT '' NOT NULL, ".
-    "`paypal_mode` VARCHAR(10) DEFAULT '' NOT NULL, ".
+    "`paypal_mode` VARCHAR(20) DEFAULT '' NOT NULL, ".
     "`enable_paypal` text, ".
     "`paypal_email` text, ".
     "`request_cost` text, ".
@@ -346,7 +348,7 @@ function cpabc_appointments_filter_list($atts) {
 		'group' => 'no',
 		'fields' => 'DATE,TIME,NAME',
 		'from' => "today",
-		'to' => "today +30 days",
+		'to' => "today +90 days",
 	), $atts ) );
 
 	$from = date("Y-m-d 00:00:00", strtotime($from));
@@ -581,7 +583,7 @@ function cpabc_helpLink($links) {
 }
 
 function cpabc_customAdjustmentsLink($links) {
-    $customAdjustments_link = '<a href="http://abc.dwbooster.com/support">'.__('Request custom changes','cpabc').'</a>';
+    $customAdjustments_link = '<a href="http://abc.dwbooster.com/download">'.__('Upgrade To Premium','cpabc').'</a>';
 	array_unshift($links, $customAdjustments_link);
 	return $links;
 }
@@ -861,6 +863,7 @@ function cpabc_appointments_check_posted_data()
         {
             echo 'Error saving data! Please try again.';
             echo '<br /><br />Error debug information: '.mysql_error();
+            echo '<br /><br />If the error persists  please be sure you are using the latest version and in that case contact support service at http://abc.dwbooster.com/contact-us?debug=db';
             $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX."` ADD `booked_time_unformatted` text;"; $wpdb->query($sql);
             exit;
         }
@@ -882,7 +885,7 @@ function cpabc_appointments_check_posted_data()
 <form action="<?php echo $ppurl; ?>" name="ppform3" method="post">
 <input type="hidden" name="cmd" value="_xclick" />
 <input type="hidden" name="business" value="<?php echo cpabc_get_option('paypal_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL); ?>" />
-<input type="hidden" name="item_name" value="<?php echo iconv("utf-8","iso-8859-1",cpabc_get_option('paypal_product_name', CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME).(@$_POST["services"]?": ".trim($services_formatted[1]):"")); ?>" />
+<input type="hidden" name="item_name" value="<?php echo cpabc_get_option('paypal_product_name', CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME).(@$_POST["services"]?": ".trim($services_formatted[1]):""); ?>" />
 <!--<input type="hidden" name="item_number" value="<?php echo $item_number; ?>" />-->
 <input type="hidden" name="amount" value="<?php echo $price; ?>" />
 <input type="hidden" name="page_style" value="Primary" />
@@ -895,7 +898,6 @@ function cpabc_appointments_check_posted_data()
 <input type="hidden" name="bn" value="NetFactorSL_SI_Custom" />
 <input type="hidden" name="notify_url" value="<?php echo cpabc_appointment_get_FULL_site_url(); ?>/?cpabc_ipncheck=1&itemnumber=<?php echo $item_number; ?>" />
 <input type="hidden" name="ipn_test" value="1" />
-<input class="pbutton" type="hidden" value="Buy Now" />
 </form>
 <script type="text/javascript">
 document.ppform3.submit();
@@ -931,15 +933,15 @@ function cpabc_appointments_check_IPN_verification() {
     $payer_email = $_POST['payer_email'];
     $payment_type = $_POST['payment_type'];
 
-    /**
-    // uncomment the following lines to process echecks only after cleared
-	if ($payment_status != 'Completed' && $payment_type != 'echeck')
-	    return;
+    if (CPABC_TDEAPP_CALENDAR_STEP2_VRFY)
+    {
+	    if ($payment_status != 'Completed' && $payment_type != 'echeck')
+	        return;
 
-	if ($payment_type == 'echeck' && $payment_status == 'Completed')
-	    return;
-    */
-    //$wpdb->get_results("ALTER TABLE `wp_cpabc_appointment_calendars_data` CHANGE `reference` `reference` VARCHAR(21)");
+	    if ($payment_type == 'echeck' && $payment_status == 'Completed')
+    	    return;
+    }
+    
     $itemnumber = explode(";",$_GET["itemnumber"]);
     $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." WHERE reference='".intval($itemnumber[0])."'" );
     if (count($myrows))
@@ -974,7 +976,7 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
 
    cpabc_appointments_add_field_verify(CPABC_TDEAPP_CALENDAR_DATA_TABLE, 'quantity', "VARCHAR(25) DEFAULT '1' NOT NULL");
    cpabc_appointments_add_field_verify(CPABC_TDEAPP_CALENDAR_DATA_TABLE, 'reminder', "VARCHAR(1) DEFAULT '' NOT NULL");
-   cpabc_appointments_add_field_verify(CPABC_TDEAPP_CALENDAR_DATA_TABLE, 'reference', "VARCHAR(20) DEFAULT '' NOT NULL");
+   cpabc_appointments_add_field_verify(CPABC_TDEAPP_CALENDAR_DATA_TABLE, 'reference', "VARCHAR(30) DEFAULT '' NOT NULL");
 
    $itemnumber = explode(";",$itemnumber);
    $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_TABLE_NAME." WHERE id=".intval($itemnumber[0]) );
@@ -1112,11 +1114,12 @@ function cpabc_appointments_save_options()
         echo 'No enough privilegies to load this content.';
         exit;
     }
-
-    foreach ($_POST as $item => $value)
-        if (!is_array($value))
-            $_POST[$item] = stripcslashes($value);    
-
+/**
+    if (get_magic_quotes_gpc())
+        foreach ($_POST as $item => $value)
+            if (!is_array($value))
+                $_POST[$item] = stripcslashes($value);    
+*/
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'nuser_emailformat');
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'nadmin_emailformat');
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'nremind_emailformat');
@@ -1254,7 +1257,7 @@ function cpabc_appointments_export_csv ()
 
     $events = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." INNER JOIN ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." ON ".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".appointment_calendar_id=".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.".id LEFT JOIN ".CPABC_APPOINTMENTS_TABLE_NAME." ON ".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".reference=".CPABC_APPOINTMENTS_TABLE_NAME.".id  WHERE 1=1 ".$cond );
 
-    $fields = array("Calendar ID","Calendar Name", "Time");
+    $fields = array("Calendar ID","Calendar", "Time");
     $values = array();
 
     foreach ($events as $item)
@@ -1287,7 +1290,7 @@ function cpabc_appointments_export_csv ()
     }
 
     header("Content-type: application/octet-stream");
-    header("Content-Disposition: attachment; filename=export.csv");
+    header("Content-Disposition: attachment; filename=bookings.csv");
 
     $end = count($fields);
     for ($i=0; $i<$end; $i++)
@@ -1319,7 +1322,7 @@ function cpabc_appointments_calendar_load() {
     global $wpdb;
 	if ( ! isset( $_GET['cpabc_calendar_load'] ) || $_GET['cpabc_calendar_load'] != '1' )
 		return;
-    //@ob_clean();
+
     @header("Cache-Control: no-store, no-cache, must-revalidate");
     @header("Pragma: no-cache");
     $calid = str_replace  (CPABC_TDEAPP_CAL_PREFIX, "",$_GET["id"]);
@@ -1399,7 +1402,6 @@ function cpabc_appointments_calendar_update() {
 
     cpabc_appointments_add_field_verify(CPABC_TDEAPP_CONFIG, 'specialDates');
 
-    //@ob_clean();
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header("Pragma: no-cache");
     if ( $user_ID )
@@ -1418,7 +1420,6 @@ function cpabc_appointments_calendar_update2() {
     if ( ! current_user_can('edit_pages') && !cpabc_appointments_user_access_to($calid) )
         return;
 
-    //@ob_clean();
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header("Pragma: no-cache");
     if ( $user_ID )

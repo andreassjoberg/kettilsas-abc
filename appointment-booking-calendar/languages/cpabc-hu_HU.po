@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app book cal\n"
 "POT-Creation-Date: 2013-04-19 10:48+0100\n"
-"PO-Revision-Date: 2014-12-07 22:40+0100\n"
+"PO-Revision-Date: 2016-10-27 15:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;_e\n"
-"X-Poedit-Basepath: C:\\TORRE_F\\WorkII\\Developers4Web\\DWBooster.wordpress"
-"\\components\\Appointment Booking Calendar\\pro-version\\appointment-booking-"
-"calendar\\\n"
+"X-Poedit-Basepath: C:/TORRE_F/WorkII/Developers4Web/DWBooster.wordpress/"
+"components/Appointment Booking Calendar/pro-version/appointment-booking-"
+"calendar\n"
 "Language: hu_HU\n"
 "X-Poedit-SearchPath-0: .\n"
 
@@ -37,7 +37,7 @@ msgstr "Naptár"
 # RevTran=Select the date and time
 #: cpabc_internal.inc.php:12 cpabc_scheduler.inc.php:10
 msgid "Select date and time"
-msgstr "Válassza ki a dátum és az idő"
+msgstr "x"
 
 # RevTran=Please select the date and time
 #: cpabc_internal.inc.php:24 cpabc_scheduler.inc.php:37
