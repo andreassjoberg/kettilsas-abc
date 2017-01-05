@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.1.62
+Version: 3.1.1.74
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -105,6 +105,8 @@ define("CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES5","timeWorkingDates5");
 define("CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES6","timeWorkingDates6");
 define("CPABC_TDEAPP_CALDELETED_FIELD","caldeleted");
 
+define('CPABC_TDEAPP_CALENDAR_STEP2_VRFY', false);
+
 define("CPABC_TDEAPP_CALENDAR_DATA_TABLE",CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME);
 define("CPABC_TDEAPP_DATA_ID","id");
 define("CPABC_TDEAPP_DATA_IDCALENDAR","appointment_calendar_id");
@@ -193,7 +195,7 @@ function _cpabc_appointments_install() {
          email VARCHAR(250) DEFAULT '' NOT NULL,
          phone VARCHAR(250) DEFAULT '' NOT NULL,
          question mediumtext,
-         quantity VARCHAR(25) DEFAULT '1' NOT NULL,
+         quantity VARCHAR(30) DEFAULT '1' NOT NULL,
          buffered_date text,
          UNIQUE KEY id (id)
          );";
@@ -231,7 +233,7 @@ function _cpabc_appointments_install() {
     "`max_slots` VARCHAR(10) DEFAULT '' NOT NULL, ".
     "`close_fpanel` VARCHAR(10) DEFAULT '' NOT NULL, ".
     "`quantity_field` VARCHAR(10) DEFAULT '' NOT NULL, ".
-    "`paypal_mode` VARCHAR(10) DEFAULT '' NOT NULL, ".
+    "`paypal_mode` VARCHAR(20) DEFAULT '' NOT NULL, ".
     "`enable_paypal` text, ".
     "`paypal_email` text, ".
     "`request_cost` text, ".
@@ -346,7 +348,7 @@ function cpabc_appointments_filter_list($atts) {
 		'group' => 'no',
 		'fields' => 'DATE,TIME,NAME',
 		'from' => "today",
-		'to' => "today +30 days",
+		'to' => "today +90 days",
 	), $atts ) );
 
 	$from = date("Y-m-d 00:00:00", strtotime($from));
@@ -861,6 +863,7 @@ function cpabc_appointments_check_posted_data()
         {
             echo 'Error saving data! Please try again.';
             echo '<br /><br />Error debug information: '.mysql_error();
+            echo '<br /><br />If the error persists  please be sure you are using the latest version and in that case contact support service at http://abc.dwbooster.com/contact-us?debug=db';
             $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX."` ADD `booked_time_unformatted` text;"; $wpdb->query($sql);
             exit;
         }
@@ -882,7 +885,7 @@ function cpabc_appointments_check_posted_data()
 <form action="<?php echo cpabc_appointment_get_FULL_site_url(); ?>/?cpabc_ipncheck=1&itemnumber=<?php echo $item_number; ?>" name="ppform3" method="post">
 <input type="hidden" name="cmd" value="_xclick" />
 <input type="hidden" name="business" value="<?php echo cpabc_get_option('paypal_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL); ?>" />
-<input type="hidden" name="item_name" value="<?php echo iconv("utf-8","iso-8859-1",cpabc_get_option('paypal_product_name', CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME).(@$_POST["services"]?": ".trim($services_formatted[1]):"")); ?>" />
+<input type="hidden" name="item_name" value="<?php echo cpabc_get_option('paypal_product_name', CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME).(@$_POST["services"]?": ".trim($services_formatted[1]):""); ?>" />
 <!--<input type="hidden" name="item_number" value="<?php echo $item_number; ?>" />-->
 <input type="hidden" name="amount" value="<?php echo $price; ?>" />
 <input type="hidden" name="page_style" value="Primary" />
@@ -895,7 +898,6 @@ function cpabc_appointments_check_posted_data()
 <input type="hidden" name="bn" value="NetFactorSL_SI_Custom" />
 <input type="hidden" name="notify_url" value="<?php echo cpabc_appointment_get_FULL_site_url(); ?>/?cpabc_ipncheck=1&itemnumber=<?php echo $item_number; ?>" />
 <input type="hidden" name="ipn_test" value="1" />
-<input class="pbutton" type="hidden" value="Buy Now" />
 </form>
 <script type="text/javascript">
 document.ppform3.submit();
@@ -931,14 +933,16 @@ function cpabc_appointments_check_IPN_verification() {
     $payer_email = $_POST['payer_email'];
     $payment_type = $_POST['payment_type'];
 
-    /**
-    // uncomment the following lines to process echecks only after cleared
-    if ($payment_status != 'Completed' && $payment_type != 'echeck')
-        return;
+	
+    //if (CPABC_TDEAPP_CALENDAR_STEP2_VRFY)
+    //{
+	//    if ($payment_status != 'Completed' && $payment_type != 'echeck')
+	//        return;
 
-    if ($payment_type == 'echeck' && $payment_status == 'Completed')
-        return;
-    */    
+	//    if ($payment_type == 'echeck' && $payment_status == 'Completed')
+    //	    return;
+    //}
+    
     $itemnumber = explode(";",$_GET["itemnumber"]);
     $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE." WHERE reference='".intval($itemnumber[0])."'" );
     if (count($myrows))
@@ -973,7 +977,7 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
 
    cpabc_appointments_add_field_verify(CPABC_TDEAPP_CALENDAR_DATA_TABLE, 'quantity', "VARCHAR(25) DEFAULT '1' NOT NULL");
    cpabc_appointments_add_field_verify(CPABC_TDEAPP_CALENDAR_DATA_TABLE, 'reminder', "VARCHAR(1) DEFAULT '' NOT NULL");
-   cpabc_appointments_add_field_verify(CPABC_TDEAPP_CALENDAR_DATA_TABLE, 'reference', "VARCHAR(20) DEFAULT '' NOT NULL");
+   cpabc_appointments_add_field_verify(CPABC_TDEAPP_CALENDAR_DATA_TABLE, 'reference', "VARCHAR(30) DEFAULT '' NOT NULL");
 
    $itemnumber = explode(";",$itemnumber);
    $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_TABLE_NAME." WHERE id=".intval($itemnumber[0]) );
@@ -1317,8 +1321,8 @@ add_action( 'plugins_loaded', 'cpabc_appointments_calendar_update2', 11 );
 
 function cpabc_appointments_calendar_load() {
     global $wpdb;
-    if ( ! isset( $_GET['cpabc_calendar_load'] ) || $_GET['cpabc_calendar_load'] != '1' )
-        return;
+	if ( ! isset( $_GET['cpabc_calendar_load'] ) || $_GET['cpabc_calendar_load'] != '1' )
+		return;
 
     @header("Cache-Control: no-store, no-cache, must-revalidate");
     @header("Pragma: no-cache");

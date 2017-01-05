@@ -105,6 +105,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                <option value="HU" <?php if ($value == 'HU') echo ' selected="selected"'; ?>>Hungarian</option>
                <option value="IT" <?php if ($value == 'IT') echo ' selected="selected"'; ?>>Italian</option>
                <option value="JP" <?php if ($value == 'JP') echo ' selected="selected"'; ?>>Japanese</option>
+               <option value="KR" <?php if ($value == 'KR') echo ' selected="selected"'; ?>>Korean</option>
                <option value="NW" <?php if ($value == 'NW') echo ' selected="selected"'; ?>>Norwegian</option>
                <option value="PL" <?php if ($value == 'PL') echo ' selected="selected"'; ?>>Polish</option>
                <option value="PT" <?php if ($value == 'PT') echo ' selected="selected"'; ?>>Portuguese</option>
@@ -613,7 +614,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"  /></p>
 
 <?php if (!defined('CPABC_CALENDAR_ON_PUBLIC_WEBSITE')) { ?> 
-[<a href="http://abc.dwbooster.com/customization" target="_blank">Request Custom Modifications</a>] | [<a href="http://abc.dwbooster.com/support" target="_blank">Help</a>]
+[<a href="http://abc.dwbooster.com/customization" target="_blank">Request Custom Modifications</a>] | [<a href="http://abc.dwbooster.com/support?go=doc" target="_blank">Help</a>]
 <?php } ?>
 
 </form>

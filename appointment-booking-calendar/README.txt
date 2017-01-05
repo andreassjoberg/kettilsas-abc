@@ -3,7 +3,7 @@ Contributors: codepeople
 Donate link: http://abc.dwbooster.com/download
 Tags: booking form,booking calendar,appointment,appointment calendar,page,paypal calendar,plugin,calendar,paypal bookings,paypal appointments,booking,bookings,meeting,meet,scheduler,scheduler calendar,availability,availability calendar,agenda,reservation form,reservation calendar
 Requires at least: 3.0.5
-Tested up to: 4.6
+Tested up to: 4.7
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -110,7 +110,7 @@ If you want to add a new translation you can add a new PO/MO file into the "lang
 
 = Updates =
 
-New features has been published in the current Appointment Booking Calendar version 1.1.8 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over 125,000 downloads/installations (6000+ active installs) and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
+New features has been published in the current Appointment Booking Calendar version 1.1.8 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over 140,000 downloads/installations (6000+ active installs) and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
 
 == Installation ==
 
@@ -527,9 +527,45 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.62 =
 * Replaced default placeholder email
 
+= 1.1.63 =
+* Better support tracking
+
+= 1.1.64 =
+* Database updates
+
+= 1.1.65 =
+* PayPal IPN improvements
+
+= 1.1.66 =
+* Added korean calendar
+
+= 1.1.67 =
+* List option updated
+
+= 1.1.68 =
+* Compatible with WP 4.7
+
+= 1.1.69 =
+* Removed use of iconv
+
+= 1.1.70 =
+* PayPal integration improvement
+
+= 1.1.71 =
+* Instructions update
+
+= 1.1.72 =
+* Database fix
+
+= 1.1.73 =
+* New support page
+
+= 1.1.74 =
+* DB update
+
 == Upgrade Notice ==
 
-= 1.1.62 =
-* Replaced default placeholder email
+= 1.1.74 =
+* DB update
 
 Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://abc.dwbooster.com/contact-us
