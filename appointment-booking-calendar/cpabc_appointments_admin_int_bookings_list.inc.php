@@ -7,30 +7,30 @@ if ( !is_admin() )
 }
 
 if (!defined('CP_CALENDAR_ID'))
-    define ('CP_CALENDAR_ID',intval($_GET["cal"]));
+    define ('CP_CALENDAR_ID', 1);
 
 global $wpdb;
 
 $message = "";
 
-$records_per_page = 25;                                                                                  
+$records_per_page = 50;                                                                                  
 
 
 if (isset($_GET['delmark']) && $_GET['delmark'] != '')
 {
     for ($i=0; $i<=$records_per_page; $i++)
     if (isset($_GET['c'.$i]) && $_GET['c'.$i] != '')   
-        $wpdb->query('DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE id='.intval($_GET['c'.$i]));       
+        $wpdb->query( $wpdb->prepare('DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE id=%d', $_GET['c'.$i])  );       
     $message = "Marked items deleted";
 }
 else if (isset($_GET['ld']) && $_GET['ld'] != '')
 {
-    $wpdb->query('DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE id='.intval($_GET['ld']));       
+    $wpdb->query( $wpdb->prepare('DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE id=%d', $_GET['ld']) );       
     $message = "Item deleted";
 } 
 else if (isset($_GET['del']) && $_GET['del'] == 'all')
-{    
-    $wpdb->query('DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE appointment_calendar_id='.intval(CP_CALENDAR_ID));           
+{        
+    $wpdb->query( $wpdb->prepare( 'DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE appointment_calendar_id=%d', CP_CALENDAR_ID ) );           
     $message = "All items deleted";
 }
 
@@ -69,7 +69,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
  }
  function do_dexapp_deleteall()
  {
-    if (confirm('Are you sure that you want to delete ALL bookings for this calendar?'))
+    if (confirm('Are you sure that you want to delete ALL bookings for this calendar? Note: This action cannot be undone.'))
     {        
         document.location = 'admin.php?page=cpabc_appointments.php&cal=<?php echo intval($_GET["cal"]); ?>&list=1&del=all&r='+Math.random();
     }    
@@ -127,26 +127,26 @@ echo paginate_links(  array(
  <input type="hidden" name="cal" value="<?php echo intval($_GET["cal"]); ?>" />
  <input type="hidden" name="list" value="1" />
  <input type="hidden" name="delmark" value="1" />
-<table class="wp-list-table widefat fixed pages" cellspacing="0">
+<table class="wp-list-table widefat fixed pages" cellspacing="0" width="100%"> 
 	<thead>
 	<tr>
-	  <th width="30"></th>
+	  <th width="30"  class="cpnopr"></th>
 	  <th style="padding-left:7px;font-weight:bold;">Date</th>
 	  <th style="padding-left:7px;font-weight:bold;">Title</th>
 	  <th style="padding-left:7px;font-weight:bold;">Description</th>
 	  <th style="padding-left:7px;font-weight:bold;">Quantity</th>
-	  <th style="padding-left:7px;font-weight:bold;">Options</th>
+	  <th class="cpnopr" style="padding-left:7px;font-weight:bold;">Options</th>
 	</tr>
 	</thead>
 	<tbody id="the-list">
 	 <?php for ($i=($current_page-1)*$records_per_page; $i<$current_page*$records_per_page; $i++) if (isset($events[$i])) { ?>
 	  <tr class='<?php if (!($i%2)) { ?>alternate <?php } ?>author-self status-draft format-default iedit' valign="top">
-	    <td width="1%"><input type="checkbox" name="c<?php echo $i-($current_page-1)*$records_per_page; ?>" value="<?php echo $events[$i]->id; ?>" /></td>
+	    <td width="1%"  class="cpnopr"><input type="checkbox" name="c<?php echo $i-($current_page-1)*$records_per_page; ?>" value="<?php echo $events[$i]->id; ?>" /></td>
 		<td><?php echo substr($events[$i]->datatime,0,16); ?></td>
 		<td><?php echo str_replace('<','&lt;',$events[$i]->title); ?></td>
 		<td><?php echo str_replace('--br />','<br />',str_replace('<','&lt;',str_replace('<br />','--br />',$events[$i]->description))); ?></td>
 		<td><?php echo $events[$i]->quantity; ?></td>
-		<td>
+		<td class="cpnopr">
 		  <input type="button" name="caldelete_<?php echo $events[$i]->id; ?>" value="Delete" onclick="cp_deleteMessageItem(<?php echo $events[$i]->id; ?>);" />                             
 		</td>		
       </tr>
@@ -170,7 +170,7 @@ echo paginate_links(  array(
  function do_dexapp_print()
  {
       w=window.open();
-      w.document.write("<style>table{border:2px solid black;width:100%;}th{border-bottom:2px solid black;text-align:left}td{padding-left:10px;border-bottom:1px solid black;}</style>"+document.getElementById('cpabc_printable_contents').innerHTML);
+      w.document.write("<style>.cpnopr{display:none;};table{border:2px solid black;width:100%;}th{border-bottom:2px solid black;text-align:left}td{padding-left:10px;border-bottom:1px solid black;}</style>"+document.getElementById('cpabc_printable_contents').innerHTML);
       w.print();     
  }
  function do_dexapp_deletemarked()

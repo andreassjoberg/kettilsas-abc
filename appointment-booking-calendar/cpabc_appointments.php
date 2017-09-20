@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.1.74
+Version: 3.1.2.22
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -44,7 +44,7 @@ define('CPABC_APPOINTMENTS_DEFAULT_cu_user_email_field', 'email');
 define('CPABC_APPOINTMENTS_DEFAULT_email_format', 'text');
 define('CPABC_APPOINTMENTS_DEFAULT_ENABLE_PAYPAL', 1);
 define('CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL','sample@email.com');
-define('CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME','Consultation');
+define('CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME','Appointment');
 define('CPABC_APPOINTMENTS_DEFAULT_COST','25');
 define('CPABC_APPOINTMENTS_DEFAULT_OK_URL',get_site_url());
 define('CPABC_APPOINTMENTS_DEFAULT_CANCEL_URL',get_site_url());
@@ -149,23 +149,23 @@ function cpabc_plugin_init() {
 add_action('plugins_loaded', 'cpabc_plugin_init');
 
 function cpabc_appointments_install($networkwide)  {
-    global $wpdb;
+	global $wpdb;
 
-    if (function_exists('is_multisite') && is_multisite()) {
-        // check if it is a network activation - if so, run the activation function for each blog id
-        if ($networkwide) {
-                    $old_blog = $wpdb->blogid;
-            // Get all blog ids
-            $blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
-            foreach ($blogids as $blog_id) {
-                switch_to_blog($blog_id);
-                _cpabc_appointments_install();
-            }
-            switch_to_blog($old_blog);
-            return;
-        }
-    }
-    _cpabc_appointments_install();
+	if (function_exists('is_multisite') && is_multisite()) {
+		// check if it is a network activation - if so, run the activation function for each blog id
+		if ($networkwide) {
+	                $old_blog = $wpdb->blogid;
+			// Get all blog ids
+			$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			foreach ($blogids as $blog_id) {
+				switch_to_blog($blog_id);
+				_cpabc_appointments_install();
+			}
+			switch_to_blog($old_blog);
+			return;
+		}
+	}
+	_cpabc_appointments_install();
 }
 
 function _cpabc_appointments_install() {
@@ -208,8 +208,8 @@ function _cpabc_appointments_install() {
     $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME."` ADD (".
     "`conwer` INT NOT NULL, ".
     "`form_structure` mediumtext, ".
-    "`specialDates` text, ".
-    "`vs_use_validation` VARCHAR(10) DEFAULT '' NOT NULL, ".
+    "`specialDates` mediumtext, ".
+    "`vs_use_validation` VARCHAR(20) DEFAULT '' NOT NULL, ".
     "`vs_text_is_required` VARCHAR(250) DEFAULT '' NOT NULL, ".
     "`vs_text_is_email` VARCHAR(250) DEFAULT '' NOT NULL, ".
     "`vs_text_datemmddyyyy` VARCHAR(250) DEFAULT '' NOT NULL, ".
@@ -273,9 +273,10 @@ function _cpabc_appointments_install() {
 
     $wpdb->query($sql);
 
-    $sql = "CREATE TABLE `".$wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME."` (`".CPABC_TDEAPP_DATA_ID."` int(10) unsigned NOT NULL auto_increment,`".CPABC_TDEAPP_DATA_IDCALENDAR."` int(10) unsigned default NULL,`".CPABC_TDEAPP_DATA_DATETIME."`datetime NOT NULL default '0000-00-00 00:00:00',`".CPABC_TDEAPP_DATA_TITLE."` varchar(250) default NULL,`".CPABC_TDEAPP_DATA_DESCRIPTION."` mediumtext,PRIMARY KEY (`".CPABC_TDEAPP_DATA_ID."`)) ;";
+    $sql = "CREATE TABLE `".$wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX."` (`".CPABC_TDEAPP_DATA_ID."` int(10) unsigned NOT NULL auto_increment,`".CPABC_TDEAPP_DATA_IDCALENDAR."` int(10) unsigned default NULL,`".CPABC_TDEAPP_DATA_DATETIME."`datetime NOT NULL default '0000-00-00 00:00:00',`".CPABC_TDEAPP_DATA_TITLE."` varchar(250) default NULL,`".CPABC_TDEAPP_DATA_DESCRIPTION."` mediumtext,PRIMARY KEY (`".CPABC_TDEAPP_DATA_ID."`)) ;";
     $wpdb->query($sql);
 
+    $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX."` ADD `description_customer` text DEFAULT '' NOT NULL;"; $wpdb->query($sql);
     $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX."` ADD `reminder` VARCHAR(1) DEFAULT '' NOT NULL;"; $wpdb->query($sql);
     $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX."` ADD `reference` VARCHAR(20) DEFAULT '' NOT NULL;"; $wpdb->query($sql);
     $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX."` ADD `quantity` VARCHAR(25) DEFAULT '1' NOT NULL;"; $wpdb->query($sql);
@@ -294,9 +295,9 @@ function _cpabc_appointments_install() {
 function cpabc_appointments_filter_content($atts) {
     global $wpdb;
     extract( shortcode_atts( array(
-        'calendar' => '',
-        'user' => '',
-    ), $atts ) );
+		'calendar' => '',
+		'user' => '',
+	), $atts ) );
     if ($calendar != '')
         define ('CPABC_CALENDAR_FIXED_ID',intval($calendar));
     else if ($user != '')
@@ -320,12 +321,12 @@ function cpabc_appointments_filter_content($atts) {
 function cpabc_appointments_filter_edit($atts) {
     global $wpdb;
     extract( shortcode_atts( array(
-        'calendar' => '',
-        'user' => '',
-    ), $atts ) );
-    $buffered_contents = '';
-    $current_user = wp_get_current_user();
-    $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." where conwer<>'' AND conwer='".esc_sql($current_user->ID )."'" );
+		'calendar' => '',
+		'user' => '',
+	), $atts ) );
+	$buffered_contents = '';
+	$current_user = wp_get_current_user();
+	$myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." where conwer<>'' AND conwer='".esc_sql($current_user->ID )."'" );
     if (count($myrows))
     {
         if (!defined('CP_CALENDAR_ID'))
@@ -571,21 +572,21 @@ else
 
 function cpabc_settingsLink($links) {
     $settings_link = '<a href="options-general.php?page=cpabc_appointments.php">'.__('Settings','cpabc').'</a>';
-    array_unshift($links, $settings_link);
-    return $links;
+	array_unshift($links, $settings_link);
+	return $links;
 }
 
 
 function cpabc_helpLink($links) {
-    $help_link = '<a href="http://abc.dwbooster.com">'.__('Help','cpabc').'</a>';
-    array_unshift($links, $help_link);
-    return $links;
+    $help_link = '<a href="https://abc.dwbooster.com/support">'.__('Help','cpabc').'</a>';
+	array_unshift($links, $help_link);
+	return $links;
 }
 
 function cpabc_customAdjustmentsLink($links) {
-    $customAdjustments_link = '<a href="http://abc.dwbooster.com/download">'.__('Upgrade To Premium','cpabc').'</a>';
-    array_unshift($links, $customAdjustments_link);
-    return $links;
+    $customAdjustments_link = '<a href="https://abc.dwbooster.com/download">'.__('Upgrade To Premium','cpabc').'</a>';
+	array_unshift($links, $customAdjustments_link);
+	return $links;
 }
 
 function cpabc_appointments_html_post_page() {
@@ -601,12 +602,12 @@ function cpabc_appointments_html_post_page() {
     {
         if (isset($_GET["page"]) &&$_GET["page"] == 'cpabc_appointments_upgrade')
         {
-            echo("Redirecting to upgrade page...<script type='text/javascript'>document.location='http://abc.dwbooster.com/download';</script>");
+            echo("Redirecting to upgrade page...<script type='text/javascript'>document.location='https://abc.dwbooster.com/download';</script>");
             exit;
         }
         else if (isset($_GET["page"]) &&$_GET["page"] == 'cpabc_appointments_demo')
         {
-            echo("Redirecting to demo page...<script type='text/javascript'>document.location='http://abc.dwbooster.com/home#demos';</script>");
+            echo("Redirecting to demo page...<script type='text/javascript'>document.location='https://abc.dwbooster.com/home#demos';</script>");
             exit;
         }
         else
@@ -627,6 +628,11 @@ function set_cpabc_apps_insert_adminScripts($hook) {
         wp_enqueue_script( 'jquery-ui-datepicker' );
 
         wp_enqueue_style('jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+
+        wp_enqueue_style('cpabc-allstyle', plugins_url('TDE_AppCalendar/all-css.css', __FILE__));
+        wp_enqueue_style('cpabc-sestyle', plugins_url('TDE_AppCalendar/simpleeditor.css', __FILE__));
+        wp_enqueue_style('cpabc-tbstyle', plugins_url('TDE_AppCalendar/tabview.css', __FILE__));
+        
     }
     if( 'post.php' != $hook  && 'post-new.php' != $hook )
         return;
@@ -742,9 +748,9 @@ function cpabc_appointments_check_posted_data()
     }
 
     // if this isn't the expected post and isn't the captcha verification then nothing to do
-    if ( 'POST' != $_SERVER['REQUEST_METHOD'] || ! isset( $_POST['cpabc_appointments_post'] ) )
-        if ( 'GET' != $_SERVER['REQUEST_METHOD'] || !isset( $_GET['hdcaptcha'] ) )
-            return;
+	if ( 'POST' != $_SERVER['REQUEST_METHOD'] || ! isset( $_POST['cpabc_appointments_post'] ) )
+		if ( 'GET' != $_SERVER['REQUEST_METHOD'] || !isset( $_GET['hdcaptcha'] ) )
+		    return;
 
 
     if (function_exists('session_start')) @session_start();
@@ -767,14 +773,14 @@ function cpabc_appointments_check_posted_data()
         exit;
     }
 
-    // if this isn't the real post (it was the captcha verification) then echo ok and exit
+	// if this isn't the real post (it was the captcha verification) then echo ok and exit
     if ( 'POST' != $_SERVER['REQUEST_METHOD'] || ! isset( $_POST['cpabc_appointments_post'] ) )
-    {
-        if (!isset($_GET["abcc"]))
-            return;
-        echo 'ok';
+	{
+	    if (!isset($_GET["abcc"]))
+	        return;
+	    echo 'ok';
         exit;
-    }
+	}
 
     $_SESSION['rand_code'] = '';
 
@@ -843,6 +849,8 @@ function cpabc_appointments_check_posted_data()
     //---------------------------
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_TABLE_NAME, 'quantity', "VARCHAR(25) DEFAULT '1' NOT NULL");
 
+    if (date("Y",strtotime($_POST["dateAndTime"][0])) == "1970") // if this is spam, skip
+        return;
 
     for ($n=0; $n<count($_POST["dateAndTime"]); $n++)
     {
@@ -862,13 +870,12 @@ function cpabc_appointments_check_posted_data()
         if (!$rows_affected)
         {
             echo 'Error saving data! Please try again.';
-            echo '<br /><br />Error debug information: '.mysql_error();
-            echo '<br /><br />If the error persists  please be sure you are using the latest version and in that case contact support service at http://abc.dwbooster.com/contact-us?debug=db';
+            echo '<br /><br />If the error persists  please be sure you are using the latest version and in that case contact support service at https://abc.dwbooster.com/contact-us?debug=db';
             $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX."` ADD `booked_time_unformatted` text;"; $wpdb->query($sql);
             exit;
         }
 
-         // save data here
+ 	    // save data here
         $item_number[] = $wpdb->insert_id;
     }
     $item_number = implode(";", $item_number);
@@ -882,22 +889,20 @@ function cpabc_appointments_check_posted_data()
 <html>
 <head><title>Redirecting...</title></head>
 <body>
-<form action="<?php echo cpabc_appointment_get_FULL_site_url(); ?>/?cpabc_ipncheck=1&itemnumber=<?php echo $item_number; ?>" name="ppform3" method="post">
+<form action="<?php echo cpabc_appointment_get_FULL_site_url(); ?>/?cpabc_ipncheck=<?php echo $item_number; ?>" name="ppform3" method="post">
 <input type="hidden" name="cmd" value="_xclick" />
-<input type="hidden" name="business" value="<?php echo cpabc_get_option('paypal_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL); ?>" />
+<input type="hidden" name="business" value="<?php echo trim(cpabc_get_option('paypal_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL)); ?>" />
 <input type="hidden" name="item_name" value="<?php echo cpabc_get_option('paypal_product_name', CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME).(@$_POST["services"]?": ".trim($services_formatted[1]):""); ?>" />
-<!--<input type="hidden" name="item_number" value="<?php echo $item_number; ?>" />-->
-<input type="hidden" name="amount" value="<?php echo $price; ?>" />
+<input type="hidden" name="custom" value="<?php echo $item_number; ?>" />
+<input type="hidden" name="amount" value="<?php echo floatval($price); ?>" />
 <input type="hidden" name="page_style" value="Primary" />
 <input type="hidden" name="no_shipping" value="1" />
-<input type="hidden" name="return" value="<?php echo cpabc_get_option('url_ok', CPABC_APPOINTMENTS_DEFAULT_OK_URL); ?>">
-<input type="hidden" name="cancel_return" value="<?php echo cpabc_get_option('url_cancel', CPABC_APPOINTMENTS_DEFAULT_CANCEL_URL); ?>" />
-<input type="hidden" name="no_note" value="1" />
-<input type="hidden" name="currency_code" value="<?php echo strtoupper(cpabc_get_option('currency', CPABC_APPOINTMENTS_DEFAULT_CURRENCY)); ?>" />
+<input type="hidden" name="return" value="<?php echo esc_url(trim(cpabc_get_option('url_ok', CPABC_APPOINTMENTS_DEFAULT_OK_URL))); ?>">
+<input type="hidden" name="cancel_return" value="<?php echo esc_url(cpabc_get_option('url_cancel', CPABC_APPOINTMENTS_DEFAULT_CANCEL_URL)); ?>" />
+<input type="hidden" name="currency_code" value="<?php echo cpabc_appointments_clean_currency(cpabc_get_option('currency', CPABC_APPOINTMENTS_DEFAULT_CURRENCY)); ?>" />
 <input type="hidden" name="lc" value="<?php echo cpabc_get_option('paypal_language', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_LANGUAGE); ?>" />
 <input type="hidden" name="bn" value="NetFactorSL_SI_Custom" />
-<input type="hidden" name="notify_url" value="<?php echo cpabc_appointment_get_FULL_site_url(); ?>/?cpabc_ipncheck=1&itemnumber=<?php echo $item_number; ?>" />
-<input type="hidden" name="ipn_test" value="1" />
+<input type="hidden" name="notify_url" value="<?php echo cpabc_appointment_get_FULL_site_url(); ?>/?cpabc_ipncheck=<?php echo $item_number; ?>" />
 </form>
 <script type="text/javascript">
 document.ppform3.submit();
@@ -908,11 +913,28 @@ document.ppform3.submit();
         exit();
 }
 
+
+function cpabc_appointments_clean_currency($currency)
+{
+	$currency = trim(strtoupper($currency));
+	if ($currency == 'GPB')
+		return 'GBP';
+	else if ($currency == 'CDN')
+		return 'CAD';
+	else if ($currency == '$')
+		return 'USD';
+	else if ($currency == 'MXP')
+		return 'MXN';
+	else
+		return $currency;
+}
+
+
 function cpabc_appointments_user_access_to($calendar) {
     global $wpdb;
-    $current_user = wp_get_current_user();
-    $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." where id='".$calendar."' AND conwer<>'' AND conwer='".esc_sql($current_user->ID)."'" );
-    return count($myrows);
+	$current_user = wp_get_current_user();
+	$myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." where id='".$calendar."' AND conwer<>'' AND conwer='".esc_sql($current_user->ID)."'" );
+	return count($myrows);
 }
 
 add_action( 'plugins_loaded', 'cpabc_appointments_check_IPN_verification', 11 );
@@ -921,8 +943,10 @@ function cpabc_appointments_check_IPN_verification() {
 
     global $wpdb;
 
-    if ( ! isset( $_GET['cpabc_ipncheck'] ) || $_GET['cpabc_ipncheck'] != '1' ||  ! isset( $_GET["itemnumber"] ) )
-        return;
+	if ( ! isset( $_GET['cpabc_ipncheck'] ) || $_GET['cpabc_ipncheck'] == '' )
+		return;
+		
+    $_GET["itemnumber"] = $_GET['cpabc_ipncheck'];
 
     $item_name = $_POST['item_name'];
     $payment_status = $_POST['payment_status'];
@@ -1218,7 +1242,7 @@ function cpabc_appointments_save_options()
          'dexcv_font' => $_POST["dexcv_font"],
          'cv_text_enter_valid_captcha' => $_POST['cv_text_enter_valid_captcha'],
          'cp_cal_checkboxes' => @$_POST["cp_cal_checkboxes"]
-    );
+	);
     $wpdb->update ( CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, $data, array( 'id' => CP_CALENDAR_ID ));
 }
 
@@ -1366,9 +1390,8 @@ function cpabc_appointments_calendar_load() {
 
 function cpabc_appointments_calendar_load2() {
     global $wpdb;
-    if ( ! isset( $_GET['cpabc_calendar_load2'] ) || $_GET['cpabc_calendar_load2'] != '1' )
-        return;
-    //@ob_clean();
+	if ( ! isset( $_GET['cpabc_calendar_load2'] ) || $_GET['cpabc_calendar_load2'] != '1' )
+		return;
     header("Cache-Control: no-store, no-cache, must-revalidate");
     header("Pragma: no-cache");
     $calid = str_replace  (CPABC_TDEAPP_CAL_PREFIX, "",$_GET["id"]);
@@ -1394,8 +1417,8 @@ function cpabc_appointments_calendar_load2() {
 function cpabc_appointments_calendar_update() {
     global $wpdb, $user_ID;
 
-    if ( ! isset( $_GET['cpabc_calendar_update'] ) || $_GET['cpabc_calendar_update'] != '1' )
-        return;
+	if ( ! isset( $_GET['cpabc_calendar_update'] ) || $_GET['cpabc_calendar_update'] != '1' )
+		return;
 
     $calid = intval(str_replace  (CPABC_TDEAPP_CAL_PREFIX, "",$_GET["id"]));
     if ( ! current_user_can('edit_pages') && !cpabc_appointments_user_access_to($calid) )
@@ -1414,8 +1437,8 @@ function cpabc_appointments_calendar_update() {
 function cpabc_appointments_calendar_update2() {
     global $wpdb, $user_ID;
 
-    if ( ! isset( $_GET['cpabc_calendar_update2'] ) || $_GET['cpabc_calendar_update2'] != '1' )
-        return;
+	if ( ! isset( $_GET['cpabc_calendar_update2'] ) || $_GET['cpabc_calendar_update2'] != '1' )
+		return;
 
     $calid = intval(str_replace  (CPABC_TDEAPP_CAL_PREFIX, "",$_GET["id"]));
     if ( ! current_user_can('edit_pages') && !cpabc_appointments_user_access_to($calid) )
@@ -1432,9 +1455,9 @@ function cpabc_appointments_calendar_update2() {
             $data = explode("\n", $_POST["appoiments"]);
             $d1 =  explode(",", $data[0]);
             $d2 =  explode(":", $data[1]);
-            $datetime = $d1[0]."-".$d1[1]."-".$d1[2]." ".$d2[0].":".$d2[1];
-            $capacity = $data[2];
-            $title = $data[3];
+	        $datetime = $d1[0]."-".$d1[1]."-".$d1[2]." ".$d2[0].":".$d2[1];
+	        $capacity = $data[2];
+	        $title = $data[3];
             $description = "";
             for ($j=4;$j<count($data);$j++)
             {
@@ -1449,9 +1472,9 @@ function cpabc_appointments_calendar_update2() {
             $data = explode("\n", $_POST["appoiments"]);
             $d1 =  explode(",", $data[0]);
             $d2 =  explode(":", $data[1]);
-            $datetime = $d1[0]."-".$d1[1]."-".$d1[2]." ".$d2[0].":".$d2[1];
-            $capacity = $data[2];
-            $title = $data[3];
+	        $datetime = $d1[0]."-".$d1[1]."-".$d1[2]." ".$d2[0].":".$d2[1];
+	        $capacity = $data[2];
+	        $title = $data[3];
             $description = "";
             for ($j=4;$j<count($data);$j++)
             {
@@ -1471,7 +1494,7 @@ function cpabc_appointments_calendar_update2() {
 function cpabc_appointment_cleanJSON($str)
 {
     $str = str_replace('&qquot;','"',$str);
-    $str = str_replace('    ',' ',$str);
+    $str = str_replace('	',' ',$str);
     $str = str_replace("\n",'\n',$str);
     $str = str_replace("\r",'',$str);
     return $str;
@@ -1506,8 +1529,6 @@ function cpabc_appointment_get_FULL_site_url($admin = false)
     $pos = strpos($url, "://");
     if ($pos === false)
         $url = 'http://'.$_SERVER["HTTP_HOST"].$url;
-//    if (!empty($_SERVER['HTTPS']))
-//        $url = str_replace("http://","https://",$url);
     return $url;
 }
 

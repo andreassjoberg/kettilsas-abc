@@ -1297,7 +1297,7 @@ YAHOO.TDE.tabView.weekdaytag = function(day,calendarId) {
 	}
 	selectN = function(name){
 		var str = '<select name="'+name+'" id="'+name+'">';
-		for (var i=2;i<51;i++)
+		for (var i=2;i<99;i++)
 			str += '<option value="'+i+'">'+i+'</option>';
 		str += '</select>';
 		return str;
@@ -1567,7 +1567,7 @@ function createRemark(id_in, title_in, body_in, context_in, closeOnMouseOut){
 	var hdwr = YAHOO.TDE.panel.panels;
 	
 		hdwr[id_in] = [];
-		hdwr[id_in][0] = new YAHOO.widget.SimpleDialog(id_in, { width:'408px',modal:true,visible:true, draggable:true, close:true,
+		hdwr[id_in][0] = new YAHOO.widget.SimpleDialog(id_in, { width:'308px',modal:true,visible:true, draggable:true, close:true,
 											constraintoviewport:true, context:[context_in, 'tl', 'bl'], underlay:'shadow',
 											effect:{effect:eval(YAHOO.widget.ContainerEffect.FADE),duration:0.1}} );
 		hdwr[id_in][0].setHeader("<div class='tl'></div><span>"+title_in+"<span><div class='tr'></div>");

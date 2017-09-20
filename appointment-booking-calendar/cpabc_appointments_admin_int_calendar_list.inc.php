@@ -16,7 +16,7 @@ if (isset($_GET['u']) && $_GET['u'] != '')
         $message = "Access verification error. Cannot update settings.";
     else
     {
-        $wpdb->query('UPDATE `'.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` SET conwer='.intval($_GET["owner"]).',`'.CPABC_TDEAPP_CONFIG_USER.'`="'.esc_sql($_GET["name"]).'" WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`='.intval($_GET['u']));           
+        $wpdb->query( $wpdb->prepare( 'UPDATE `'.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` SET conwer=%d,`'.CPABC_TDEAPP_CONFIG_USER.'`=%s WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`=%d', $_GET["owner"], $_GET["name"], $_GET['u'] ) );           
         $message = "Item updated";        
     }    
 }
@@ -64,11 +64,6 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
 <h1>Appointment Booking Calendar</h1>
 
 <script type="text/javascript">
- function cp_addItem()
- {
-    var calname = document.getElementById("cp_itemname").value;
-    document.location = 'admin.php?page=cpabc_appointments.php&_wpnonce=<?php echo $nonce_un; ?>&a=1&r='+Math.random()+'&name='+encodeURIComponent(calname);       
- }
  
  function cp_updateItem(id)
  {
@@ -84,22 +79,9 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
     document.location = 'admin.php?page=cpabc_appointments.php&cal='+id+'&r='+Math.random();
  }
  
- function cp_cloneItem(id)
- {
-    document.location = 'admin.php?page=cpabc_appointments.php&c='+id+'&r='+Math.random();  
- }  
- 
  function cp_BookingsList(id)
  {
     document.location = 'admin.php?page=cpabc_appointments.php&cal='+id+'&list=1&r='+Math.random();
- }
- 
- function cp_deleteItem(id)
- {
-    if (confirm('Are you sure that you want to delete this item?'))
-    {        
-        document.location = 'admin.php?page=cpabc_appointments.php&d='+id+'&r='+Math.random();
-    }
  }
  
  function cp_updateConfig()
@@ -159,7 +141,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
         </td>
     <?php }  ?>
        
-    <td nowrap><a href="<?php get_site_url(); ?>?cpabc_app=calfeed&id=<?php echo $item->id; ?>&verify=<?php echo substr(md5($item->id.$_SERVER["DOCUMENT_ROOT"]),0,10); ?>">iCal Feed</a></td>
+    <td nowrap><a href="<?php echo get_site_url(false); ?>?cpabc_app=calfeed&id=<?php echo $item->id; ?>&verify=<?php echo substr(md5($item->id.$_SERVER["DOCUMENT_ROOT"]),0,10); ?>">iCal Feed</a></td>
     <td nowrap>&nbsp; &nbsp; 
                              <?php if (cpabc_appointment_is_administrator()) { ?> 
                                <input style="font-size:11px;" type="button" name="calupdate_<?php echo $item->id; ?>" value="Update" onclick="cp_updateItem(<?php echo $item->id; ?>);" /> &nbsp; 
@@ -203,7 +185,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
        <select id="ccformrender" name="ccformrender">
         <option value="1" selected>Use classic predefined form</option>        
        </select><br />
-       <em>* The <strong>Visual Form Builder</strong> is available only in the <a href="http://abc.dwbooster.com/download">pro version</a>. To edit the form in this basic version you should manually edit the file 'cpabc_scheduler.inc.php'.</em>
+       <em>* The <strong>Visual Form Builder</strong> is available only in the <a href="https://abc.dwbooster.com/download">pro version</a>. To edit the form in this basic version you should manually edit the file 'cpabc_scheduler.inc.php'.</em>
       
       <br /><br />
           
@@ -231,11 +213,11 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
         <option value="<?php $text = " ".($i<0?"":"+").$i." hours"; echo urlencode($text); ?>" <?php if (get_option('CPABC_CAL_TIME_ZONE_MODIFY_SET'," +2 hours") == $text) echo ' selected'; ?>><?php echo $text; ?></option>
         <?php } ?>
        </select><br />
-       <em>* Update this, if needed, to match the desired timezone. The difference is calculated referred to the server time.</em>
+       <em>* Update this, if needed, to match the desired timezone. The difference is calculated referred to the server time. Current server time is <?php echo date("Y-m-d H:i"); ?></em>
        
        <br /><br />
        iCal timeslot size in minutes:<br />
-        <input type="text" size="2" name="icaltimeslotsize" id="icaltimeslotsize" value="<?php echo get_option('CPABC_CAL_TIME_SLOT_SIZE_SET',"15"); ?>" /> minutes
+        <input type="text" size="2" name="icaltimeslotsize" id="icaltimeslotsize" value="<?php echo get_option('CPABC_CAL_TIME_SLOT_SIZE_SET',"10"); ?>" /> minutes
         <br />
        <em>* Update this, if needed, to have a specific slot time in the exported iCal file.</em>
       
@@ -253,6 +235,6 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
 </div> 
 
 
-[<a href="http://abc.dwbooster.com/customization" target="_blank">Request Custom Modifications</a>] | [<a href="http://abc.dwbooster.com/support" target="_blank">Help</a>]
+[<a href="https://wordpress.org/support/plugin/appointment-booking-calendar#new-post" target="_blank">Support</a>] | [<a href="https://abc.dwbooster.com/support?ref=callist" target="_blank">Documentation</a>]
 </form>
 </div>
