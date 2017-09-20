@@ -1,18 +1,18 @@
 === Appointment Booking Calendar ===
 Contributors: codepeople
-Donate link: http://abc.dwbooster.com/download
-Tags: booking form,booking calendar,appointment,appointment calendar,page,paypal calendar,plugin,calendar,paypal bookings,paypal appointments,booking,bookings,meeting,meet,scheduler,scheduler calendar,availability,availability calendar,agenda,reservation form,reservation calendar
+Donate link: https://abc.dwbooster.com/download
+Tags: appointment,booking,calendar,appointment calendar,booking calendar,booking form,paypal calendar,plugin,paypal bookings,paypal appointments,bookings,meeting,meet,scheduler,scheduler calendar,availability,availability calendar,agenda,reservation form,reservation calendar
 Requires at least: 3.0.5
-Tested up to: 4.6
+Tested up to: 4.8
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Appointment Booking Calendar allows you to accept online bookings from a set of available time-slots in a calendar.
+Appointment Booking Calendar is an appointment calendar for accepting online bookings from a set of available time-slots in a calendar.
 
 == Description ==
 
-Appointment Booking Calendar is a plugin for **accepting online bookings** from a set of **available time-slots in a calendar**. The booking form is linked to a **PayPal** payment process.
+Appointment Booking Calendar is an appointment calendar plugin for **accepting online bookings** from a set of **available time-slots in a calendar**. The booking form is linked to a **PayPal** payment process.
 
 You can use it to accept bookings for medical consultation, classrooms, events, transportation and other activities where a specific time from a defined set must be selected, allowing you to define the maximum number of bookings that can be accepted for each time-slot.
 
@@ -40,7 +40,7 @@ Features:
 * You can block specific dates.
 * Pretty modern administration interface.
 
-Please note that this is a plugin originally designed to accept appointment bookings linked to PayPal payments. The feature for accepting appointments without PayPal is implemented/available in the commercial versions: http://abc.dwbooster.com/download
+Please note that this is a plugin originally designed to accept appointment bookings linked to PayPal payments. The feature for accepting appointments without PayPal is implemented/available in the commercial versions: https://abc.dwbooster.com/download
 
 = Available Languages and Adding New Languages / Translations = 
 
@@ -110,7 +110,7 @@ If you want to add a new translation you can add a new PO/MO file into the "lang
 
 = Updates =
 
-New features has been published in the current Appointment Booking Calendar version 1.1.8 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over 55,000 downloads/installations (6000+ active installs) and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
+New features has been published in the current Appointment Booking Calendar version 1.1.8 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over 140,000 downloads/installations (6000+ active installs) and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
 
 == Installation ==
 
@@ -128,7 +128,7 @@ To install **Appointment Booking Calendar**, follow these steps:
 
 A: The product's page contains detailed information about each appointment calendar field and customization:
 
-http://abc.dwbooster.com
+https://abc.dwbooster.com
 
 
 = Q: How can I center the appointment calendar into the page? =
@@ -304,7 +304,7 @@ The free version published in this WordPress directory is a fully-functional ver
 - Email reminders for the appointments
 - Additional drop-down fields for multiple prices/services
 
-Please note that the pro features aren't advised as part of the free plugin in the description shown in this WordPress directory. If you are interested in more information about the pro features go to the plugin's page: http://abc.dwbooster.com/download
+Please note that the pro features aren't advised as part of the free plugin in the description shown in this WordPress directory. If you are interested in more information about the pro features go to the plugin's page: https://abc.dwbooster.com/download
  
 The Appointment Booking Calendar plugin has recently reached **28,000 installations** and we would like to **thank you all the people** that have supported the development of the plugin with feedback messages or by acquiring the pro / developer versions. We are working in a new set of features for all the distributions of the plugin that will be published soon. 
  
@@ -503,9 +503,179 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.1.54 =
 * Fix to the placeholder from email for compatibility with WP 4.6
 
+= 1.1.55 =
+* Modified POST processing
+
+= 1.1.56 =
+* Updates to export feature
+
+= 1.1.57 =
+* Fixed magic quotes issue
+
+= 1.1.58 =
+* Misc code improvements
+
+= 1.1.59 =
+* Interface update
+
+= 1.1.60 =
+* Update to Hungarian language
+
+= 1.1.61 =
+* Update to French language
+
+= 1.1.62 =
+* Replaced default placeholder email
+
+= 1.1.63 =
+* Better support tracking
+
+= 1.1.64 =
+* Database updates
+
+= 1.1.65 =
+* PayPal IPN improvements
+
+= 1.1.66 =
+* Added korean calendar
+
+= 1.1.67 =
+* List option updated
+
+= 1.1.68 =
+* Compatible with WP 4.7
+
+= 1.1.69 =
+* Removed use of iconv
+
+= 1.1.70 =
+* PayPal integration improvement
+
+= 1.1.71 =
+* Instructions update
+
+= 1.1.72 =
+* Database fix
+
+= 1.1.73 =
+* New support page
+
+= 1.1.74 =
+* DB update
+
+= 1.1.75 =
+* Database improvements
+
+= 1.1.76 =
+* Improvements to calendars list
+
+= 1.1.77 =
+* Improved view in mobile devices
+
+= 1.1.78 =
+* Admin interface modification
+
+= 1.1.79 =
+* Removed jquery scripts not longer needed
+
+= 1.1.80 =
+* Product name update
+
+= 1.1.81 =
+* DB fix for upgrades
+
+= 1.1.82 =
+* Dashboard updates
+
+= 1.1.83 =
+* Option to add more time slots
+
+= 1.1.84 =
+* PayPal button update
+
+= 1.1.85 =
+* Help link update
+
+= 1.1.86 =
+* Compatible with WP 4.7.3
+
+= 1.1.87 =
+* Update related to the parameters in the PayPal IPN notification
+
+= 1.1.88 =
+* Use less parameters for the PayPal IPN notification
+
+= 1.1.89 =
+* Code improvements
+
+= 1.1.90 =
+* Field specialDates now supports more information
+
+= 1.1.91 =
+* Mobile friendly update(email types for fields)
+
+= 1.1.92 =
+* New anti-spam rule for public booking form
+
+= 1.1.93 =
+* Corrected bug in anti-spam rule 
+
+= 1.1.94 =
+* Captcha code security and speed improvements
+* Better SQL query sanitization through $wpdb->prepare
+
+= 1.1.95 =
+* Optional review panel
+
+= 1.1.96 =
+* Review panel correction
+
+= 1.1.97 =
+* Better CSS styles linking in admin area
+
+= 1.1.98 =
+* Sanitization for PayPal email address
+
+= 1.1.99 =
+* MySQL query sanitization
+
+= 1.2.10 =
+* Tested and compatible with WordPress 4.8
+
+= 1.2.11 =
+* Removed deprecated PayPal parameters
+
+= 1.2.12 =
+* Cleanup for PayPal parameters
+
+= 1.2.14 =
+* Validation and accessibility updates
+
+= 1.2.15 =
+* iCal URL modified to prevent issues with robots.txt restrictions
+
+= 1.2.16 =
+* Moved plugin website and links to SSL
+
+= 1.2.17 =
+* Removed use of deprecated MySQL functions
+
+= 1.2.18 =
+* Database installation bug fixed
+
+= 1.2.19 =
+* PayPal return address santized
+
+= 1.2.20 =
+* Server time note in iCal settings
+
+= 1.2.21 =
+* Improved print view
+
+= 1.2.22 =
+* Better PayPal currency selection
+
 == Upgrade Notice ==
 
-= 1.1.54 =
-* Fix to the placeholder from email for compatibility with WP 4.6
-
-Important note: If you are using the Professional version don't update via the WP dashboard but using your personal update link. Contact us if you need further information: http://abc.dwbooster.com/contact-us
+= 1.2.22 =
+* Better PayPal currency selection

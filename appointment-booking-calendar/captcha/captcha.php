@@ -4,30 +4,26 @@ PHP Captcha by Codepeople.net
 http://www.codepeople.net
 */
 
-error_reporting(7);
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if (!ini_get("zlib.output_compression")) ob_clean();
 
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Pragma: no-cache");    
 
-if ($_GET["width"] == '' || !is_numeric($_GET["width"])) $_GET["width"] = "180";
-if ($_GET["height"] == '' || !is_numeric($_GET["height"])) $_GET["height"] = "60";
-if ($_GET["letter_count"] == ''|| !is_numeric($_GET["letter_count"])) $_GET["letter_count"] = "5";
-if ($_GET["min_size"] == ''|| !is_numeric($_GET["min_size"])) $_GET["min_size"] = "35";
-if ($_GET["max_size"] == ''|| !is_numeric($_GET["max_size"])) $_GET["max_size"] = "45";
-if ($_GET["noise"] == ''|| !is_numeric($_GET["noise"])) $_GET["noise"] = "200";
-if ($_GET["noiselength"] == ''|| !is_numeric($_GET["noiselength"])) $_GET["noiselength"] = "5";
-if ($_GET["bcolor"] == '') $_GET["bcolor"] = "FFFFFF";
-if ($_GET["border"] == '') $_GET["border"] = "000000";
+if (!isset($_GET["ps"])) $_GET["ps"] = '';
+if (!isset($_GET["bcolor"]) || $_GET["bcolor"] == '') $_GET["bcolor"] = "FFFFFF";
+if (!isset($_GET["border"]) || $_GET["border"] == '') $_GET["border"] = "000000";
 
 //configuration
-$imgX = $_GET["width"]; 
-$imgY = $_GET["height"]; 
+$imgX = ( isset($_GET["width"]) && is_numeric( $_GET["width"] ) )? $_GET["width"] : "180" ; 
+$imgY = ( isset($_GET["height"]) && is_numeric( $_GET["height"] ) )? $_GET["height"] : "60" ;
 
-$letter_count = $_GET["letter_count"];
-$min_size = $_GET["min_size"]; 
-$max_size = $_GET["max_size"]; 
-$noise = $_GET["noise"]; 
-$noiselength = $_GET["noiselength"]; 
+$letter_count = ( isset($_GET["letter_count"]) && is_numeric( $_GET["letter_count"] ) )? $_GET["letter_count"] : "5";
+$min_size = ( isset($_GET["min_size"]) && is_numeric( $_GET["min_size"] ) )? $_GET["min_size"] : "35"; 
+$max_size = ( isset($_GET["max_size"]) && is_numeric( $_GET["max_size"] ) )? $_GET["max_size"] : "45"; 
+$noise = ( isset($_GET["noise"]) && is_numeric( $_GET["noise"] ) )? $_GET["noise"] : "200"; 
+$noiselength = ( isset($_GET["noiselength"]) && is_numeric( $_GET["noiselength"] ) )? $_GET["noiselength"] : "5"; 
 $bcolor = cpcff_decodeColor($_GET["bcolor"]);  
 $border = cpcff_decodeColor($_GET["border"]);  
 
@@ -35,11 +31,7 @@ $noisecolor = 0xcdcdcd;
 $random_noise_color= true;      
 $tcolor = cpcff_decodeColor("666666"); 
 $random_text_color= true;                                
-                       
-                         
-header("Cache-Control: no-store, no-cache, must-revalidate");
-header("Pragma: no-cache");  
-  
+                                               
 function cpcff_decodeColor($hexcolor)
 {
    $color = hexdec($hexcolor);
@@ -70,9 +62,9 @@ $length = 0;
 for ($i = 0; $i < $letter_count; $i++) {
 	 $str .= chr(mt_rand(97, 122))." ";
 }
-$_SESSION['rand_code'] = str_replace(" ", "", $str);
+$_SESSION['rand_code'.$_GET["ps"]] = str_replace(" ", "", $str);
 
-setCookie('rand_code', md5(str_replace(" ", "", $str)), time()+36000,"/");
+setCookie('rand_code'.$_GET["ps"], md5(str_replace(" ", "", $str)), time()+36000,"/");
 
 $image = imagecreatetruecolor($imgX, $imgY);
 $backgr_col = imagecolorallocate($image, $bcolor["r"],$bcolor["g"],$bcolor["b"]);
@@ -102,9 +94,22 @@ for ($i=0;$i<$noise;$i++)
   imageline ( $image, $x1, $y1, mt_rand($x1-$noiselength,$x1+$noiselength), mt_rand($y1-$noiselength,$y1+$noiselength), $color);
 }  
 
-$font = dirname( __FILE__ ) . "/font-1.ttf"; // font
-if ($_GET["font"]) $font = dirname( __FILE__ ) . "/".$_GET["font"];       
-$font = str_replace("\\","/",$font);
+
+switch (@$_GET["font"]) {
+    case "font-2.ttf":
+        $selected_font = "font-2.ttf";
+        break;
+    case "font-3.ttf":
+        $selected_font = "font-3.ttf";
+        break;
+    case "font-4.ttf":
+        $selected_font = "font-4.ttf";
+        break;               
+    default:
+        $selected_font = "font-1.ttf";    
+}
+
+$font = dirname( __FILE__ ) . "/". $selected_font;
 
 $font_size = rand($min_size, $max_size);
   
@@ -135,15 +140,8 @@ else
     imagestring ( $image, $font, $x, $y, $str, $text_col);	
 }
 
-function cfwpp_output_handler($img) {
-    header('Content-type: image/png');
-    header('Content-Length: ' . strlen($img));
-    return $img;
-}
-
-ob_start("cfwpp_output_handler");
+header("Content-type: image/png");
 imagepng($image);
-ob_end_flush();
 imagedestroy ($image);
 exit;
 ?>

@@ -10,7 +10,7 @@ if (!defined('CP_CALENDAR_ID'))
     define ('CP_CALENDAR_ID',1);
 
 global $wpdb; 
-$mycalendarrows = $wpdb->get_results( 'SELECT * FROM '.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME .' WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`='.CP_CALENDAR_ID); 
+$mycalendarrows = $wpdb->get_results( $wpdb->prepare('SELECT * FROM '.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME .' WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`=%d', CP_CALENDAR_ID) ); 
 
 
 if ( 'POST' == $_SERVER['REQUEST_METHOD'] && isset( $_POST['cpabc_appointments_post_options'] ) )
@@ -35,8 +35,6 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 ?>
 
 <?php if (!CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING) { ?>
-<script type='text/javascript' src='../wp-content/plugins/appointment-booking-calendar/js/jQuery.stringify.js'></script>
-<script type='text/javascript' src='../wp-content/plugins/appointment-booking-calendar/js/fbuilder-pro.jquery.js'></script>
 <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />   
 <?php } ?>
 
@@ -61,9 +59,6 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
   <h3 class='hndle' style="padding:5px;"><span>Calendar Configuration / Administration</span></h3>
   <div class="inside">
   
-   <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('TDE_AppCalendar/all-css.css', __FILE__); ?>" />
-   <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('TDE_AppCalendar/simpleeditor.css', __FILE__); ?>" />
-   <link rel="stylesheet" type="text/css" href="<?php echo plugins_url('TDE_AppCalendar/tabview.css', __FILE__); ?>" />
    <script>
    var pathCalendar = "<?php echo cpabc_appointment_get_site_url(true); ?>";
    var cpabc_global_start_weekday = '<?php echo cpabc_get_option('calendar_weekday', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_WEEKDAY); ?>';
@@ -102,8 +97,10 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                <option value="DU" <?php if ($value == 'DU') echo ' selected="selected"'; ?>>Dutch</option>
                <option value="EN" <?php if ($value == 'EN') echo ' selected="selected"'; ?>>English</option>
                <option value="FR" <?php if ($value == 'FR') echo ' selected="selected"'; ?>>French</option>
+               <option value="HU" <?php if ($value == 'HU') echo ' selected="selected"'; ?>>Hungarian</option>
                <option value="IT" <?php if ($value == 'IT') echo ' selected="selected"'; ?>>Italian</option>
                <option value="JP" <?php if ($value == 'JP') echo ' selected="selected"'; ?>>Japanese</option>
+               <option value="KR" <?php if ($value == 'KR') echo ' selected="selected"'; ?>>Korean</option>
                <option value="NW" <?php if ($value == 'NW') echo ' selected="selected"'; ?>>Norwegian</option>
                <option value="PL" <?php if ($value == 'PL') echo ' selected="selected"'; ?>>Polish</option>
                <option value="PT" <?php if ($value == 'PT') echo ' selected="selected"'; ?>>Portuguese</option>
@@ -129,7 +126,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                <option value="light/" <?php if ($value == 'light/') echo ' selected="selected"'; ?>>Light</option>
                <option value="blue/" <?php if ($value == 'blue/') echo ' selected="selected"'; ?>>Blue</option>
             </select><br />
-            * This will modify the calendar appearance in the public website. For other appearance modifications <a target="_blank" href="http://abc.dwbooster.com/faq">check the FAQ</a>.
+            * This will modify the calendar appearance in the public website. For other appearance modifications <a target="_blank" href="https://abc.dwbooster.com/faq">check the FAQ</a>.
         </td>
         </tr>        
         
@@ -311,7 +308,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         - The styles can be applied into any of the CSS files of your theme or into the CSS file <em>"appointment-booking-calendar\TDE_AppCalendar\all-css.css"</em>. <br />
         - For further modifications, the submit button is located at the end of the file <em>"<?php if (get_option('CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR',"1") != "1") echo 'cpabc_internal.inc.php'; else echo 'cpabc_scheduler.inc.php'; ?>"</em>.<br />
         <?php if (get_option('CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR',"1") != "1") { ?>
-        - For general CSS styles modifications to the form and samples <a href="http://abc.dwbooster.com/faq" target="_blank">check this FAQ</a>.
+        - For general CSS styles modifications to the form and samples <a href="https://abc.dwbooster.com/faq" target="_blank">check this FAQ</a>.
         <?php } ?>
         </tr>
      </table>
@@ -326,13 +323,13 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
     <table class="form-table">
         <tr valign="top">        
         <th scope="row">Enable Paypal Payments?</th>
-        <td><input type="checkbox" readonly disabled name="enable_paypal" size="40" value="1" checked /> <em>The feature for working without PayPal is implemented/available in the <a href="http://abc.dwbooster.com/download">pro version</a>.</em>
+        <td><input type="checkbox" readonly disabled name="enable_paypal" size="40" value="1" checked /> <em>The feature for working without PayPal is implemented/available in the <a href="https://abc.dwbooster.com/download">pro version</a>.</em>
         </td>
         </tr>                   
     
         <tr valign="top">        
         <th scope="row">Paypal email</th>
-        <td><input type="text" name="paypal_email" size="40" value="<?php echo esc_attr(cpabc_get_option('paypal_email',$current_user->user_email)); ?>" /></td>
+        <td><input type="email" name="paypal_email" size="40" value="<?php echo esc_attr(cpabc_get_option('paypal_email',$current_user->user_email)); ?>" /></td>
         </tr>
          
         <tr valign="top">
@@ -345,7 +342,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
              </div>            
            </div>
            <div style="clear:both"></div>
-           <em>Note: Each box should contain the TOTAL cost for the N slots related. Ex: 1 slot for $25, 2 slots for $50, 3 slots for $75, ...</em>
+           <em>Note: Each box should contain the TOTAL cost for the N slots related. Ex: 1 slot for 25, 2 slots for 50, 3 slots for 75, DON'T put the currency symbol in this field, keep only the price number...</em>
         </td>
         </tr>
         
@@ -357,7 +354,36 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         
         <tr valign="top">        
         <th scope="row">Currency</th>
-        <td><input type="text" name="currency" value="<?php echo esc_attr(cpabc_get_option('currency',CPABC_APPOINTMENTS_DEFAULT_CURRENCY)); ?>" /></td>
+        <td>
+        <?php $currency = strtoupper(esc_attr(cpabc_get_option('currency',CPABC_APPOINTMENTS_DEFAULT_CURRENCY))); ?>
+<select name="currency">
+<option value="USD"<?php if ($currency == 'USD' || $currency == '') echo ' selected'; ?>>USD - U.S. Dollar</option>
+<option value="EUR"<?php if ($currency == 'EUR') echo ' selected'; ?>>EUR - Euro</option>
+<option value="GBP"<?php if ($currency == 'GBP') echo ' selected'; ?>>GBP - Pound Sterling</option>
+<option value="USD"> - </option>
+<option value="AUD"<?php if ($currency == 'AUD') echo ' selected'; ?>>AUD - Australian Dollar</option>
+<option value="BRL"<?php if ($currency == 'BRL') echo ' selected'; ?>>BRL - Brazilian Real</option>
+<option value="CAD"<?php if ($currency == 'CAD') echo ' selected'; ?>>CAD - Canadian Dollar</option>
+<option value="CZK"<?php if ($currency == 'CZK') echo ' selected'; ?>>CZK - Czech Koruna</option>
+<option value="DKK"<?php if ($currency == 'DKK') echo ' selected'; ?>>DKK - Danish Krone</option>
+<option value="HKD"<?php if ($currency == 'HKD') echo ' selected'; ?>>HKD - Hong Kong Dollar</option>
+<option value="HUF"<?php if ($currency == 'HUF') echo ' selected'; ?>>HUF - Hungarian Forint</option>
+<option value="ILS"<?php if ($currency == 'ILS') echo ' selected'; ?>>ILS - Israeli New Sheqel</option>
+<option value="JPY"<?php if ($currency == 'JPY') echo ' selected'; ?>>JPY - Japanese Yen</option>
+<option value="MYR"<?php if ($currency == 'MYR') echo ' selected'; ?>>MYR - Malaysian Ringgit</option>
+<option value="MXN"<?php if ($currency == 'MXN') echo ' selected'; ?>>MXN - Mexican Peso</option>	
+<option value="NOK"<?php if ($currency == 'NOK') echo ' selected'; ?>>NOK - Norwegian Krone</option>	
+<option value="NZD"<?php if ($currency == 'NZD') echo ' selected'; ?>>NZD - New Zealand Dollar</option>	
+<option value="PHP"<?php if ($currency == 'PHP') echo ' selected'; ?>>PHP - Philippine Peso</option>	
+<option value="PLN"<?php if ($currency == 'PLN') echo ' selected'; ?>>PLN - Polish Zloty</option>		
+<option value="RUB"<?php if ($currency == 'RUB') echo ' selected'; ?>>RUB - Russian Ruble</option>
+<option value="SGD"<?php if ($currency == 'SGD') echo ' selected'; ?>>SGD - Singapore Dollar</option>	
+<option value="SEK"<?php if ($currency == 'SEK') echo ' selected'; ?>>SEK - Swedish Krona</option>
+<option value="CHF"<?php if ($currency == 'CHF') echo ' selected'; ?>>CHF - Swiss Franc</option>
+<option value="TWD"<?php if ($currency == 'TWD') echo ' selected'; ?>>TWD - Taiwan New Dollar</option>
+<option value="THB"<?php if ($currency == 'THB') echo ' selected'; ?>>THB - Thai Baht</option>
+</select>
+</td>
         </tr>
         
         <tr valign="top">
@@ -390,7 +416,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <tr valign="top">
         <th scope="row">Discount Codes</th>
         <td> 
-           <em>The -discount codes- feature is available in the <a href="http://abc.dwbooster.com/download">pro version</a>.</em>
+           <em>The -discount codes- feature is available in the <a href="https://abc.dwbooster.com/download">pro version</a>.</em>
         </td>
         </tr>  
                    
@@ -407,11 +433,11 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
      <table class="form-table">    
         <tr valign="top">
         <th scope="row">Notification "from" email</th>
-        <td><input type="text" name="notification_from_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_from_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL)); ?>" /></td>
+        <td><input type="email" name="notification_from_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_from_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL)); ?>" required /></td>
         </tr>             
         <tr valign="top">
         <th scope="row">Send notification to email</th>
-        <td><input type="text" name="notification_destination_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_destination_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL)); ?>" />
+        <td><input type="email" name="notification_destination_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_destination_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL)); ?>" />
           <br />
           <em>Note: Comma separated list for adding more than one email address<em>
         </td>
@@ -546,7 +572,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
      <table class="form-table">    
         <tr valign="top">
         <th scope="row">Enable e-mail reminder?</th>
-        <td><input type="checkbox" name="enable_reminder" disabled readonly size="40" value="1" <?php if (cpabc_get_option('enable_reminder',CPABC_APPOINTMENTS_DEFAULT_ENABLE_REMINDER)) echo 'checked'; ?> /> * This feature is available in the <a href="http://abc.dwbooster.com/download">pro version</a>.</td>
+        <td><input type="checkbox" name="enable_reminder" disabled readonly size="40" value="1" <?php if (cpabc_get_option('enable_reminder',CPABC_APPOINTMENTS_DEFAULT_ENABLE_REMINDER)) echo 'checked'; ?> /> * This feature is available in the <a href="https://abc.dwbooster.com/download">pro version</a>.</td>
         </tr>              
         <tr valign="top">
         <th scope="row">Send reminder:</th>        
@@ -587,7 +613,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <?php echo str_replace("\n", "<br />", CPABC_APPOINTMENTS_DEFAULT_EXPLAIN_CP_CAL_CHECKBOXES); ?>
         </th>
         <td>
-            <em>This feature is available only in the <a href="http://abc.dwbooster.com/download">pro version</a>.</em>
+            <em>This feature is available only in the <a href="https://abc.dwbooster.com/download">commercial versions</a>.</em>
         </td>
         </tr>             
      </table>  
@@ -612,7 +638,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"  /></p>
 
 <?php if (!defined('CPABC_CALENDAR_ON_PUBLIC_WEBSITE')) { ?> 
-[<a href="http://abc.dwbooster.com/customization" target="_blank">Request Custom Modifications</a>] | [<a href="http://abc.dwbooster.com/support" target="_blank">Help</a>]
+[<a href="https://wordpress.org/support/plugin/appointment-booking-calendar#new-post" target="_blank">Support</a>] | [<a href="https://abc.dwbooster.com/support?go=doc" target="_blank">Documentation</a>]
 <?php } ?>
 
 </form>
