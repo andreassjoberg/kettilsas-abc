@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: https://abc.dwbooster.com
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.2.22
+Version: 1.2.24
 Author: CodePeople
 Author URI: https://abc.dwbooster.com
 License: GPL
@@ -828,7 +828,7 @@ function cpabc_appointments_check_posted_data()
     $coupon = false;
 
     $params = array();
-    $params["PRICE"] = $price;
+    $params["PRICE"] = number_format ($price, 2);
     $params["COUPONCODE"] = ($coupon?"\nCoupon code:".$coupon->code.$discount_note."\n":"");
     $params["QUANTITY"] = @$_POST["abc_capacity"];
 
@@ -1169,7 +1169,7 @@ function cpabc_appointments_save_options()
 
     $_POST["request_cost"] = '';
     for ($k=1;$k <= intval($_POST["max_slots"]); $k++)
-        $_POST["request_cost"] .= ($k!=1?";":"").$_POST["request_cost_".$k];
+        $_POST["request_cost"] .= ($k!=1?";":"").cpabc_clean_price($_POST["request_cost_".$k]);
 
     $data = array(
          'form_structure' => $_POST['form_structure'],
@@ -1243,6 +1243,11 @@ function cpabc_appointments_save_options()
          'cp_cal_checkboxes' => @$_POST["cp_cal_checkboxes"]
 	);
     $wpdb->update ( CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, $data, array( 'id' => CP_CALENDAR_ID ));
+}
+
+function cpabc_clean_price($price)
+{
+    return preg_replace('/[^0-9.]+/', '', str_replace(',','.',$price));
 }
 
 function cpabc_appointments_get_field_name ($fieldid, $form)

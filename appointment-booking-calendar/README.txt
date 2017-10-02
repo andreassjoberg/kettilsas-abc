@@ -675,7 +675,13 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.2.22 =
 * Better PayPal currency selection
 
+= 1.2.23 =
+* Formatting for price number
+
+= 1.2.24 =
+* Automatic validation of price settings
+
 == Upgrade Notice ==
 
-= 1.2.22 =
-* Better PayPal currency selection
+= 1.2.24 =
+* Automatic validation of price settings
