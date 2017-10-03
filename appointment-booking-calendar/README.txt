@@ -681,7 +681,10 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.2.24 =
 * Automatic validation of price settings
 
+= 1.2.25 =
+* Default values for get_option actions
+
 == Upgrade Notice ==
 
-= 1.2.24 =
-* Automatic validation of price settings
+= 1.2.25 =
+* Default values for get_option actions
