@@ -513,18 +513,18 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         
         <tr valign="top">
          <th scope="row">Width:</th>
-         <td><input type="text" name="dexcv_width" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_width', CPABC_TDEAPP_DEFAULT_dexcv_width)); ?>"  onblur="generateCaptcha();"  /></td>
+         <td><input type="number" name="dexcv_width" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_width', CPABC_TDEAPP_DEFAULT_dexcv_width)); ?>"  onblur="generateCaptcha();"  /></td>
          <th scope="row">Height:</th>
-         <td><input type="text" name="dexcv_height" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_height', CPABC_TDEAPP_DEFAULT_dexcv_height)); ?>" onblur="generateCaptcha();"  /></td>
+         <td><input type="number" name="dexcv_height" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_height', CPABC_TDEAPP_DEFAULT_dexcv_height)); ?>" onblur="generateCaptcha();"  /></td>
          <th scope="row">Chars:</th>
-         <td><input type="text" name="dexcv_chars" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_chars', CPABC_TDEAPP_DEFAULT_dexcv_chars)); ?>" onblur="generateCaptcha();"  /></td>
+         <td><input type="number" name="dexcv_chars" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_chars', CPABC_TDEAPP_DEFAULT_dexcv_chars)); ?>" onblur="generateCaptcha();"  /></td>
         </tr>             
 
         <tr valign="top">
          <th scope="row">Min font size:</th>
-         <td><input type="text" name="dexcv_min_font_size" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_min_font_size', CPABC_TDEAPP_DEFAULT_dexcv_min_font_size)); ?>" onblur="generateCaptcha();"  /></td>
+         <td><input type="number" name="dexcv_min_font_size" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_min_font_size', CPABC_TDEAPP_DEFAULT_dexcv_min_font_size)); ?>" onblur="generateCaptcha();"  /></td>
          <th scope="row">Max font size:</th>
-         <td><input type="text" name="dexcv_max_font_size" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_max_font_size', CPABC_TDEAPP_DEFAULT_dexcv_max_font_size)); ?>" onblur="generateCaptcha();"  /></td>        
+         <td><input type="number" name="dexcv_max_font_size" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_max_font_size', CPABC_TDEAPP_DEFAULT_dexcv_max_font_size)); ?>" onblur="generateCaptcha();"  /></td>        
          <td colspan="2" rowspan="">
            Preview:<br />
              <br />
@@ -535,9 +535,9 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 
         <tr valign="top">
          <th scope="row">Noise:</th>
-         <td><input type="text" name="dexcv_noise" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_noise', CPABC_TDEAPP_DEFAULT_dexcv_noise)); ?>" onblur="generateCaptcha();" /></td>
+         <td><input type="number" name="dexcv_noise" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_noise', CPABC_TDEAPP_DEFAULT_dexcv_noise)); ?>" onblur="generateCaptcha();" /></td>
          <th scope="row">Noise Length:</th>
-         <td><input type="text" name="dexcv_noise_length" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_noise_length', CPABC_TDEAPP_DEFAULT_dexcv_noise_length)); ?>" onblur="generateCaptcha();" /></td>        
+         <td><input type="number" name="dexcv_noise_length" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_noise_length', CPABC_TDEAPP_DEFAULT_dexcv_noise_length)); ?>" onblur="generateCaptcha();" /></td>        
         </tr>          
         
 
@@ -576,7 +576,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         </tr>              
         <tr valign="top">
         <th scope="row">Send reminder:</th>        
-        <td><input type="text" name="reminder_hours"  disabled readonly size="2" value="<?php echo esc_attr(cpabc_get_option('reminder_hours', CPABC_APPOINTMENTS_DEFAULT_REMINDER_HOURS)); ?>" /> hours before the appointment        
+        <td><input type="number" name="reminder_hours"  disabled readonly size="2" value="<?php echo esc_attr(cpabc_get_option('reminder_hours', CPABC_APPOINTMENTS_DEFAULT_REMINDER_HOURS)); ?>" /> hours before the appointment        
         <br /><em>Note: Hours date based in server time. Server time now is <?php echo date("Y-m-d H:i"); ?></em>
         </td>
         </tr>
