@@ -543,9 +543,9 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 
         <tr valign="top">
          <th scope="row">Background:</th>
-         <td><input type="text" name="dexcv_background" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_background', CPABC_TDEAPP_DEFAULT_dexcv_background)); ?>" onblur="generateCaptcha();" /></td>
+         <td><input type="color" name="dexcv_background" size="10" value="#<?php echo esc_attr(cpabc_get_option('dexcv_background', CPABC_TDEAPP_DEFAULT_dexcv_background)); ?>" onblur="generateCaptcha();" /></td>
          <th scope="row">Border:</th>
-         <td><input type="text" name="dexcv_border" size="10" value="<?php echo esc_attr(cpabc_get_option('dexcv_border', CPABC_TDEAPP_DEFAULT_dexcv_border)); ?>" onblur="generateCaptcha();" /></td>        
+         <td><input type="color" name="dexcv_border" size="10" value="#<?php echo esc_attr(cpabc_get_option('dexcv_border', CPABC_TDEAPP_DEFAULT_dexcv_border)); ?>" onblur="generateCaptcha();" /></td>        
         </tr>    
         
         <tr valign="top">

@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.2.26
+Version: 3.1.2.27
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -1237,8 +1237,8 @@ function cpabc_appointments_save_options()
          'dexcv_max_font_size' => $_POST["dexcv_max_font_size"],
          'dexcv_noise' => $_POST["dexcv_noise"],
          'dexcv_noise_length' => $_POST["dexcv_noise_length"],
-         'dexcv_background' => $_POST["dexcv_background"],
-         'dexcv_border' => $_POST["dexcv_border"],
+         'dexcv_background' => str_replace('#','',$_POST['dexcv_background']),
+         'dexcv_border' => str_replace('#','',$_POST['dexcv_border']),
          'dexcv_font' => $_POST["dexcv_font"],
          'cv_text_enter_valid_captcha' => $_POST['cv_text_enter_valid_captcha'],
          'cp_cal_checkboxes' => @$_POST["cp_cal_checkboxes"]
