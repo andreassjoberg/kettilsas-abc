@@ -4,4 +4,4 @@ Original Wordpress plugin page: [Appointment Booking Calendar](https://sv.wordpr
 
 Modified for [Kettilsas.se](http://www.kettilsas.se/)
 
-License: GPLv2 or later
+License: See [LICENSE.md](LICENSE.md)
