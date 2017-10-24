@@ -690,7 +690,10 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.2.27 =
 * Color fields for captcha settings
 
+= 1.2.28 =
+* Admin intf updates
+
 == Upgrade Notice ==
 
-= 1.2.27 =
-* Color fields for captcha settings
+= 1.2.28 =
+* Admin intf updates

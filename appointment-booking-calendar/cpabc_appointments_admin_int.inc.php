@@ -193,7 +193,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <tr valign="top">        
         <th scope="row">Minimum  available date</th>
         <td><input type="text" name="calendar_mindate" size="40" value="<?php echo esc_attr(cpabc_get_option('calendar_mindate',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MINDATE)); ?>" /><br />
-         <em style="font-size:11px;">Examples: 2012-10-25, today, today +3 days, now +30 hours</em>
+         <em style="font-size:11px;">Examples: <?php echo date("Y-m-d"); ?>, today, today +3 days, now +30 hours</em>
         </td>
         </tr>
         
@@ -201,7 +201,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <th scope="row">Maximum available date</th>
         <td>
          <input type="text" name="calendar_maxdate" size="40" value="<?php echo esc_attr(cpabc_get_option('calendar_maxdate',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MAXDATE)); ?>" /><br />
-         <em style="font-size:11px;">Examples: 2012-10-25, today, today +3 days</em>
+         <em style="font-size:11px;">Examples: <?php echo date("Y-m-d", strtotime("+6 months")); ?>, today, today +3 days</em>
         </td>
         </tr>
         
