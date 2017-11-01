@@ -693,7 +693,10 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.2.28 =
 * Admin intf updates
 
+= 1.2.29 =
+* Currency automatic correction
+
 == Upgrade Notice ==
 
-= 1.2.28 =
-* Admin intf updates
+= 1.2.29 =
+* Currency automatic correction
