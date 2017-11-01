@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.2.28
+Version: 3.1.2.29
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -925,6 +925,8 @@ function cpabc_appointments_clean_currency($currency)
 		return 'USD';
 	else if ($currency == 'MXP')
 		return 'MXN';
+	else if ($currency == 'AUS')
+		return 'AUD';    
 	else
 		return $currency;
 }
