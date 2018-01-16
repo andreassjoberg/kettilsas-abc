@@ -702,7 +702,34 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.2.31 =
 * Compatible with WordPress 4.9
 
+= 1.2.32 =
+* Easier file for form customization
+
+= 1.2.33 =
+* Optimized code. Removed queries and fields no longer needed.
+
+= 1.2.34 =
+* Fixed bug in calendar event editor 
+
+= 1.2.35 =
+* Fixed z-index issue in datepicker
+
+= 1.2.36 =
+* Fixed bug in review panel
+
+= 1.2.37 =
+* Added CSS and JavaScript customization panel
+
+= 1.2.38 =
+* Improved submission to prevent duplicated booking submissions
+
+= 1.2.39 =
+* Better currency auto-correction
+
+= 1.2.40 =
+* Fix to editor access in admin appointments
+
 == Upgrade Notice ==
 
-= 1.2.31 =
-* Compatible with WordPress 4.9
+= 1.2.40 =
+* Fix to editor access in admin appointments
