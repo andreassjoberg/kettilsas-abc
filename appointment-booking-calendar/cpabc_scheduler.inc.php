@@ -1,4 +1,12 @@
 <?php if ( !defined('CPABC_AUTH_INCLUDE') ) { echo 'Direct access not allowed.'; exit; } ?>
+<?php 
+  $custom_styles = base64_decode(get_option('CP_ABC_CSS', '')); 
+  if ($custom_styles != '')
+      echo '<style type="text/css">'.$custom_styles.'</style>';
+  $custom_scripts = base64_decode(get_option('CP_ABC_JS', '')); 
+  if ($custom_scripts != '')
+      echo '<script type="text/javascript">'.$custom_scripts.'</script>';  
+?>
 <form class="cpp_form" name="FormEdit" action="<?php get_site_url(); ?>" method="post" onsubmit="return doValidate(this);">
 <input name="cpabc_appointments_post" type="hidden" value="1" />
 <?php echo $quant_buffer; ?>
@@ -11,70 +19,6 @@
   foreach ($myrows as $item)
       echo '<div id="calarea_'.$item->id.'" style="display:none"><input name="selDaycal'.$item->id.'" type="hidden" id="selDaycal'.$item->id.'" /><input name="selMonthcal'.$item->id.'" type="hidden" id="selMonthcal'.$item->id.'" /><input name="selYearcal'.$item->id.'" type="hidden" id="selYearcal'.$item->id.'" /><input name="selHourcal'.$item->id.'" type="hidden" id="selHourcal'.$item->id.'" /><input name="selMinutecal'.$item->id.'" type="hidden" id="selMinutecal'.$item->id.'" /><div class="appContainer"><div style="z-index:1000;" class="appContainer2"><div id="cal'.$item->id.'Container"></div></div></div> <div style="clear:both;"></div><div id="listcal'.$item->id.'"></div></div>';
 ?>
-<script type="text/javascript">
- cpabc_do_init(<?php echo $myrows[0]->id; ?>);
- setInterval('updatedate()',200);
- function doValidate(form)
- {
-    if (form.phone.value == '')
-    {
-        alert('<?php echo str_replace("'","\'",__('Please enter a valid phone number','cpabc')); ?>.');
-        return false;
-    }
-    if (form.email.value == '')
-    {
-        alert('<?php echo str_replace("'","\'",__('Please enter a valid email address','cpabc')); ?>.');
-        return false;
-    }
-    if (form.name.value == '')
-    {
-        alert('<?php echo str_replace("'","\'",__('Please write your name','cpabc')); ?>.');
-        return false;
-    }
-    var selst = ""+document.getElementById("selDaycal"+cpabc_current_calendar_item).value;    
-    if (selst == '')
-    {
-        alert('<?php echo str_replace("'","\'",__('Please select date and time','cpabc')); ?>.');
-        return false;
-    }
-    selst = selst.match(/;/g);selst = selst.length;
-    if (selst < <?php $opt = cpabc_get_option('min_slots', '1'); if ($opt == '') $opt = '1'; echo $opt; ?>)
-    {
-        var almsg = '<?php echo str_replace("'","\'",__('Please select at least %1 time-slots. Currently selected: %2 time-slots.','cpabc')); ?>';
-        almsg = almsg.replace('%1','<?php echo $opt; ?>');
-        almsg = almsg.replace('%2',selst);
-        alert(almsg);
-        return false;
-    }
-    if (selst > <?php $opt = cpabc_get_option('max_slots', '1'); if ($opt == '') $opt = '1'; echo $opt; ?>)
-    {
-        var almsg = '<?php echo str_replace("'","\'",__('Please select a maximum of %1 time-slots. Currently selected: %2 time-slots.','cpabc')); ?>';
-        almsg = almsg.replace('%1','<?php echo $opt; ?>');
-        almsg = almsg.replace('%2',selst);
-        alert(almsg);
-        return false;
-    } 
-    <?php if (cpabc_get_option('dexcv_enable_captcha', CPABC_TDEAPP_DEFAULT_dexcv_enable_captcha) != 'false') { ?> if (form.hdcaptcha.value == '')
-    {
-        alert('<?php echo str_replace("'","\'",__('Please enter the captcha verification code','cpabc')); ?>.');
-        return false;
-    }
-    $dexQuery = jQuery.noConflict();
-    var result = $dexQuery.ajax({
-        type: "GET",
-        url: "<?php echo cpabc_appointment_get_site_url(); ?>?inAdmin=1"+String.fromCharCode(38)+"abcc=1"+String.fromCharCode(38)+"hdcaptcha="+form.hdcaptcha.value,
-        async: false
-    }).responseText;
-    if (result.indexOf("captchafailed") != -1)
-    {
-        $dexQuery("#captchaimg").attr('src', $dexQuery("#captchaimg").attr('src')+String.fromCharCode(38)+Date());
-        alert('<?php echo str_replace("'","\'",__('Incorrect captcha code. Please try again.','cpabc')); ?>');
-        return false;
-    }
-    else <?php } ?>
-        return true;
- }
-</script>
 <br />
 <?php _e('Your phone number','cpabc'); ?>:<br />
 <input type="text" name="phone" value=""><br />

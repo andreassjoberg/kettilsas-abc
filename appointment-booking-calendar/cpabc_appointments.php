@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.2.31
+Version: 3.1.2.40
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -139,7 +139,11 @@ define('CPABC_APPOINTMENTS_DEFAULT_vs_text_max', 'Please enter a value less than
 define('CPABC_APPOINTMENTS_DEFAULT_vs_text_min', 'Please enter a value greater than or equal to {0}.');
 
 
-
+$codepeople_promote_banner_plugins[ 'appointment-booking-calendar' ] = array( 
+                      'plugin_name' => 'Appointment Booking Calendar', 
+                      'plugin_url'  => 'https://wordpress.org/support/plugin/appointment-booking-calendar/reviews/#new-post'
+);
+require_once 'banner.php';
 
 register_activation_hook(__FILE__,'cpabc_appointments_install');
 
@@ -530,6 +534,90 @@ var cpabc_global_pagedate = '<?php
     $current_user = wp_get_current_user();
     define('CPABC_AUTH_INCLUDE', true);
     @include dirname( __FILE__ ) . '/cpabc_scheduler.inc.php';
+    ?>
+<script type="text/javascript">
+ var cpabc_click_enabled = true;  
+ cpabc_do_init(<?php echo $myrows[0]->id; ?>);
+ setInterval('updatedate()',200);
+ function doValidate(form)
+ {
+    if (!cpabc_click_enabled) return false;
+    if (form.phone.value == '')
+    {
+        alert('<?php echo str_replace("'","\'",__('Please enter a valid phone number','cpabc')); ?>.');
+        return false;
+    }
+    if (form.email.value == '')
+    {
+        alert('<?php echo str_replace("'","\'",__('Please enter a valid email address','cpabc')); ?>.');
+        return false;
+    }
+    if (form.name.value == '')
+    {
+        alert('<?php echo str_replace("'","\'",__('Please write your name','cpabc')); ?>.');
+        return false;
+    }
+    var selst = ""+document.getElementById("selDaycal"+cpabc_current_calendar_item).value;    
+    if (selst == '')
+    {
+        alert('<?php echo str_replace("'","\'",__('Please select date and time','cpabc')); ?>.');
+        return false;
+    }
+    selst = selst.match(/;/g);selst = selst.length;
+    if (selst < <?php $opt = cpabc_get_option('min_slots', '1'); if ($opt == '') $opt = '1'; echo $opt; ?>)
+    {
+        var almsg = '<?php echo str_replace("'","\'",__('Please select at least %1 time-slots. Currently selected: %2 time-slots.','cpabc')); ?>';
+        almsg = almsg.replace('%1','<?php echo $opt; ?>');
+        almsg = almsg.replace('%2',selst);
+        alert(almsg);
+        return false;
+    }
+    if (selst > <?php $opt = cpabc_get_option('max_slots', '1'); if ($opt == '') $opt = '1'; echo $opt; ?>)
+    {
+        var almsg = '<?php echo str_replace("'","\'",__('Please select a maximum of %1 time-slots. Currently selected: %2 time-slots.','cpabc')); ?>';
+        almsg = almsg.replace('%1','<?php echo $opt; ?>');
+        almsg = almsg.replace('%2',selst);
+        alert(almsg);
+        return false;
+    } 
+    <?php if (cpabc_get_option('dexcv_enable_captcha', CPABC_TDEAPP_DEFAULT_dexcv_enable_captcha) != 'false') { ?> if (form.hdcaptcha.value == '')
+    {
+        alert('<?php echo str_replace("'","\'",__('Please enter the captcha verification code','cpabc')); ?>.');
+        return false;
+    }
+    $dexQuery = jQuery.noConflict();
+    var result = $dexQuery.ajax({
+        type: "GET",
+        url: "<?php echo cpabc_appointment_get_site_url(); ?>?inAdmin=1"+String.fromCharCode(38)+"abcc=1"+String.fromCharCode(38)+"hdcaptcha="+form.hdcaptcha.value,
+        async: false
+    }).responseText;
+    if (result.indexOf("captchafailed") != -1)
+    {
+        $dexQuery("#captchaimg").attr('src', $dexQuery("#captchaimg").attr('src')+String.fromCharCode(38)+Date());
+        alert('<?php echo str_replace("'","\'",__('Incorrect captcha code. Please try again.','cpabc')); ?>');
+        return false;
+    }
+    else <?php } ?>
+    {
+        cpabc_click_enabled = false;
+        cpabc_blink(".cp_subbtn");
+        return true;
+    }
+ }
+ function cpabc_blink(selector){
+     try 
+     {
+         $dexQuery = jQuery.noConflict();
+         $dexQuery(selector).fadeOut(1000, function(){
+             $dexQuery(this).fadeIn(1000, function(){
+                 if (!cpabc_click_enabled)
+                     cpabc_blink(this); 
+             });
+         });
+     } catch (e) {}
+ }
+</script>    
+    <?php
 }
 
 
@@ -593,7 +681,9 @@ function cpabc_appointments_html_post_page() {
     if (isset($_GET["cal"]) && $_GET["cal"] != '')
     {
         $_GET["cal"] = intval($_GET["cal"]);
-        if (isset($_GET["list"]) && $_GET["list"] == '1')
+        if (isset($_GET["edit"]) && $_GET["edit"] == '1')
+            @include_once dirname( __FILE__ ) . '/cp_admin_int_edition.inc.php';
+        else if (isset($_GET["list"]) && $_GET["list"] == '1')
             @include_once dirname( __FILE__ ) . '/cpabc_appointments_admin_int_bookings_list.inc.php';
         else
             @include_once dirname( __FILE__ ) . '/cpabc_appointments_admin_int.inc.php';
@@ -626,6 +716,7 @@ function set_cpabc_apps_insert_adminScripts($hook) {
         wp_enqueue_script( 'jquery' );
         wp_enqueue_script( 'jquery-ui-core' );
         wp_enqueue_script( 'jquery-ui-datepicker' );
+        wp_enqueue_script( 'tinymce_js', includes_url( 'js/tinymce/' ) . 'wp-tinymce.php', array( 'jquery' ), false, true );
 
         wp_enqueue_style('jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 
@@ -746,7 +837,13 @@ function cpabc_appointments_check_posted_data()
         cpabc_appointments_save_options();
         return;
     }
-
+    
+    if ( 'POST' == $_SERVER['REQUEST_METHOD'] && isset( $_POST['CP_ABC_post_edition'] ) && is_admin() )
+    {
+        cpabc_appointments_save_edition();
+        return;
+    }  
+    
     // if this isn't the expected post and isn't the captcha verification then nothing to do
 	if ( 'POST' != $_SERVER['REQUEST_METHOD'] || ! isset( $_POST['cpabc_appointments_post'] ) )
 		if ( 'GET' != $_SERVER['REQUEST_METHOD'] || !isset( $_GET['hdcaptcha'] ) )
@@ -923,6 +1020,10 @@ function cpabc_appointments_clean_currency($currency)
 		return 'CAD';
 	else if ($currency == '$')
 		return 'USD';
+    else if ($currency == 'DOLLAR')
+		return 'USD';
+    else if ($currency == 'EURO')
+		return 'EUR';
 	else if ($currency == 'MXP')
 		return 'MXN';
 	else if ($currency == 'AUS')
@@ -1124,6 +1225,18 @@ function cpabc_appointments_add_field_verify ($table, $field, $type = "text")
     }
 }
 
+
+function cpabc_appointments_save_edition()
+{
+    if (substr_count($_POST['editionarea'],"\\\""))
+        $_POST["editionarea"] = stripcslashes($_POST["editionarea"]);
+    if ($_POST["cfwpp_edit"] == 'js')   
+        update_option('CP_ABC_JS', base64_encode($_POST["editionarea"]));  
+    else if ($_POST["cfwpp_edit"] == 'css')  
+        update_option('CP_ABC_CSS', base64_encode($_POST["editionarea"]));  
+}
+
+
 function cpabc_appointments_save_options()
 {
     global $wpdb;
@@ -1192,7 +1305,6 @@ function cpabc_appointments_save_options()
          'calendar_startmonth' => $_POST["calendar_startmonth"],
          'calendar_theme' => $_POST["calendar_theme"],
 
-         'enable_paypal' => @$_POST["enable_paypal"],
          'paypal_email' => $_POST["paypal_email"],
          'request_cost' => $_POST["request_cost"],
          'paypal_product_name' => $_POST["paypal_product_name"],
@@ -1205,7 +1317,6 @@ function cpabc_appointments_save_options()
          'nadmin_emailformat' => $_POST["nadmin_emailformat"],
          'nremind_emailformat' => $_POST["nremind_emailformat"],
 
-         //'vs_use_validation' => $_POST['vs_use_validation'],
          'vs_text_is_required' => $_POST['vs_text_is_required'],
          'vs_text_is_email' => $_POST['vs_text_is_email'],
          'vs_text_datemmddyyyy' => $_POST['vs_text_datemmddyyyy'],

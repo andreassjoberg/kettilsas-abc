@@ -1,3 +1,7 @@
+tinyMCEPreInit = {
+			baseURL: "../wp-includes/js/tinymce",
+			suffix: ".min"
+		};
 /*
 Copyright (c) 2008, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
@@ -1711,26 +1715,28 @@ function changeEditorSelect(id,d,t)
 	 	var objSelectValue = objSelect.options[objSelect.selectedIndex].value;
 	 	var a = YAHOO.TDE.AppCalendar.appoiments[calendarId];
 
-	 		var myEditor = YAHOO.TDE.panel.editors;
+	 		//var myEditor = YAHOO.TDE.panel.editors;
 	 	if (objSelectValue!="-1")
 	 	{
 	 		document.getElementById("editorTitle"+id).value = a[d][t][objSelectValue].title;
 	 		var capacitySelected = parseInt(a[d][t][objSelectValue].capacity);
-	 		myEditor['editorComment'+id].setEditorHTML(a[d][t][objSelectValue].comment);
+	 		tinymce.get('editorComment'+id).setContent(a[d][t][objSelectValue].comment);
+		  document.getElementById("editorComment"+id).value = a[d][t][objSelectValue].comment;
 		}
 		else
 		{
 	 		document.getElementById("editorTitle"+id).value = "";
 	 		var capacitySelected = 0;
-	 		myEditor['editorComment'+id].setEditorHTML("");
+	 		tinymce.get("editorComment"+id).setContent("");
+		  document.getElementById("editorComment"+id).value = "";
 		}
 		var thecapacity	= "";
 		
 		for (var i=1;i<=(reservations-capacityOccupied+capacitySelected);i++)
 	        thecapacity += '<option value="'+i+'" '+((i==capacitySelected || ((capacitySelected==0) && (i==1)))?"selected":"")+'>'+i+'</option>';
-	    document.getElementById("editorcapacity"+id).innerHTML = thecapacity;    
-		
-		myEditor["editorComment"+id].saveHTML();
+	    document.getElementById("editorcapacity"+id).innerHTML = thecapacity; 
+	    
+		document.getElementById("editorComment"+id).value = tinymce.get("editorComment"+id).getContent();
 	}
 function getTotalReservations(calendarId,d,t)
 {
@@ -1754,7 +1760,7 @@ function getTotalReservations(calendarId,d,t)
 }
 function createEditorCell(id_in, title_in, d, context_in, calendarId){
 	closeOnMouseOut = false;
-	var myEditor = YAHOO.TDE.panel.editors;
+	//var myEditor = YAHOO.TDE.panel.editors;
 	var hdwr = YAHOO.TDE.panel.panels;
 
 	 var handleYes = function() {
@@ -1771,7 +1777,8 @@ function createEditorCell(id_in, title_in, d, context_in, calendarId){
 	 	buttonID = buttonID.replace("editorCell", "button");
 
 	 	var objbutton = document.getElementById(buttonID);
-		myEditor["editorComment"+this.id].saveHTML();
+	 	
+		objcomment.value = tinymce.get("editorComment"+this.id).getContent();
 		var cal = YAHOO.TDE.calendar.calendarArray[calendarId];
 		if (objtitle.value!="")
 		{
@@ -1815,7 +1822,7 @@ function createEditorCell(id_in, title_in, d, context_in, calendarId){
 
 			}
 		}
-		if (a[this.d][this.time].length>0)
+		if (a[this.d] && a[this.d][this.time] && a[this.d][this.time].length>0)
 		{
 			if (cal.mCfg.MILITARY_TIME!=1)
 				objbutton.className = "cellbusy12";
@@ -1839,9 +1846,8 @@ function createEditorCell(id_in, title_in, d, context_in, calendarId){
 	 var handleClear = function() {
 	 	document.getElementById("editorTitle"+this.id).value = "";
 	 	document.getElementById("editorcapacity"+this.id).selectedIndex = 0;
-	 	var myEditor = YAHOO.TDE.panel.editors;
-	 	myEditor['editorComment'+this.id].setEditorHTML("");
-		myEditor["editorComment"+this.id].saveHTML();
+		tinymce.get("editorComment"+this.id).setContent("");
+		document.getElementById("editorComment"+this.id).value = "";
 	 };
 
 	/** if(!hdwr[id_in]){ */
@@ -1886,7 +1892,7 @@ function createEditorCell(id_in, title_in, d, context_in, calendarId){
 		var thecapacity	= '';
 		for (var i=1;i<=(reservations-capacityOccupied+capacitySelected);i++)
 			thecapacity += '<option value="'+i+'" '+((i==capacitySelected || ((capacitySelected==0) && (i==1)))?"selected":"")+'>'+i+'</option>';
-		hdwr[id_in][0].setBody('<div class="editorCell"><div>Appointments '+capacityOccupied+'/'+reservations+'<br /><select name="editorSelect'+id_in+'" id="editorSelect'+id_in+'" onchange="javascript:changeEditorSelect(\''+id_in+'\',\''+hdwr[id_in][0].d+'\',\''+hdwr[id_in][0].time+'\')">'+theSelect+'</select></div><div>Title</div><div><input value="'+title+'" name="editorTitle'+id_in+'" id="editorTitle'+id_in+'" type="text" /></div><div>Capacity occupied</div><div><select name="editorcapacity'+id_in+'" id="editorcapacity'+id_in+'">'+thecapacity+'</select></div><div>Comments</div><div><textarea name="editorComment'+id_in+'" id="editorComment'+id_in+'">'+comment+'</textarea></div></div>');
+		hdwr[id_in][0].setBody('<div class="editorCell"><div>Appointments '+capacityOccupied+'/'+reservations+'<br /><select name="editorSelect'+id_in+'" id="editorSelect'+id_in+'" onchange="javascript:changeEditorSelect(\''+id_in+'\',\''+hdwr[id_in][0].d+'\',\''+hdwr[id_in][0].time+'\')">'+theSelect+'</select></div><div>Title</div><div><input value="'+title+'" name="editorTitle'+id_in+'" id="editorTitle'+id_in+'" type="text" /></div><div>Capacity occupied</div><div><select name="editorcapacity'+id_in+'" id="editorcapacity'+id_in+'">'+thecapacity+'</select></div><div>Comments</div><div><textarea name="editorComment'+id_in+'" id="editorComment'+id_in+'" class="editorCommentClass">'+comment+'</textarea></div></div>');
 
 		hdwr[id_in][0].render(document.body);
 		var myConfig = {
@@ -1895,14 +1901,30 @@ function createEditorCell(id_in, title_in, d, context_in, calendarId){
 		dompath: true,
 		focusAtStart: true
 		 };
-
-	myEditor['editorComment'+id_in] = new YAHOO.widget.SimpleEditor('editorComment'+id_in, myConfig);
-	myEditor['editorComment'+id_in].render();
-
+		if ( typeof tinymce !== 'undefined' ) {
+           tinymce.remove();
+           tinymce.init( {
+               mode : "exact",
+               elements : 'editorComment'+id_in,
+               theme: "modern",
+               skin: "lightgray",
+               menubar : false,
+               statusbar : false,
+               toolbar: [
+                   "bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | undo redo"
+               ],
+               plugins : "paste",
+               paste_auto_cleanup_on_paste : true,
+               paste_postprocess : function( pl, o ) {
+                   o.node.innerHTML = o.node.innerHTML.replace( /&nbsp;+/ig, " " );
+               }
+           } );
+		}
+   
 	/** }else{
 	 	hdwr[id_in][0].show();
 	  } */
-}
+}  
 
 
 

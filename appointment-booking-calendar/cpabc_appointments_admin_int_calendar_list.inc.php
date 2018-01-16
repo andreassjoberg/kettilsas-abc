@@ -229,6 +229,22 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
   </div>    
  </div> 
 
+ 
+   <script type="text/javascript">
+   function cp_editArea(id)
+   {       
+          document.location = 'admin.php?page=cpabc_appointments.php&edit=1&cal=1&item='+id+'&r='+Math.random();
+   }
+  </script>
+  <div id="metabox_basic_settings" class="postbox" >
+  <h3 class='hndle' style="padding:5px;"><span>Customization Area</span></h3>
+  <div class="inside"> 
+      <p>Use this area to add custom CSS styles or custom scripts. These styles and scripts will be keep safe even after updating the plugin.</p>
+      <input type="button" onclick="cp_editArea('css');" name="gobtn3" value="Add Custom Styles" />
+      &nbsp; &nbsp; &nbsp;      
+      <input type="button" onclick="cp_editArea('js');" name="gobtn2" value="Add Custom JavaScript" />
+  </div>    
+ </div> 
   
 <?php } ?>  
   
