@@ -890,7 +890,9 @@ function cpabc_appointments_check_posted_data()
     if (cpabc_get_option('calendar_militarytime', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MILITARYTIME) == '0') $format = "g:i A"; else $format = "H:i";
 
     $calendar_dformat = cpabc_get_option('calendar_dateformat', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_DATEFORMAT);
-    if ($calendar_dformat == '2')
+    if ($calendar_dformat == '3')
+        $format = "Y-m-d ".$format;
+    else if ($calendar_dformat == '2')
         $format = "d.m.Y ".$format;
     else if ($calendar_dformat == '1')
         $format = "d/m/Y ".$format;
