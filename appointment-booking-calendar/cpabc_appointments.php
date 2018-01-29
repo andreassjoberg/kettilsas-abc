@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: https://abc.dwbooster.com
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.2.40
+Version: 1.2.41
 Author: CodePeople
 Author URI: https://abc.dwbooster.com
 License: GPL
@@ -763,7 +763,7 @@ function cpabc_export_iCal() {
     echo "END:STANDARD\n";
     echo "END:VTIMEZONE\n";
 
-    $events = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME." WHERE appointment_calendar_id=".intval($_GET["id"])." ORDER BY datatime ASC" );
+    $events = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME." WHERE ((is_cancelled is Null) OR (is_cancelled<>'1')) AND appointment_calendar_id=".intval($_GET["id"])." ORDER BY datatime ASC" );
     foreach ($events as $event)
     {
         echo "BEGIN:VEVENT\n";
