@@ -1943,7 +1943,7 @@ function getTimeWithAMPM(calendarId,t)
 		m =  ((t.substring(1,2)==":")?t.substring(1,t.length):t.substring(2,t.length));
 		return ((h%12==0)?"12":h%12)+m+' '+((h<12)?"am":"pm");
 	}
-	else if (cpabc_global_date_format == '3')
+	else if (typeof cpabc_global_date_format === 'undefined' || !cpabc_global_date_format || cpabc_global_date_format == '3')
 		return ("0" + t).slice(-5);
 	else
 		return t;
