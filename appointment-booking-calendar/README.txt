@@ -729,7 +729,10 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.2.40 =
 * Fix to editor access in admin appointments
 
+= 1.2.41 =
+* Fixed bug related to cancelled events appearing in iCal exports
+
 == Upgrade Notice ==
 
-= 1.2.40 =
-* Fix to editor access in admin appointments
+= 1.2.41 =
+* Fixed bug related to cancelled events appearing in iCal exports
