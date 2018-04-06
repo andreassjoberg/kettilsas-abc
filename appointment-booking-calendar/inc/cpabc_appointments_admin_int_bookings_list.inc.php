@@ -15,9 +15,22 @@ $message = "";
 
 $records_per_page = 50;                                                                                  
 
+function cpabc_bklist_verify_nonce() {
+    if (isset($_GET['rsave']) && $_GET['rsave'] != '')
+        $nonce = $_GET['rsave'];
+    else
+        $nonce = $_POST['rsave'];
+    $verify_nonce = wp_verify_nonce( $nonce, 'uname_abc_bklist');
+    if (!$verify_nonce)
+    {
+        echo 'Error: Form cannot be authenticated (nonce failed). Please contact our <a href="https://abc.dwbooster.com/contact-us">support service</a> for verification and solution. Thank you.';
+        exit;
+    } 
+}
 
 if (isset($_GET['delmark']) && $_GET['delmark'] != '')
 {
+    cpabc_bklist_verify_nonce();
     for ($i=0; $i<=$records_per_page; $i++)
     if (isset($_GET['c'.$i]) && $_GET['c'.$i] != '')   
         $wpdb->query( $wpdb->prepare('DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE id=%d', $_GET['c'.$i])  );       
@@ -25,11 +38,13 @@ if (isset($_GET['delmark']) && $_GET['delmark'] != '')
 }
 else if (isset($_GET['ld']) && $_GET['ld'] != '')
 {
+    cpabc_bklist_verify_nonce();
     $wpdb->query( $wpdb->prepare('DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE id=%d', $_GET['ld']) );       
     $message = "Item deleted";
 } 
 else if (isset($_GET['del']) && $_GET['del'] == 'all')
 {        
+    cpabc_bklist_verify_nonce();
     $wpdb->query( $wpdb->prepare( 'DELETE FROM `'.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME.'` WHERE appointment_calendar_id=%d', CP_CALENDAR_ID ) );           
     $message = "All items deleted";
 }
@@ -58,20 +73,22 @@ $total_pages = ceil(count($events) / $records_per_page);
 
 if ($message) echo "<div id='setting-error-settings_updated' class='updated settings-error'><p><strong>".$message."</strong></p></div>";
 
+$nonce_un = wp_create_nonce( 'uname_abc_bklist' );
+
 ?>
 <script type="text/javascript">
  function cp_deleteMessageItem(id)
  {
     if (confirm('Are you sure that you want to delete this item?'))
     {        
-        document.location = 'admin.php?page=cpabc_appointments.php&cal=<?php echo intval($_GET["cal"]); ?>&list=1&ld='+id+'&r='+Math.random();
+        document.location = 'admin.php?page=cpabc_appointments.php&rsave=<?php echo $nonce_un; ?>&cal=<?php echo intval($_GET["cal"]); ?>&list=1&ld='+id+'&r='+Math.random();
     }
  }
  function do_dexapp_deleteall()
  {
     if (confirm('Are you sure that you want to delete ALL bookings for this calendar? Note: This action cannot be undone.'))
     {        
-        document.location = 'admin.php?page=cpabc_appointments.php&cal=<?php echo intval($_GET["cal"]); ?>&list=1&del=all&r='+Math.random();
+        document.location = 'admin.php?page=cpabc_appointments.php&rsave=<?php echo $nonce_un; ?>&cal=<?php echo intval($_GET["cal"]); ?>&list=1&del=all&r='+Math.random();
     }    
  }
 </script>
@@ -126,6 +143,7 @@ echo paginate_links(  array(
  <input type="hidden" name="page" value="cpabc_appointments.php" />
  <input type="hidden" name="cal" value="<?php echo intval($_GET["cal"]); ?>" />
  <input type="hidden" name="list" value="1" />
+ <input type="hidden" name="rsave" value="<?php echo $nonce_un; ?>" />
  <input type="hidden" name="delmark" value="1" />
 <table class="wp-list-table widefat fixed pages" cellspacing="0" width="100%"> 
 	<thead>

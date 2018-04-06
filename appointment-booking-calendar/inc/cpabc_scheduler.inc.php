@@ -8,7 +8,7 @@
       echo '<script type="text/javascript">'.$custom_scripts.'</script>';  
 ?>
 <form class="cpp_form" name="FormEdit" action="<?php get_site_url(); ?>" method="post" onsubmit="return doValidate(this);">
-<input name="cpabc_appointments_post" type="hidden" value="1" />
+<input name="cpabc_appointments_post" type="hidden" value="1" /><input name="cpabc_appointments_utime" type="hidden"  value="" />
 <?php echo $quant_buffer; ?>
 <div <?php if (count($myrows) < 2) echo 'style="display:none"'; ?>>
   <?php _e("Calendar",'cpabc').":"; ?><br />
