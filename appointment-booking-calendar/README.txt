@@ -732,7 +732,31 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.2.41 =
 * Fixed bug related to cancelled events appearing in iCal exports
 
+= 1.2.42 =
+* Corrected settings links in plugins menu
+
+= 1.2.43 =
+* Multiple code updates and captcha fixes
+
+= 1.2.44 =
+* Security improvement
+
+= 1.2.45 =
+* Fixed display issue in non-available special dates
+
+= 1.2.46 =
+* Misc code updates
+
+= 1.2.47 =
+* Security improvements: nonces in bookings list
+
+= 1.2.48 =
+* Changed to local jquery datepicker styles
+
+= 1.2.49 =
+* New feature for getting the timezone info
+
 == Upgrade Notice ==
 
-= 1.2.41 =
-* Fixed bug related to cancelled events appearing in iCal exports
+= 1.2.49 =
+* New feature for getting the timezone info

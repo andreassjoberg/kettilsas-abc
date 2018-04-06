@@ -10,6 +10,7 @@ if (!defined('CP_CALENDAR_ID'))
     define ('CP_CALENDAR_ID',1);
 
 global $wpdb; 
+
 $mycalendarrows = $wpdb->get_results( $wpdb->prepare('SELECT * FROM '.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME .' WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`=%d', CP_CALENDAR_ID) ); 
 
 
@@ -63,9 +64,9 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
    var pathCalendar = "<?php echo cpabc_appointment_get_site_url(true); ?>";
    var cpabc_global_start_weekday = '<?php echo cpabc_get_option('calendar_weekday', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_WEEKDAY); ?>';
    </script>
-   <script type="text/javascript" src="<?php echo plugins_url('TDE_AppCalendar/all-scripts.js', __FILE__); ?>"></script>
-   <script type="text/javascript" language="JavaScript" src="<?php echo plugins_url('TDE_AppCalendar/tabview.js', __FILE__); ?>"></script>
-   <script type="text/javascript" language="JavaScript" src="<?php echo plugins_url('TDE_AppCalendar/simpleeditor-beta-min.js', __FILE__); ?>"></script>
+   <script type="text/javascript" src="<?php echo plugins_url('../TDE_AppCalendar/all-scripts.js', __FILE__); ?>"></script>
+   <script type="text/javascript" language="JavaScript" src="<?php echo plugins_url('../TDE_AppCalendar/tabview.js', __FILE__); ?>"></script>
+   <script type="text/javascript" language="JavaScript" src="<?php echo plugins_url('../TDE_AppCalendar/simpleeditor-beta-min.js', __FILE__); ?>"></script>
    
    <script>initAppCalendar("cal<?php echo CP_CALENDAR_ID; ?>","3","1","<?php echo CPABC_TDEAPP_DEFAULT_CALENDAR_LANGUAGE; ?>",{m1:"Please, select your appointment."});</script>
    
@@ -625,7 +626,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
   <h3 class='hndle' style="padding:5px;"><span>Note</span></h3>
   <div class="inside">
    To insert the calendar booking form in a post/page, use the dedicated icon 
-   <?php print '<img hspace="5" src="'.plugins_url('/images/cpabc_apps.gif', __FILE__).'" alt="'.__('Insert Appointment Booking Calendar','cpabc').'" />';     ?>
+   <?php print '<img hspace="5" src="'.plugins_url('../images/cpabc_apps.gif', __FILE__).'" alt="'.__('Insert Appointment Booking Calendar','cpabc').'" />';     ?>
    which has been added to your Upload/Insert Menu, just below the title of your Post/Page.
    <br /><br />
   </div>
@@ -648,6 +649,10 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
  {            
     var d=new Date();
     var f = document.dexconfigofrm;    
+    var cv_background = f.dexcv_background.value;
+	cv_background = cv_background.replace('#','');
+	var cv_border = f.dexcv_border.value;
+	cv_border = cv_border.replace('#','');
     var qs = "?width="+f.dexcv_width.value;
     qs += "&height="+f.dexcv_height.value;
     qs += "&letter_count="+f.dexcv_chars.value;
@@ -655,8 +660,8 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
     qs += "&max_size="+f.dexcv_max_font_size.value;
     qs += "&noise="+f.dexcv_noise.value;
     qs += "&noiselength="+f.dexcv_noise_length.value;
-    qs += "&bcolor="+f.dexcv_background.value;
-    qs += "&border="+f.dexcv_border.value;
+    qs += "&bcolor="+cv_background;
+    qs += "&border="+cv_border;
     qs += "&font="+f.dexcv_font.options[f.dexcv_font.selectedIndex].value;
     qs += "&rand="+d;
          

@@ -682,7 +682,11 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 					 {
 					     var tmp = j.split(":");
 					     if (tmp.length==2) /** check if time? */
-						       appCount += a[k][j].length;
+						   {
+						       //appCount += a[k][j].length;
+						       for (var l=0;l<a[k][j].length;l++) 
+		                  appCount += parseInt(a[k][j][l].capacity);
+						   }
 					 }
 					 /** check if special date */
 					 var special = YAHOO.TDE.AppCalendar.specialDates[calendarId];
