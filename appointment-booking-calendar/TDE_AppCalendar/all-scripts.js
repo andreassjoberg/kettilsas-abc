@@ -535,7 +535,15 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 						ws = ["Pz", "Pt", "Sa", "&Ccedil;a", "Pe", "Cu", "Ct"];
 						wm = ["Paz", "Pat", "Sal", "&Ccedil;ar", "Per", "Cum", "Cut"];
 						wl = ["Pazar","Pazartesi","Sal&yacute;","&Ccedil;ar&thorn;amba","Per&thorn;embe","Cuma","Cumartesi"];
-					break;					
+					break;	
+					case "HE":
+						ms = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+						ml = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+						wc = ['א\'','ב\'','ג\'','ד\'','ה\'','ו\'','שבת'];
+						ws = ['א\'','ב\'','ג\'','ד\'','ה\'','ו\'','שבת'];
+						wm = ['א\'','ב\'','ג\'','ד\'','ה\'','ו\'','שבת'];
+						wl = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+                    break;                         
 					default:
 						return;
 					break;
@@ -1298,7 +1306,11 @@ YAHOO.TDE.tabView.weekdaytag = function(day,calendarId) {
 		str += '<option value="90">90</option>';
 		str += '<option value="120">120</option>';
 		str += '<option value="180">180</option>';
-		str += '<option value="240">240</option>';
+        str += '<option value="240">240</option>';
+		str += '<option value="300">300</option>';
+        str += '<option value="360">360</option>';
+        str += '<option value="420">420</option>';
+        str += '<option value="480">480</option>';
 		str += '</select>';
 		return str;
 

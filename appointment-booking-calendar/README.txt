@@ -108,10 +108,6 @@ The current translations are already available in the appointment calendar plugi
 
 If you want to add a new translation you can add a new PO/MO file into the "languages" folder. If you want to provide the translation for a new language you can send us the texts and we will create the PO/MO files for you. We will appreciate if you allow sharing your translation with other WordPress users.
 
-= Updates =
-
-New features has been published in the current Appointment Booking Calendar version 1.1.8 based on the feedback received and we would like to thank you all the people that have supported the development, provided feedback and feature requests. The plugin is currently over 140,000 downloads/installations (6000+ active installs) and a new set of updates is already being prepared, any feature requests will be welcome. Thank you!
-
 == Installation ==
 
 To install **Appointment Booking Calendar**, follow these steps:
@@ -133,7 +129,7 @@ https://abc.dwbooster.com
 
 = Q: How can I center the appointment calendar into the page? =
 
-A: For centering the calendar open the CSS file "TDE_AppCalendar\all-css.css" in any text editor and add these CSS rules into that file:
+A: For centering the calendar add the needed styles into the "Customization area >> Add Custom Styles" (at the bottom of the page that contains the list of calendars):
 
     .appContainer{text-align:center;}
     .appContainer2{margin-left:auto;margin-right:auto;width:200px}
@@ -181,7 +177,17 @@ https://support.google.com/calendar/answer/37100?hl=en
 
 To get the iCal feed URL right click the "iCal" link on the calendar list and click "Copy Link Address" or "Copy Link Location" (depending of the browser you are using).
 
-Note: This will automatically export the bookings stored in the calendar plugin to the Google Calendar. The inverse process (import the items on Google Calendar into the plugin) isn't currently available.
+Note: This will automatically export the bookings stored in the calendar plugin to the Google Calendar. 
+
+The inverse process (import the items on Google Calendar into the plugin) is available in the Platinum version of the plugin.
+
+= Q: The plugin supports Double-Opt-In E-mail Validation? =
+
+A: The Platinum version of the Appointment Booking Calendar supports double opt-in e-mail validation. The double opt-in process includes two steps. In step 1, a potential customer fills out and submits your online booking form. In step 2, they'll receive a confirmation email and click a link to verify their email, changing the status of the booking to "confirmed".
+
+The double opt-in e-mail validation is useful to comply the European General Data Protection Regulation (GDPR).
+
+More info at https://abc.dwbooster.com/documentation#doiemail-area
 
 
 = Q: After booking appointment I'm not receiving the emails with the appointment data. =
@@ -196,7 +202,7 @@ A: Please check if after the completing the payment at PayPal the appointment ap
 
 = Q: How to make the appointment calendar 100% width? =
 
-A: Add this CSS rule at the end of the file "wp-content/plugins/appointment-booking-calendar/css/stylepublic.css":
+A: Add this CSS rule into the "Customization area >> Add Custom Styles" (at the bottom of the page that contains the list of calendars):
 
         .yui-calcontainer{width:98%}        
 
@@ -299,14 +305,15 @@ The theme can be selected into the administration area, below the calendar on th
 The free version published in this WordPress directory is a fully-functional version for accepting appointments through PayPal as indicated in the plugin description. There is also a pro (commercial)  version that includes the following additional features (not present in the free version):
 
 - Ability to process forms/appointments without PayPal
-- Coupons / discount codes
 - Form builder for a visual customization of the booking form
 - Email reminders for the appointments
+- Coupons / discount codes
 - Additional drop-down fields for multiple prices/services
+- Display calculated appointments price below the calendar
+- ... and a lot more of rich features
 
 Please note that the pro features aren't advised as part of the free plugin in the description shown in this WordPress directory. If you are interested in more information about the pro features go to the plugin's page: https://abc.dwbooster.com/download
  
-The Appointment Booking Calendar plugin has recently reached **28,000 installations** and we would like to **thank you all the people** that have supported the development of the plugin with feedback messages or by acquiring the pro / developer versions. We are working in a new set of features for all the distributions of the plugin that will be published soon. 
  
 == Screenshots ==
 
@@ -756,7 +763,73 @@ The Appointment Booking Calendar plugin has recently reached **28,000 installati
 = 1.2.49 =
 * New feature for getting the timezone info
 
+= 1.2.50 =
+* Multiple code optimizations
+
+= 1.2.51 =
+* Interface updates
+
+= 1.2.52 =
+* Full support for Hebrew language
+
+= 1.2.53 =
+* Improved language autodetection
+
+= 1.2.54 =
+* Fixed compatibility issue with third party plugin (Beaver)
+
+= 1.2.55 =
+* Fixed conflict with autoptimize plugin
+
+= 1.2.56 =
+* New feature for excluding fields from CSV exports
+
+= 1.2.57 =
+* Fixed conflict with WP Rocket and itemnumber fix 
+
+= 1.2.58 =
+* Fixed captcha reloading issue
+
+= 1.2.59 =
+* Clarification about calendar supported
+
+= 1.2.60 =
+* Min and max date edition validations
+
+= 1.2.61 =
+* Currency detection improved
+
+= 1.2.62 =
+* Added PayPal txnid tag to the confirmation emails
+
+= 1.2.63 =
+* Easier activation process
+
+= 1.2.64 =
+* Fixed initialization issue and added optional feedback
+
+= 1.2.65 =
+* SQL sanitization and doc updates
+
+= 1.2.66 =
+* Increased appointment intervals
+
+= 1.2.67 =
+* Added support for INR - Indian Rupee and ARS - Argentine peso currencies
+
+= 1.2.68 =
+* Database creating encoding fix 
+
+= 1.2.69 =
+* Fix to activation process
+
+= 1.2.70 =
+* New fix to activation process
+
+= 1.2.71 =
+* Interface improvements
+
 == Upgrade Notice ==
 
-= 1.2.49 =
-* New feature for getting the timezone info
+= 1.2.71 =
+* Interface improvements
