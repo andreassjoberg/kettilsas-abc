@@ -9,17 +9,23 @@
 ?>
 <form class="cpp_form" name="FormEdit" action="<?php get_site_url(); ?>" method="post" onsubmit="return doValidate(this);">
 <input name="cpabc_appointments_post" type="hidden" value="1" /><input name="cpabc_appointments_utime" type="hidden"  value="" />
-<?php echo $quant_buffer; ?>
+<?php 
+   echo $quant_buffer; 
+   if (isset($_GET["fl_builder"])) echo '<div style="border:1px dotted black;background-color:#ffffbb;padding:7px;">NOTE: Calendar is disabled while the Beaver Page Builder is in use. Will appear again after closing the Beaver edition option.</div>';
+?>
 <div <?php if (count($myrows) < 2) echo 'style="display:none"'; ?>>
   <?php _e("Calendar",'cpabc').":"; ?><br />
   <select name="cpabc_item" id="cpabc_item" onchange="cpabc_updateItem()"><?php echo $calendar_items; ?></select><br /><br />
 </div>
 <?php
-  _e("Select date and time",'cpabc').":";
+  echo "<div class=\"abc_selectdate fields\"><label>".__("Select date and time",'cpabc').":</label></div>";
   foreach ($myrows as $item)
-      echo '<div id="calarea_'.$item->id.'" style="display:none"><input name="selDaycal'.$item->id.'" type="hidden" id="selDaycal'.$item->id.'" /><input name="selMonthcal'.$item->id.'" type="hidden" id="selMonthcal'.$item->id.'" /><input name="selYearcal'.$item->id.'" type="hidden" id="selYearcal'.$item->id.'" /><input name="selHourcal'.$item->id.'" type="hidden" id="selHourcal'.$item->id.'" /><input name="selMinutecal'.$item->id.'" type="hidden" id="selMinutecal'.$item->id.'" /><div class="appContainer"><div style="z-index:1000;" class="appContainer2"><div id="cal'.$item->id.'Container"></div></div></div> <div style="clear:both;"></div><div id="listcal'.$item->id.'"></div></div>';
+  {
+      $atlang = cpabc_auto_language($item->calendar_language);
+      echo '<div id="calarea_'.$item->id.'" style="display:none'.(is_rtl()?';float:right;':'').'"><input name="selDaycal'.$item->id.'" type="hidden" id="selDaycal'.$item->id.'" /><input name="selMonthcal'.$item->id.'" type="hidden" id="selMonthcal'.$item->id.'" /><input name="selYearcal'.$item->id.'" type="hidden" id="selYearcal'.$item->id.'" /><input name="selHourcal'.$item->id.'" type="hidden" id="selHourcal'.$item->id.'" /><input name="selMinutecal'.$item->id.'" type="hidden" id="selMinutecal'.$item->id.'" /><div class="appContainer"><div style="z-index:1000;" class="appContainer2"><div id="cal'.$item->id.'Container"></div></div></div> <div style="clear:both;"></div><div id="listcal'.$item->id.'"></div></div>';
+  }
 ?>
-<br />
+<div style="clear:both;"></div>
 <?php _e('Your phone number','cpabc'); ?>:<br />
 <input type="text" name="phone" value=""><br />
 <?php _e('Your name','cpabc'); ?>:<br />

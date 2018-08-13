@@ -92,12 +92,14 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <td>
              <?php $value = cpabc_get_option('calendar_language',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_LANGUAGE); ?>
              <select name="calendar_language">               
+               <option value="-" <?php if ($value == '-') echo ' selected="selected"'; ?>>- Auto detect -</option> 
                <option value="CZ" <?php if ($value == 'CZ') echo ' selected="selected"'; ?>>Czech</option>
                <option value="DE" <?php if ($value == 'DE') echo ' selected="selected"'; ?>>German</option>
                <option value="DA" <?php if ($value == 'DA') echo ' selected="selected"'; ?>>Danish</option>
                <option value="DU" <?php if ($value == 'DU') echo ' selected="selected"'; ?>>Dutch</option>
                <option value="EN" <?php if ($value == 'EN') echo ' selected="selected"'; ?>>English</option>
                <option value="FR" <?php if ($value == 'FR') echo ' selected="selected"'; ?>>French</option>
+               <option value="HE" <?php if ($value == 'HE') echo ' selected="selected"'; ?>>Hebrew</option>
                <option value="HU" <?php if ($value == 'HU') echo ' selected="selected"'; ?>>Hungarian</option>
                <option value="IT" <?php if ($value == 'IT') echo ' selected="selected"'; ?>>Italian</option>
                <option value="JP" <?php if ($value == 'JP') echo ' selected="selected"'; ?>>Japanese</option>
@@ -194,16 +196,18 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         
         <tr valign="top">        
         <th scope="row">Minimum  available date</th>
-        <td><input type="text" name="calendar_mindate" size="40" value="<?php echo esc_attr(cpabc_get_option('calendar_mindate',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MINDATE)); ?>" /><br />
+        <td><input type="text" onchange="abc_checkdatemin()" id="calendar_mindate" name="calendar_mindate" size="40" value="<?php echo esc_attr(cpabc_get_option('calendar_mindate',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MINDATE)); ?>" /><br />
          <em style="font-size:11px;">Examples: <?php echo date("Y-m-d"); ?>, today, today +3 days, now +30 hours</em>
+         <div id="abcmindateval" style="font-weight:bold"></div>
         </td>
         </tr>
         
         <tr valign="top">        
         <th scope="row">Maximum available date</th>
         <td>
-         <input type="text" name="calendar_maxdate" size="40" value="<?php echo esc_attr(cpabc_get_option('calendar_maxdate',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MAXDATE)); ?>" /><br />
+         <input type="text" onchange="abc_checkdatemax()" id="calendar_maxdate" name="calendar_maxdate" size="40" value="<?php echo esc_attr(cpabc_get_option('calendar_maxdate',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MAXDATE)); ?>" /><br />
          <em style="font-size:11px;">Examples: <?php echo date("Y-m-d", strtotime("+6 months")); ?>, today, today +3 days</em>
+         <div id="abcmaxdateval" style="font-weight:bold"></div>
         </td>
         </tr>
         
@@ -302,16 +306,12 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
      <table class="form-table">    
         <tr valign="top">
         <th scope="row">Submit button label (text):</th>
-        <td><input type="text" name="vs_text_submitbtn" size="40" value="<?php $label = esc_attr(cpabc_get_option('vs_text_submitbtn', 'Continue')); echo ($label==''?'Continue':$label); ?>" /></td>
-        </tr>    
-        <tr valign="top">
-        <td colspan="2"> - The  <em>class="<?php if (get_option('CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR',"1") != "1") { ?>pbSubmit<?php } else { ?>cp_subbtn<?php } ?>"</em> can be used to modify the button styles. <br />
-        - The styles can be applied into any of the CSS files of your theme or into the CSS file <em>"appointment-booking-calendar\TDE_AppCalendar\all-css.css"</em>. <br />
-        - For further modifications, the submit button is located at the end of the file <em>"<?php if (get_option('CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR',"1") != "1") echo 'cpabc_internal.inc.php'; else echo 'cpabc_scheduler.inc.php'; ?>"</em>.<br />
+        <td><input type="text" name="vs_text_submitbtn" size="40" value="<?php $label = esc_attr(cpabc_get_option('vs_text_submitbtn', 'Continue')); echo ($label==''?'Continue':$label); ?>" /><br />
+        <em>The  class="<?php if (get_option('CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR',"1") != "1") { ?>pbSubmit<?php } else { ?>cp_subbtn<?php } ?>" can be used to modify the button styles. The styles can be applied into the <a href="?page=cpabc_appointments.php#metabox_basic_settings_custom">CSS Customization Area</a>. For further modifications, the submit button is located at the end of the file "<?php if (get_option('CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR',"1") != "1") echo 'cpabc_internal.inc.php'; else echo 'cpabc_scheduler.inc.php'; ?>".<br />
         <?php if (get_option('CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR',"1") != "1") { ?>
         - For general CSS styles modifications to the form and samples <a href="https://abc.dwbooster.com/faq" target="_blank">check this FAQ</a>.
-        <?php } ?>
-        </tr>
+        <?php } ?></em></td>
+        </tr>  
      </table>
   </div>    
  </div> 
@@ -324,7 +324,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
     <table class="form-table">
         <tr valign="top">        
         <th scope="row">Enable Paypal Payments?</th>
-        <td><input type="checkbox" readonly disabled name="enable_paypal" size="40" value="1" checked /> <em>The feature for working without PayPal is implemented/available in the <a href="https://abc.dwbooster.com/download">pro version</a>.</em>
+        <td><input type="checkbox" readonly disabled name="enable_paypal" size="40" value="1" checked /> <em>The feature for working without PayPal is implemented/available in the <a href="https://abc.dwbooster.com/download">commercial versions</a>.</em>
         </td>
         </tr>                   
     
@@ -362,6 +362,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 <option value="EUR"<?php if ($currency == 'EUR') echo ' selected'; ?>>EUR - Euro</option>
 <option value="GBP"<?php if ($currency == 'GBP') echo ' selected'; ?>>GBP - Pound Sterling</option>
 <option value="USD"> - </option>
+<option value="ARS"<?php if ($currency == 'ARS') echo ' selected'; ?>>ARS - Argentine peso</option>
 <option value="AUD"<?php if ($currency == 'AUD') echo ' selected'; ?>>AUD - Australian Dollar</option>
 <option value="BRL"<?php if ($currency == 'BRL') echo ' selected'; ?>>BRL - Brazilian Real</option>
 <option value="CAD"<?php if ($currency == 'CAD') echo ' selected'; ?>>CAD - Canadian Dollar</option>
@@ -370,6 +371,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 <option value="HKD"<?php if ($currency == 'HKD') echo ' selected'; ?>>HKD - Hong Kong Dollar</option>
 <option value="HUF"<?php if ($currency == 'HUF') echo ' selected'; ?>>HUF - Hungarian Forint</option>
 <option value="ILS"<?php if ($currency == 'ILS') echo ' selected'; ?>>ILS - Israeli New Sheqel</option>
+<option value="INR"<?php if ($currency == 'INR') echo ' selected'; ?>>INR - Indian Rupee</option>
 <option value="JPY"<?php if ($currency == 'JPY') echo ' selected'; ?>>JPY - Japanese Yen</option>
 <option value="MYR"<?php if ($currency == 'MYR') echo ' selected'; ?>>MYR - Malaysian Ringgit</option>
 <option value="MXN"<?php if ($currency == 'MXN') echo ' selected'; ?>>MXN - Mexican Peso</option>	
@@ -417,7 +419,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <tr valign="top">
         <th scope="row">Discount Codes</th>
         <td> 
-           <em>The -discount codes- feature is available in the <a href="https://abc.dwbooster.com/download">pro version</a>.</em>
+           <em>The -discount codes- feature is available in the <a href="https://abc.dwbooster.com/download">commercial versions</a>.</em>
         </td>
         </tr>  
                    
@@ -568,12 +570,12 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
  
  
  <div id="metabox_basic_settings" class="postbox" >
-  <h3 class='hndle' style="padding:5px;"><span>Email Reminder Settings  - Available only in Pro version</span></h3>
+  <h3 class='hndle' style="padding:5px;"><span>Email Reminder Settings  - Available in commercial versions</span></h3>
   <div class="inside">  
      <table class="form-table">    
         <tr valign="top">
         <th scope="row">Enable e-mail reminder?</th>
-        <td><input type="checkbox" name="enable_reminder" disabled readonly size="40" value="1" <?php if (cpabc_get_option('enable_reminder',CPABC_APPOINTMENTS_DEFAULT_ENABLE_REMINDER)) echo 'checked'; ?> /> * This feature is available in the <a href="https://abc.dwbooster.com/download">pro version</a>.</td>
+        <td><input type="checkbox" name="enable_reminder" disabled readonly size="40" value="1" <?php if (cpabc_get_option('enable_reminder',CPABC_APPOINTMENTS_DEFAULT_ENABLE_REMINDER)) echo 'checked'; ?> /> * This feature is available in the <a href="https://abc.dwbooster.com/download">commercial versions</a>.</td>
         </tr>              
         <tr valign="top">
         <th scope="row">Send reminder:</th>        
@@ -605,7 +607,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 
  
  <div id="metabox_basic_settings" class="postbox" >
-  <h3 class='hndle' style="padding:5px;"><span>Custom Settings - Available only in Pro version</span></h3>
+  <h3 class='hndle' style="padding:5px;"><span>Custom Settings - Available in commercial versions</span></h3>
   <div class="inside">
      <table class="form-table">    
         <tr valign="top">
@@ -614,7 +616,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <?php echo str_replace("\n", "<br />", CPABC_APPOINTMENTS_DEFAULT_EXPLAIN_CP_CAL_CHECKBOXES); ?>
         </th>
         <td>
-            <em>This feature is available only in the <a href="https://abc.dwbooster.com/download">commercial versions</a>.</em>
+            <em>This feature is available in the <a href="https://abc.dwbooster.com/download">commercial versions</a>.</em>
         </td>
         </tr>             
      </table>  
@@ -689,10 +691,18 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                                $j('#cpabc_dc_code').val();
                              });
                              
-  function cpabc_delete_coupon(id)                             
+  
+  function abc_checkdatemin()                             
   {
-     $j('#cpabc_nocodes_availmsg').load('<?php echo cpabc_appointment_get_site_url(true); ?>/?cpabc_app=cpabc_loadcoupons&inAdmin=1&cpabc_item=<?php echo CP_CALENDAR_ID; ?>&delete=1&code='+id);
+     $j('#abcmindateval').load('<?php echo cpabc_appointment_get_site_url(true); ?>/?cpabc_app=cpabc_loadmindate&code='+encodeURIComponent(document.getElementById("calendar_mindate").value));
   }
+  
+  function abc_checkdatemax()                             
+  {
+     $j('#abcmaxdateval').load('<?php echo cpabc_appointment_get_site_url(true); ?>/?cpabc_app=cpabc_loadmaxdate&code='+encodeURIComponent(document.getElementById("calendar_maxdate").value)+'&code2='+encodeURIComponent(document.getElementById("calendar_mindate").value));
+  }  
+  abc_checkdatemax();
+  abc_checkdatemin();
   
   function cpabc_updatemaxslots()
   {

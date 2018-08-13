@@ -28,6 +28,7 @@ else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
     {
         update_option( 'CPABC_CAL_TIME_ZONE_MODIFY_SET', $_GET["ict"] );
         update_option( 'CPABC_CAL_TIME_SLOT_SIZE_SET', $_GET["ics"] );
+        update_option( 'CPABC_EXCLUDED_COLUMNS', $_GET["col"] );
         
         update_option( 'CPABC_APPOINTMENTS_LOAD_SCRIPTS', ($_GET["scr"]=="1"?"1":"2") );   
         update_option( 'CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR', "1" );
@@ -93,7 +94,8 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
         var ccf = document.getElementById("ccformrender").value; 
         var ict = document.getElementById("icaltimediff").value; 
         var ics = document.getElementById("icaltimeslotsize").value; 
-        document.location = 'admin.php?page=cpabc_appointments.php&_wpnonce=<?php echo $nonce_un; ?>&ac=st&scr='+scr+'&chs='+chs+'&ccf='+ccf+'&ict='+ict+'&ics='+ics+'&r='+Math.random();
+        var col = document.getElementById("excludecolumns").value; 
+        document.location = 'admin.php?page=cpabc_appointments.php&_wpnonce=<?php echo $nonce_un; ?>&ac=st&scr='+scr+'&chs='+chs+'&ccf='+ccf+'&ict='+ict+'&ics='+ics+'&col='+encodeURIComponent(col)+'&r='+Math.random();
     }    
  } 
  
@@ -168,7 +170,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
   <h3 class='hndle' style="padding:5px;"><span>New Calendar / Item</span></h3>
   <div class="inside"> 
    
-       This version supports one calendar.
+       This version supports one calendar. <a href="https://abc.dwbooster.com/download">Check the upgrade options</a>.
 
   </div>    
  </div>
@@ -185,7 +187,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
        <select id="ccformrender" name="ccformrender">
         <option value="1" selected>Use classic predefined form</option>        
        </select><br />
-       <em>* The <strong>Visual Form Builder</strong> is available only in the <a href="https://abc.dwbooster.com/download">pro version</a>. To edit the form in this basic version you should manually edit the file 'cpabc_scheduler.inc.php'.</em>
+       <em>* The <strong>Visual Form Builder</strong> is available in the <a href="https://abc.dwbooster.com/download">commercial versions</a>. To edit the form in this basic version you should manually edit the file 'cpabc_scheduler.inc.php'.</em>
       
       <br /><br />
           
@@ -221,6 +223,13 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
         <br />
        <em>* Update this, if needed, to have a specific slot time in the exported iCal file.</em>
       
+       <br /><br />
+       Exclude columns from CSV exported files:<br />
+        <input type="text" size="50" name="excludecolumns" id="excludecolumns" value="<?php echo get_option('CPABC_EXCLUDED_COLUMNS',""); ?>" /> 
+        <br />
+       <em>* Names of the columns to be excluded, comma separated.</em>
+      
+      
         <br /><br />         
        <input type="button" onclick="cp_updateConfig();" name="gobtn" value="UPDATE" />
       <br /><br />      
@@ -236,7 +245,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
           document.location = 'admin.php?page=cpabc_appointments.php&edit=1&cal=1&item='+id+'&r='+Math.random();
    }
   </script>
-  <div id="metabox_basic_settings" class="postbox" >
+  <div id="metabox_basic_settings_custom" class="postbox" >
   <h3 class='hndle' style="padding:5px;"><span>Customization Area</span></h3>
   <div class="inside"> 
       <p>Use this area to add custom CSS styles or custom scripts. These styles and scripts will be keep safe even after updating the plugin.</p>

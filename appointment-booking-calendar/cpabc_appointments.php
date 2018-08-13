@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.2.49
+Version: 3.1.2.71
 Author: Andreas Sjoberg
 Author URI: https://www.andreassjoberg.com/
 License: GPL
@@ -26,7 +26,7 @@ define('CPABC_APPOINTMENTS_EUR_CURRENCY_SYMBOL_B',chr(128));
 
 define('CPABC_APPOINTMENTS_DEFAULT_form_structure', '[[{"name":"email","index":0,"title":"Email","ftype":"femail","userhelp":"","csslayout":"","required":true,"predefined":"","size":"medium"},{"name":"subject","index":1,"title":"Subject","required":true,"ftype":"ftext","userhelp":"","csslayout":"","predefined":"","size":"medium"},{"name":"message","index":2,"size":"large","required":true,"title":"Message","ftype":"ftextarea","userhelp":"","csslayout":"","predefined":""}],[{"title":"","description":"","formlayout":"top_aligned"}]]');
 
-define('CPABC_APPOINTMENTS_DEFAULT_CALENDAR_LANGUAGE', 'EN');
+define('CPABC_APPOINTMENTS_DEFAULT_CALENDAR_LANGUAGE', '-');
 define('CPABC_APPOINTMENTS_DEFAULT_CALENDAR_DATEFORMAT', '0');
 define('CPABC_APPOINTMENTS_DEFAULT_CALENDAR_MILITARYTIME', '1');
 define('CPABC_APPOINTMENTS_DEFAULT_CALENDAR_WEEKDAY', '0');
@@ -46,7 +46,7 @@ define('CPABC_APPOINTMENTS_DEFAULT_CURRENCY','USD');
 define('CPABC_APPOINTMENTS_DEFAULT_PAYPAL_LANGUAGE','EN');
 
 define('CPABC_APPOINTMENTS_DEFAULT_ENABLE_REMINDER', 0);
-define('CPABC_APPOINTMENTS_DEFAULT_REMINDER_HOURS', 24);
+define('CPABC_APPOINTMENTS_DEFAULT_REMINDER_HOURS', 48);
 define('CPABC_APPOINTMENTS_DEFAULT_REMINDER_SUBJECT', 'Appointment reminder...');
 define('CPABC_APPOINTMENTS_DEFAULT_REMINDER_CONTENT', "This is a reminder for your appointment with the following information:\n\n%INFORMATION%\n\nThank you.\n\nBest regards.");
 
@@ -137,12 +137,26 @@ include_once dirname( __FILE__ ) . '/inc/cpabc_apps.inc.php';
 register_activation_hook(__FILE__,'cpabc_appointments_install');
 
 add_action( 'plugins_loaded', 'cpabc_plugin_init');
-add_action( 'plugins_loaded', 'cpabc_appointments_check_posted_data', 11 );
+add_action( 'init', 'cpabc_appointments_check_posted_data', 11 );
 add_action( 'plugins_loaded', 'cpabc_appointments_check_IPN_verification', 11 );
 add_action( 'plugins_loaded', 'cpabc_appointments_calendar_load', 11 );
 add_action( 'plugins_loaded', 'cpabc_appointments_calendar_load2', 11 );
 add_action( 'plugins_loaded', 'cpabc_appointments_calendar_update', 11 );
 add_action( 'plugins_loaded', 'cpabc_appointments_calendar_update2', 11 );
+
+//START: activation redirection 
+function cpabc_activation_redirect( $plugin ) {
+    if(
+        $plugin == plugin_basename( __FILE__ ) &&
+        (!isset($_POST["action"]) || $_POST["action"] != 'activate-selected') &&
+        (!isset($_POST["action2"]) || $_POST["action2"] != 'activate-selected') 
+      )
+    {
+        exit( wp_redirect( admin_url( 'admin.php?page=cpabc_appointments.php' ) ) );
+    }
+}
+add_action( 'activated_plugin', 'cpabc_activation_redirect' );
+//END: activation redirection 
 
 if ( is_admin() ) {
     add_action('media_buttons', 'set_cpabc_apps_insert_button', 100);
@@ -195,6 +209,16 @@ function cpabc_appointments_install($networkwide)  {
 		}
 	}
 	_cpabc_appointments_install();
+}   
+
+// this filter has been applied to avoid problems with WP Rocket Optimizations
+add_filter( 'rocket_exclude_js', 'cpabc_wprockert_exclude_js_minify' );
+function cpabc_wprockert_exclude_js_minify( $js_files ) {
+	$js_files[] = plugins_url('/TDE_AppCalendar/all-scripts.js', __FILE__);
+	$js_files[] = plugins_url('/js/(.*).js', __FILE__);    
+	return $js_files;
 }
 
+// optional opt-in deactivation feedback
+require_once 'inc/cp-feedback.php';
 ?>
