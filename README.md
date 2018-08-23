@@ -11,3 +11,7 @@ License: See [LICENSE.md](LICENSE.md)
  * Redirect to success page instead of PayPal
  * Added date format "yyyy-MM-dd"
  * Added time format "HH:mm"
+
+## Special thanks
+![JetBrains](https://i.imgur.com/ZjrwdWA.png "JetBrains")
+![ReSharper](https://i.imgur.com/iRLTO9E.png "ReSharper")
