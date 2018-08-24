@@ -2,7 +2,7 @@
 
 Original Wordpress plugin page: [Appointment Booking Calendar](https://sv.wordpress.org/plugins/appointment-booking-calendar/)
 
-Modified for [Kettilsas.se](http://www.kettilsas.se/)
+Modified for [Kettilsas.se](https://www.kettilsas.se/)
 
 License: See [LICENSE.md](LICENSE.md)
 
@@ -13,5 +13,5 @@ License: See [LICENSE.md](LICENSE.md)
  * Added time format "HH:mm"
 
 ## Special thanks
-![JetBrains](https://i.imgur.com/ZjrwdWA.png "JetBrains")
-![ReSharper](https://i.imgur.com/iRLTO9E.png "ReSharper")
+[![JetBrains](https://i.imgur.com/ZjrwdWA.png "JetBrains")](https://www.jetbrains.com/)
+[![ReSharper](https://i.imgur.com/iRLTO9E.png "ReSharper")](https://www.jetbrains.com/resharper/?fromMenu)
