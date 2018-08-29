@@ -3,8 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.2.71
-Author: Andreas Sjoberg
+Version: 3.1.2.74
 Author URI: https://www.andreassjoberg.com/
 License: GPL
 */
@@ -162,6 +161,7 @@ if ( is_admin() ) {
     add_action('media_buttons', 'set_cpabc_apps_insert_button', 100);
     add_action('admin_enqueue_scripts', 'set_cpabc_apps_insert_adminScripts', 1);
     add_action('admin_menu', 'cpabc_appointments_admin_menu');
+    add_action( 'init', 'cpabc_appointments_gutenberg_block' );
 
     $plugin = plugin_basename(__FILE__);
     add_filter("plugin_action_links_".$plugin, 'cpabc_customAdjustmentsLink');
@@ -183,6 +183,21 @@ else
     add_shortcode( 'CPABC_APPOINTMENT_CALENDAR', 'cpabc_appointments_filter_content' );
     add_shortcode( 'CPABC_EDIT_CALENDAR', 'cpabc_appointments_filter_edit' );
     add_shortcode( 'CPABC_APPOINTMENT_LIST', 'cpabc_appointments_filter_list' );
+}
+
+
+function cpabc_appointments_gutenberg_block() {
+    if (function_exists('register_block_type'))
+    {
+        wp_register_script(
+             'cpabc-step01',
+             plugins_url( 'js/block.js', __FILE__ ),
+             array( 'wp-blocks', 'wp-element' )
+         );
+        register_block_type( 'cpabc/appointment-booking-calendar', array(
+            'editor_script' => 'cpabc-step01',
+        ) );        
+    }
 }
 
 

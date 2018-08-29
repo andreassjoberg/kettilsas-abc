@@ -829,7 +829,16 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.2.71 =
 * Interface improvements
 
+= 1.2.72 =
+* High speed load improvement
+
+= 1.2.73 =
+* Compatible with Gutenberg
+
+= 1.2.74 =
+* Fixed bug in admin area
+
 == Upgrade Notice ==
 
-= 1.2.71 =
-* Interface improvements
+= 1.2.74 =
+* Fixed bug in admin area
