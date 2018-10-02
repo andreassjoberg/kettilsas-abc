@@ -9,6 +9,9 @@ if(!function_exists( 'codepeople_add_promote_banner' ))
 
 		if( empty($codepeople_promote_banner_plugins) || !is_admin() ) return;
 
+        $screen = get_current_screen();
+        if ( ($screen->post_type == 'page' || $screen->post_type == 'post') && $screen->base == 'post') return;
+     
 		// Take action over the banner
 		if(isset($_POST['codepeople_promote_banner_nonce']) && wp_verify_nonce($_POST['codepeople_promote_banner_nonce'], __FILE__))
 		{
