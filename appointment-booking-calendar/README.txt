@@ -841,7 +841,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.2.75 =
 * Fix to Gutenberg integration
 
+= 1.2.76 =
+* Conflict avoid with Gutenberg editor
+
 == Upgrade Notice ==
 
-= 1.2.75 =
-* Fix to Gutenberg integration
+= 1.2.76 =
+* Conflict avoid with Gutenberg editor
