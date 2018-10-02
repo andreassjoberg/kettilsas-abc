@@ -1,7 +1,7 @@
 ( function( blocks, element ) {
     var el = wp.element.createElement,
     source 		= blocks.source,
-	InspectorControls = blocks.InspectorControls,
+	InspectorControls = wp.editor.InspectorControls,
 	category 	= {slug:'appointment-booking-calendar', title : 'Appointment Booking Calendar'};
     
     /* Plugin Category */
@@ -24,7 +24,7 @@
 		},        
     
 		edit: function( props ) {
-			var focus = props.focus;
+			var focus = props.isSelected;
 			return [
 				!!focus && el(
 					InspectorControls,
