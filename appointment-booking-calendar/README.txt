@@ -838,7 +838,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.2.74 =
 * Fixed bug in admin area
 
+= 1.2.75 =
+* Fix to Gutenberg integration
+
 == Upgrade Notice ==
 
-= 1.2.74 =
-* Fixed bug in admin area
+= 1.2.75 =
+* Fix to Gutenberg integration
