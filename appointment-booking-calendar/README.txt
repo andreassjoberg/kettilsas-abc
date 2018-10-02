@@ -844,7 +844,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.2.76 =
 * Conflict avoid with Gutenberg editor
 
+= 1.2.77 =
+* Fixed magic quotes issue
+
 == Upgrade Notice ==
 
-= 1.2.76 =
-* Conflict avoid with Gutenberg editor
+= 1.2.77 =
+* Fixed magic quotes issue

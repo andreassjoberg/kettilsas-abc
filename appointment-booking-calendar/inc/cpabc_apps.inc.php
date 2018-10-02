@@ -1080,6 +1080,9 @@ function cpabc_appointments_add_field_verify ($table, $field, $type = "text")
 
 function cpabc_appointments_save_edition()
 {
+    foreach ($_POST as $item => $value)
+        if (!is_array($value))
+            $_POST[$item] = stripcslashes($value);    
     if (substr_count($_POST['editionarea'],"\\\""))
         $_POST["editionarea"] = stripcslashes($_POST["editionarea"]);
     if ($_POST["cfwpp_edit"] == 'js')   
