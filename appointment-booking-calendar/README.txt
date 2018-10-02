@@ -838,7 +838,22 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.2.74 =
 * Fixed bug in admin area
 
+= 1.2.75 =
+* Fix to Gutenberg integration
+
+= 1.2.76 =
+* Conflict avoid with Gutenberg editor
+
+= 1.2.77 =
+* Fixed magic quotes issue
+
+= 1.2.78 =
+* Gutenberg integration update
+
+= 1.2.79 =
+* Improved custom CSS and JS editor
+
 == Upgrade Notice ==
 
-= 1.2.74 =
-* Fixed bug in admin area
+= 1.2.79 =
+* Improved custom CSS and JS editor
