@@ -431,7 +431,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
  
   
  <div id="metabox_basic_settings" class="postbox" >
-  <h3 class='hndle' style="padding:5px;"><span>Notification Settings to Administrators</span></h3>
+  <h3 class='hndle' style="padding:5px;"><span>Notification Settings for Administrators</span></h3>
   <div class="inside">
      <table class="form-table">    
         <tr valign="top">
