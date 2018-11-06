@@ -853,7 +853,28 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.2.79 =
 * Improved custom CSS and JS editor
 
+= 1.2.80 =
+* Improved CSS edition area
+
+= 1.2.81 =
+* Fixes to styles, translations and captcha
+
+= 1.2.82 =
+* Currency settings clarifications
+
+= 1.2.83 =
+* Fixed email edition issue
+
+= 1.2.84 =
+* Fixed issue with magic quotes
+
+= 1.2.85 =
+* Captcha image improvement
+
+= 1.2.86 =
+* Gutenberg compatibility updates
+
 == Upgrade Notice ==
 
-= 1.2.79 =
-* Improved custom CSS and JS editor
+= 1.2.86 =
+* Gutenberg compatibility updates
