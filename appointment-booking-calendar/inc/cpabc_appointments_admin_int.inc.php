@@ -50,6 +50,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 <input name="cpabc_appointments_post_options" type="hidden" value="1" />
 <input name="cpabc_item" type="hidden" value="<?php echo CP_CALENDAR_ID; ?>" />
 <input name="_wpnonce" type="hidden" value="<?php echo $nonce_un; ?>" />
+<input name="cpabc_appointments_control_field" type="hidden" value="&quot;" />
    
 <div id="normal-sortables" class="meta-box-sortables">
 
@@ -357,7 +358,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <th scope="row">Currency</th>
         <td>
         <?php $currency = strtoupper(esc_attr(cpabc_get_option('currency',CPABC_APPOINTMENTS_DEFAULT_CURRENCY))); ?>
-<select name="currency">
+<select name="currency" onchange="javascript:cpExplainCurrency(this);">
 <option value="USD"<?php if ($currency == 'USD' || $currency == '') echo ' selected'; ?>>USD - U.S. Dollar</option>
 <option value="EUR"<?php if ($currency == 'EUR') echo ' selected'; ?>>EUR - Euro</option>
 <option value="GBP"<?php if ($currency == 'GBP') echo ' selected'; ?>>GBP - Pound Sterling</option>
@@ -385,7 +386,25 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 <option value="CHF"<?php if ($currency == 'CHF') echo ' selected'; ?>>CHF - Swiss Franc</option>
 <option value="TWD"<?php if ($currency == 'TWD') echo ' selected'; ?>>TWD - Taiwan New Dollar</option>
 <option value="THB"<?php if ($currency == 'THB') echo ' selected'; ?>>THB - Thai Baht</option>
+<option value="USD"<?php if ($currency == 'nocurrency') echo ' selected'; ?>> - Other Currency? -</option>
 </select>
+<script type="text/javascript">
+function cpExplainCurrency(fld)
+{
+    var sel = fld.options[fld.options.selectedIndex].text;
+    if (sel == '- Other Currency? -')
+        document.getElementById("cpexplaincurr").style.display = '';
+}
+</script>
+<div id="cpexplaincurr" style="display:none;padding:15px;background-color:#EDF5FF;border:1px solid #808080;">
+<p>The currencies listed in this dropdown are the <a href="https://developer.paypal.com/docs/classic/api/currency_codes/#paypal" target="_blank">currencies supported by PayPal</a> to accept payments. Since this version
+of the plugin requires the PayPal integration only the PayPal supported currencies are listed here.</p><br />
+
+<p>The commercial versions of the plugin support all currencies since PayPal is optional in those versions and some distributions
+also support integration with other payment gateways.</p><br />
+
+<p>If you need further information or solution about this currency setting you can <a href="https://abc.dwbooster.com/contact-us">contact our support service</a>.</p>
+</div>
 </td>
         </tr>
         
@@ -440,7 +459,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         </tr>             
         <tr valign="top">
         <th scope="row">Send notification to email</th>
-        <td><input type="email" name="notification_destination_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_destination_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL)); ?>" />
+        <td><input type="text" name="notification_destination_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_destination_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL)); ?>" />
           <br />
           <em>Note: Comma separated list for adding more than one email address<em>
         </td>

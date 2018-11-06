@@ -1109,12 +1109,11 @@ function cpabc_appointments_save_options()
         echo 'No enough privilegies to load this content.';
         exit;
     }
-/**
-    if (get_magic_quotes_gpc())
+    if ($_POST["cpabc_appointments_control_field"] == '\\"')    
         foreach ($_POST as $item => $value)
             if (!is_array($value))
                 $_POST[$item] = stripcslashes($value);    
-*/
+
 
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'enable_reminder');
     cpabc_appointments_add_field_verify(CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, 'reminder_hours');
@@ -1472,6 +1471,41 @@ function cpabc_appointments_calendar_update2() {
     exit();
 }
 
+function cpabc_get_captcha_params()
+{
+    $str = '&inAdmin=1';
+    $tmp = cpabc_get_option('dexcv_width', CPABC_TDEAPP_DEFAULT_dexcv_width);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_width)  $str .='&width='.$tmp;
+    
+    $tmp = cpabc_get_option('dexcv_height', CPABC_TDEAPP_DEFAULT_dexcv_height);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_height) $str .='&height='.$tmp;
+    
+    $tmp = cpabc_get_option('dexcv_chars', CPABC_TDEAPP_DEFAULT_dexcv_chars);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_chars) $str .='&letter_count='.$tmp;
+    
+    $tmp = cpabc_get_option('dexcv_min_font_size', CPABC_TDEAPP_DEFAULT_dexcv_min_font_size);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_min_font_size) $str .='&min_size='.$tmp;
+    
+    $tmp = cpabc_get_option('dexcv_max_font_size', CPABC_TDEAPP_DEFAULT_dexcv_max_font_size);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_max_font_size) $str .='&max_size='.$tmp;
+    
+    $tmp = cpabc_get_option('dexcv_noise', CPABC_TDEAPP_DEFAULT_dexcv_noise);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_noise) $str .='&noise='.$tmp;
+    
+    $tmp = cpabc_get_option('dexcv_noise_length', CPABC_TDEAPP_DEFAULT_dexcv_noise_length);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_noise_length) $str .='&noiselength='.$tmp;
+    
+    $tmp = cpabc_get_option('dexcv_background', CPABC_TDEAPP_DEFAULT_dexcv_background);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_background) $str .='&bcolor='.$tmp;
+    
+    $tmp = cpabc_get_option('dexcv_border', CPABC_TDEAPP_DEFAULT_dexcv_border);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_border) $str .='&border='.$tmp;
+    
+    $tmp = cpabc_get_option('dexcv_font', CPABC_TDEAPP_DEFAULT_dexcv_font);
+    if ($tmp != CPABC_TDEAPP_DEFAULT_dexcv_font) $str .='&font='.$tmp;
+    
+    return $str;    
+}
 
 function cpabc_appointment_cleanJSON($str)
 {

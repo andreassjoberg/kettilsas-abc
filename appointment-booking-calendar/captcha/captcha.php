@@ -20,10 +20,10 @@ $imgX = ( isset($_GET["width"]) && is_numeric( $_GET["width"] ) )? $_GET["width"
 $imgY = ( isset($_GET["height"]) && is_numeric( $_GET["height"] ) )? $_GET["height"] : "60" ;
 
 $letter_count = ( isset($_GET["letter_count"]) && is_numeric( $_GET["letter_count"] ) )? $_GET["letter_count"] : "5";
-$min_size = ( isset($_GET["min_size"]) && is_numeric( $_GET["min_size"] ) )? $_GET["min_size"] : "35"; 
-$max_size = ( isset($_GET["max_size"]) && is_numeric( $_GET["max_size"] ) )? $_GET["max_size"] : "45"; 
+$min_size = ( isset($_GET["min_size"]) && is_numeric( $_GET["min_size"] ) )? $_GET["min_size"] : "25"; 
+$max_size = ( isset($_GET["max_size"]) && is_numeric( $_GET["max_size"] ) )? $_GET["max_size"] : "35"; 
 $noise = ( isset($_GET["noise"]) && is_numeric( $_GET["noise"] ) )? $_GET["noise"] : "200"; 
-$noiselength = ( isset($_GET["noiselength"]) && is_numeric( $_GET["noiselength"] ) )? $_GET["noiselength"] : "5"; 
+$noiselength = ( isset($_GET["noiselength"]) && is_numeric( $_GET["noiselength"] ) )? $_GET["noiselength"] : "4"; 
 $bcolor = cpcff_decodeColor($_GET["bcolor"]);  
 $border = cpcff_decodeColor($_GET["border"]);  
 

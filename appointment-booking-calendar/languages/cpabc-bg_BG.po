@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app book cal\n"
 "POT-Creation-Date: 2013-04-19 10:48+0100\n"
-"PO-Revision-Date: 2014-12-07 22:38+0100\n"
+"PO-Revision-Date: 2018-10-17 23:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;_e\n"
-"X-Poedit-Basepath: C:\\TORRE_F\\WorkII\\Developers4Web\\DWBooster.wordpress"
-"\\components\\Appointment Booking Calendar\\pro-version\\appointment-booking-"
-"calendar\\\n"
+"X-Poedit-Basepath: C:/TORRE_F/WorkII/Developers4Web/DWBooster.wordpress/"
+"components/Appointment Booking Calendar/pro-version/appointment-booking-"
+"calendar\n"
 "Language: bg_BG\n"
 "X-Poedit-SearchPath-0: .\n"
 
@@ -59,7 +59,7 @@ msgstr "Моля, въведете кода за сигурност:"
 
 # RevTran=Security code (lowercase):
 # RevTran=Security code (lowercase):
-msgid "Security Code (lowercase letters):"
+msgid "Security Code:"
 msgstr "Код за сигурност (малки букви):"
 
 # RevTran=Resume

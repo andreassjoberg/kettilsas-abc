@@ -2,17 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: app book cal\n"
 "POT-Creation-Date: 2013-04-19 10:48+0100\n"
-"PO-Revision-Date: 2014-12-07 22:37+0100\n"
+"PO-Revision-Date: 2018-10-17 23:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.10\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;_e\n"
-"X-Poedit-Basepath: C:\\TORRE_F\\WorkII\\Developers4Web\\DWBooster.wordpress"
-"\\components\\Appointment Booking Calendar\\pro-version\\appointment-booking-"
-"calendar\\\n"
+"X-Poedit-Basepath: C:/TORRE_F/WorkII/Developers4Web/DWBooster.wordpress/components/"
+"Appointment Booking Calendar/pro-version/appointment-booking-calendar\n"
 "Language: ta\n"
 "X-Poedit-SearchPath-0: .\n"
 
@@ -61,7 +60,7 @@ msgstr "பாதுகாப்பு குறியீட்டை பதி�
 
 # RevTran=Security protocols
 #: cpabc_internal.inc.php:76 cpabc_scheduler.inc.php:93
-msgid "Security Code (lowercase letters):"
+msgid "Security Code:"
 msgstr "பாதுகாப்பு குறியீடு (சிற்றெழுத்துக்களைப்):"
 
 #: cpabc_internal.inc.php:84 cpabc_scheduler.inc.php:101
@@ -109,15 +108,12 @@ msgid "Comments/Questions"
 msgstr "கருத்துரைகள் / கேள்விகள்"
 
 # RevTran=Please select at least% 1 time slots. Currently Selected:% 2 time slots.
-msgid ""
-"Please select at least %1 time-slots. Currently selected: %2 time-slots."
+msgid "Please select at least %1 time-slots. Currently selected: %2 time-slots."
 msgstr "குறைந்தது% 1 நேரம் இடங்கள் தேர்வு செய்க. தற்போது தேர்ந்தெடுத்த:% 2 நேரம் இடங்கள்."
 
 # RevTran=% 1 time slots, maximum select. Currently Selected:% 2 time slots.
-msgid ""
-"Please select a maximum of %1 time-slots. Currently selected: %2 time-slots."
-msgstr ""
-"% 1 நேரம் இடங்கள், அதிகபட்ச தேர்ந்தெடுக்கவும். தற்போது தேர்ந்தெடுத்த:% 2 நேரம் இடங்கள்."
+msgid "Please select a maximum of %1 time-slots. Currently selected: %2 time-slots."
+msgstr "% 1 நேரம் இடங்கள், அதிகபட்ச தேர்ந்தெடுக்கவும். தற்போது தேர்ந்தெடுத்த:% 2 நேரம் இடங்கள்."
 
 msgid "Cancel"
 msgstr "ரத்து"

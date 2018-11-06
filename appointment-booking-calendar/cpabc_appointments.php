@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.2.79
+Version: 3.1.2.86
 Author URI: https://www.andreassjoberg.com/
 License: GPL
 */
@@ -161,7 +161,7 @@ if ( is_admin() ) {
     add_action('media_buttons', 'set_cpabc_apps_insert_button', 100);
     add_action('admin_enqueue_scripts', 'set_cpabc_apps_insert_adminScripts', 1);
     add_action('admin_menu', 'cpabc_appointments_admin_menu');
-    add_action( 'init', 'cpabc_appointments_gutenberg_block' );
+    add_action('enqueue_block_editor_assets', 'cpabc_appointments_gutenberg_block' );
 
     $plugin = plugin_basename(__FILE__);
     add_filter("plugin_action_links_".$plugin, 'cpabc_customAdjustmentsLink');
@@ -172,7 +172,7 @@ if ( is_admin() ) {
         add_options_page('Appointment Booking Calendar Options', 'Appointment Booking Calendar', 'manage_options', 'cpabc_appointments.php', 'cpabc_appointments_html_post_page' );
         add_menu_page( 'Appointment Booking Calendar Options', 'Appointment Booking Calendar', 'read', 'cpabc_appointments.php', 'cpabc_appointments_html_post_page' );
 
-        add_submenu_page( 'cpabc_appointments.php', 'Manage Calendar', 'Manage Calendar', 'read', "cpabc_appointments",  'cpabc_appointments_html_post_page' );
+        add_submenu_page( 'cpabc_appointments.php', 'Manage Calendars', 'Manage Calendars', 'read', "cpabc_appointments",  'cpabc_appointments_html_post_page' );
         add_submenu_page( 'cpabc_appointments.php', 'Help: Online demo', 'Help: Online demo', 'read', "cpabc_appointments_demo", 'cpabc_appointments_html_post_page' );
         add_submenu_page( 'cpabc_appointments.php', 'Upgrade', 'Upgrade', 'read', "cpabc_appointments_upgrade", 'cpabc_appointments_html_post_page' );
 
@@ -187,17 +187,7 @@ else
 
 
 function cpabc_appointments_gutenberg_block() {
-    if (function_exists('register_block_type'))
-    {
-        wp_register_script(
-             'cpabc-step01',
-             plugins_url( 'js/block.js', __FILE__ ),
-             array( 'wp-blocks', 'wp-element' )
-         );
-        register_block_type( 'cpabc/appointment-booking-calendar', array(
-            'editor_script' => 'cpabc-step01',
-        ) );        
-    }
+    wp_enqueue_script( 'cpabc_gutenberg_editor', plugins_url('/js/block.js', __FILE__));
 }
 
 

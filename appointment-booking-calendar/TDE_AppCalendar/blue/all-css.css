@@ -636,3 +636,7 @@ color:#ffffff;
 #listcal1{color:#000000;font-weight:bold}
 #cp_contactformpp_pform .yui-calendar{width:100%}
 .yui-calendar a{box-shadow:none !important}
+.yui-panel-container a {
+-webkit-transition: all 0ms !important;
+transition: all 0ms !important;
+}
