@@ -3,9 +3,10 @@
 Plugin Name: Appointment Booking Calendar - Kettilsas Mod
 Plugin URI: https://github.com/andreassjoberg/kettilsas-abc
 Description: Appointment Booking Calendar with modifications for Kettilsas.se
-Version: 3.1.2.86
+Version: 3.1.3.02
 Author URI: https://www.andreassjoberg.com/
 License: GPL
+Text Domain: appointment-booking-calendar
 */
 
 /* initialization / install / uninstall functions */
@@ -131,13 +132,13 @@ define('CPABC_APPOINTMENTS_DEFAULT_vs_text_digits', 'Please enter only digits.')
 define('CPABC_APPOINTMENTS_DEFAULT_vs_text_max', 'Please enter a value less than or equal to {0}.');
 define('CPABC_APPOINTMENTS_DEFAULT_vs_text_min', 'Please enter a value greater than or equal to {0}.');
 
-include_once dirname( __FILE__ ) . '/inc/cpabc_apps.inc.php';
+include_once dirname( __FILE__ ) . '/inc/cpabc_apps_on.inc.php';
 
 register_activation_hook(__FILE__,'cpabc_appointments_install');
 
 add_action( 'plugins_loaded', 'cpabc_plugin_init');
 add_action( 'init', 'cpabc_appointments_check_posted_data', 11 );
-add_action( 'plugins_loaded', 'cpabc_appointments_check_IPN_verification', 11 );
+add_action( 'init', 'cpabc_appointments_check_IPN_verification', 11 );
 add_action( 'plugins_loaded', 'cpabc_appointments_calendar_load', 11 );
 add_action( 'plugins_loaded', 'cpabc_appointments_calendar_load2', 11 );
 add_action( 'plugins_loaded', 'cpabc_appointments_calendar_update', 11 );
@@ -162,6 +163,7 @@ if ( is_admin() ) {
     add_action('admin_enqueue_scripts', 'set_cpabc_apps_insert_adminScripts', 1);
     add_action('admin_menu', 'cpabc_appointments_admin_menu');
     add_action('enqueue_block_editor_assets', 'cpabc_appointments_gutenberg_block' );
+    add_action('wp_loaded', 'cpabc_data_management_loaded' );
 
     $plugin = plugin_basename(__FILE__);
     add_filter("plugin_action_links_".$plugin, 'cpabc_customAdjustmentsLink');
@@ -192,7 +194,7 @@ function cpabc_appointments_gutenberg_block() {
 
 
 function cpabc_plugin_init() {
-   load_plugin_textdomain( 'cpabc', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+   load_plugin_textdomain( 'appointment-booking-calendar', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
 
 
@@ -226,4 +228,9 @@ function cpabc_wprockert_exclude_js_minify( $js_files ) {
 
 // optional opt-in deactivation feedback
 require_once 'inc/cp-feedback.php';
+
+// elementor integration
+include_once dirname( __FILE__ ) . '/controllers/elementor/cp-elementor-widget.inc.php';
+
+
 ?>

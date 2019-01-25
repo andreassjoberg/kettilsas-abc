@@ -94,6 +94,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
              <?php $value = cpabc_get_option('calendar_language',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_LANGUAGE); ?>
              <select name="calendar_language">               
                <option value="-" <?php if ($value == '-') echo ' selected="selected"'; ?>>- Auto detect -</option> 
+               <option value="BG" <?php if ($value == 'BG') echo ' selected="selected"'; ?>>Bulgarian</option>
                <option value="CZ" <?php if ($value == 'CZ') echo ' selected="selected"'; ?>>Czech</option>
                <option value="DE" <?php if ($value == 'DE') echo ' selected="selected"'; ?>>German</option>
                <option value="DA" <?php if ($value == 'DA') echo ' selected="selected"'; ?>>Danish</option>
@@ -113,7 +114,9 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                <option value="CA" <?php if ($value == 'CA') echo ' selected="selected"'; ?>>Spanish - Catalan</option>
                <option value="SK" <?php if ($value == 'SK') echo ' selected="selected"'; ?>>Slovak</option>
                <option value="SE" <?php if ($value == 'SE') echo ' selected="selected"'; ?>>Swedish</option>
+               <option value="TH" <?php if ($value == 'TH') echo ' selected="selected"'; ?>>Thai</option>
                <option value="TR" <?php if ($value == 'TR') echo ' selected="selected"'; ?>>Turkish</option>
+               <option value="VI" <?php if ($value == 'VI') echo ' selected="selected"'; ?>>Vietnamese</option>
             </select><br />
             * Note that this "Calendar language" setting will affect the calendar area, 
               but the rest of the form texts are translated in the MO/PO files located in the "<em>appointment-booking-calendar/languages</em>" folder.
@@ -647,7 +650,7 @@ also support integration with other payment gateways.</p><br />
   <h3 class='hndle' style="padding:5px;"><span>Note</span></h3>
   <div class="inside">
    To insert the calendar booking form in a post/page, use the dedicated icon 
-   <?php print '<img hspace="5" src="'.plugins_url('../images/cpabc_apps.gif', __FILE__).'" alt="'.__('Insert Appointment Booking Calendar','cpabc').'" />';     ?>
+   <?php print '<img hspace="5" src="'.plugins_url('../images/cpabc_apps.gif', __FILE__).'" alt="'.__('Insert Appointment Booking Calendar','appointment-booking-calendar').'" />';     ?>
    which has been added to your Upload/Insert Menu, just below the title of your Post/Page.
    <br /><br />
   </div>

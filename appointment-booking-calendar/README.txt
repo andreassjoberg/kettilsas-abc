@@ -3,7 +3,7 @@ Contributors: codepeople
 Donate link: https://abc.dwbooster.com/download
 Tags: appointment,booking,calendar,appointment calendar,booking calendar,booking form,paypal calendar,plugin,paypal bookings,paypal appointments,bookings,meeting,meet,scheduler,scheduler calendar,availability,availability calendar,agenda,reservation form,reservation calendar
 Requires at least: 3.0.5
-Tested up to: 4.9
+Tested up to: 5.0
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -38,6 +38,8 @@ Features:
 * You can define the **start day** of the week on the appointment calendar.
 * You can define the **minimum** available date and the **maximum** available date for the bookings.
 * You can block specific dates.
+* New WP Gutenberg Editor Block
+* Elementor Editor Block
 * Pretty modern administration interface.
 
 Please note that this is a plugin originally designed to accept appointment bookings linked to PayPal payments. The feature for accepting appointments without PayPal is implemented/available in the commercial versions: https://abc.dwbooster.com/download
@@ -874,7 +876,49 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.2.86 =
 * Gutenberg compatibility updates
 
+= 1.2.87 =
+* Addded Vietnamese and Thai language to the calendar
+
+= 1.2.88 =
+* Fixed bug in CSV export option
+
+= 1.2.89 =
+* CSS styles updates
+
+= 1.2.91 =
+* Fixed Windows issue
+
+= 1.2.92 =
+* New option for adding bookings in admin area
+
+= 1.2.93 =
+* New feature for recurrent bookings
+
+= 1.2.94 =
+* Improved feature for recurrent bookings
+
+= 1.2.95 =
+* Removed old recurrent bookings code and improved error detection
+
+= 1.2.96 =
+* Added Bulgarian language
+
+= 1.2.97 =
+* Added Elementor Integration
+
+= 1.2.98 =
+* GPDR Compatibility fix
+
+= 1.2.99 =
+* Removed use of CURL
+
+= 1.3.01 =
+* New visualization / schedule calendar
+
+= 1.3.02 =
+* Fixed translation issue and optimized number of files
+
 == Upgrade Notice ==
 
-= 1.2.86 =
-* Gutenberg compatibility updates
+= 1.3.02 =
+* Fixed translation issue and optimized number of files

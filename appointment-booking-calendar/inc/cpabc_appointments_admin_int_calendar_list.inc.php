@@ -85,6 +85,21 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
     document.location = 'admin.php?page=cpabc_appointments.php&cal='+id+'&list=1&r='+Math.random();
  }
  
+ function cp_calendarschedule(id)
+ {
+    document.location = 'admin.php?page=cpabc_appointments.php&cal='+id+'&calschedule=1&r='+Math.random();
+ }
+
+ function cp_publish(id)
+ {
+     document.location = 'admin.php?page=cpabc_appointments.php&pwizard=1&cal='+id+'&r='+Math.random();
+ } 
+ 
+ function cp_addbk(id)
+ {
+    document.location = 'admin.php?page=cpabc_appointments.php&cal='+id+'&addbk=1&r='+Math.random();
+ }
+ 
  function cp_updateConfig()
  {
     if (confirm('Are you sure that you want to update these settings?'))
@@ -144,14 +159,17 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
     <?php }  ?>
        
     <td nowrap><a href="<?php echo get_site_url(false); ?>?cpabc_app=calfeed&id=<?php echo $item->id; ?>&verify=<?php echo substr(md5($item->id.$_SERVER["DOCUMENT_ROOT"]),0,10); ?>">iCal Feed</a></td>
-    <td nowrap>&nbsp; &nbsp; 
+    <td style="padding-left:15px;"> 
                              <?php if (cpabc_appointment_is_administrator()) { ?> 
-                               <input style="font-size:11px;" type="button" name="calupdate_<?php echo $item->id; ?>" value="Update" onclick="cp_updateItem(<?php echo $item->id; ?>);" /> &nbsp; 
+                               <input style="margin-bottom:3px" class="button"  type="button" name="calupdate_<?php echo $item->id; ?>" value="Update" onclick="cp_updateItem(<?php echo $item->id; ?>);" /> 
                              <?php } ?>    
-                             <input style="font-size:11px;" type="button" name="calmanage_<?php echo $item->id; ?>" value="Manage Settings" onclick="cp_manageSettings(<?php echo $item->id; ?>);" /> &nbsp; 
-                             <input style="font-size:11px;" type="button" name="calbookings_<?php echo $item->id; ?>" value="Bookings List" onclick="cp_BookingsList(<?php echo $item->id; ?>);" /> &nbsp;  
+                             <input style="margin-bottom:3px;" class="button-primary button" type="button" name="calmanage_<?php echo $item->id; ?>" value="Manage Settings" onclick="cp_manageSettings(<?php echo $item->id; ?>);" /> 
+                             <input style="margin-bottom:3px" class="button-primary button" type="button" name="calpublish_<?php echo $item->id; ?>" value="<?php _e('Publish','appointment-booking-calendar'); ?>" onclick="cp_publish(<?php echo $item->id; ?>);" />   
+                             <input style="margin-bottom:3px;" class="button" type="button" name="calbookings_<?php echo $item->id; ?>" value="Bookings List" onclick="cp_BookingsList(<?php echo $item->id; ?>);" /> 
+                             <input style="margin-bottom:3px;" class="button" type="button" name="calschedule_<?php echo $item->id; ?>" value="Calendar Schedule" onclick="cp_calendarschedule(<?php echo $item->id; ?>);" /> 
+                             <input style="margin-bottom:3px;" class="button" type="button" name="caladdbk_<?php echo $item->id; ?>" value="Add Booking" onclick="cp_addbk(<?php echo $item->id; ?>);" /> 
     </td>
-     <td nowrap style="font-size:10px;">[CPABC_APPOINTMENT_CALENDAR calendar="<?php echo $item->id; ?>"]</td>
+     <td style="font-size:10px;">[CPABC_APPOINTMENT_CALENDAR calendar="<?php echo $item->id; ?>"]</td>
    </tr>
 <?php  
       } 
@@ -219,7 +237,7 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
        
        <br /><br />
        iCal timeslot size in minutes:<br />
-        <input type="text" size="2" name="icaltimeslotsize" id="icaltimeslotsize" value="<?php echo get_option('CPABC_CAL_TIME_SLOT_SIZE_SET',"10"); ?>" /> minutes
+        <input type="text" size="2" name="icaltimeslotsize" id="icaltimeslotsize" value="<?php echo get_option('CPABC_CAL_TIME_SLOT_SIZE_SET',"30"); ?>" /> minutes
         <br />
        <em>* Update this, if needed, to have a specific slot time in the exported iCal file.</em>
       
