@@ -7,7 +7,7 @@ jQuery(function()
 				category 	= {slug:'appointment-booking-calendar', title : 'Appointment Booking Calendar'};
 
 			/* Plugin Category */
-			blocks.getCategories().push({slug: 'cpabc', title: 'Appointment Booking Calendar'}) ;
+			blocks.getCategories().push({slug: 'appointment-booking-calendar', title: 'Appointment Booking Calendar'}) ;
 
 			
             /* ICONS */
@@ -17,7 +17,7 @@ jQuery(function()
 			blocks.registerBlockType( 'cpabc/form-shortcode', {
                 title: 'Appointment Booking Calendar', 
                 icon: iconCPABC,    
-                category: 'cpabc',
+                category: 'appointment-booking-calendar',
 				supports: {
 					customClassName: false,
 					className: false

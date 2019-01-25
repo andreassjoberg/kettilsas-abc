@@ -130,8 +130,8 @@ echo paginate_links(  array(
     'end_size'     => 1,
     'mid_size'     => 2,
     'prev_next'    => True,
-    'prev_text'    => '&laquo; '.__('Previous','cpabc'),
-    'next_text'    => __('Next','cpabc').' &raquo;',
+    'prev_text'    => '&laquo; '.__('Previous','appointment-booking-calendar'),
+    'next_text'    => __('Next','appointment-booking-calendar').' &raquo;',
     'type'         => 'plain',
     'add_args'     => False
     ) );

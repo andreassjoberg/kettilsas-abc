@@ -353,8 +353,8 @@ margin:2px;
 float:left;
 cursor:hand;
 }
-.cell {width:50px;}
-.cell12 {width:66px;}
+.cell {padding:0px 10px;}
+.cell12 {padding:0px 10px;}
 .cellbusy a,.cellbusy12 a {
 text-decoration:none;
 }
@@ -536,3 +536,5 @@ color:#ffffff;
 -webkit-transition: all 0ms !important;
 transition: all 0ms !important;
 }
+.yui-calendar {white-space: nowrap;}
+table.yui-calendar  td,table.yui-calendar  th{border:inherit}

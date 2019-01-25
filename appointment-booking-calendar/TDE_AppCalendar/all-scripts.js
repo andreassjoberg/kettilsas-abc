@@ -69,8 +69,6 @@ for(var J in L){if(!this._configs[J]&&!YAHOO.lang.isUndefined(K[J])){this.setAtt
 
 function initAppCalendar(calendarId,pages,type,lang,m)
 {
-
-	
 	var currentTime = new Date();
 	currentTime.setDate(currentTime.getDate() + 2);
 	var month = currentTime.getMonth() + 1;
@@ -411,6 +409,30 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 						wm = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
 						wl = ["Domingo", "Lunes", "Martes", "Mi&eacute;rcoles", "Jueves", "Viernes", "S&acute;bado"];
 					break;
+					case "BG":
+						ms = ["яну", "фев", "март", "апр", "май", "юни", "юли", "авг", "сеп", "окт", "ное", "дек"];
+						ml = ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"];
+						wc = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"];
+						ws = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"];
+						wm = ["нд", "пн", "вт", "ср", "чт", "пт", "сб"];
+						wl = ["неделя", "понеделник", "вторник", "сряда", "четвъртък", "петък", "събота"];
+					break;                    
+					case "VI":
+						ms = ["Tháng 1", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu", "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"];
+						ml = ["Tháng 1", "Tháng Hai", "Tháng Ba", "Tháng Tư", "Tháng Năm", "Tháng Sáu", "Tháng Bảy", "Tháng Tám", "Tháng Chín", "Tháng Mười", "Tháng Mười Một", "Tháng Mười Hai"];
+						wc = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+						ws = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+						wm = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+						wl = ["Chủ nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"];
+					break;
+					case "TH":
+						ms = ["มกราคม", "กุมภาพันธ์", "เดือนมีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+						ml = ["มกราคม", "กุมภาพันธ์", "เดือนมีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+						wc = ["อา", "จัน", "อัง", "อัง", "พฤ", "ศุก", "เส"];
+						ws = ["อา", "จัน", "อัง", "อัง", "พฤ", "ศุก", "เส"];
+						wm = ["อา", "จัน", "อัง", "อัง", "พฤ", "ศุก", "เส"];
+						wl = ["วันอาทิตย์", "วันจันทร์", "วันอังคาร", "วันพุธ", "วันพฤหัสบดี", "วันศุกร์", "วันเสาร์"];
+					break;                    
 					case "CA":
 						ms = ["Gen", "Feb", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Des"];
 						ml = ["Gener", "Febrer", "Marc", "Abril", "Maig", "Juny", "Juliol", "Agost", "Setembre", "Octubre", "Novembre", "Desembre"];
@@ -653,7 +675,7 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 				    YAHOO.TDE.calendar.calendarArray[calendarId].addRenderer((k.getMonth()+ 1) + "/" + k.getDate() + "/" + k.getFullYear(), YAHOO.TDE.calendar.myCustomReserveddate);
 			    }
 			 }
-	         try{document.getElementById("selDay"+calendarId).value=strDates}catch(e){}
+	         try{document.getElementById("selDay"+calendarId).value=strDates;jQuery( "#"+"selDay"+calendarId ).trigger( "change" );}catch(e){}
 			 try{document.getElementById("list"+calendarId).innerHTML=strList}catch(e){}
 		}
 		

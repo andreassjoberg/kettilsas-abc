@@ -28,45 +28,40 @@ function cpabcal_feedback() {
     $cpabcal_plugin_version = $cpabcal_plugin_data['Version'];
     $time = time() - get_option('installed_'.$cpabcal_plugslug, '');
     $data = array(
-                 'answer' => urlencode(@$_POST["answer"]),
-                 'otherplugin' => urlencode(@$_POST["opinfo"]),
-                 'otherinfo' => urlencode(@$_POST["oinfo"]),
-                 'plugin' => urlencode($cpabcal_plugin_data['Name']),
-                 'pluginv' => urlencode($cpabcal_plugin_version),
-                 'wordpress' => urlencode(get_bloginfo( 'version' )),
-                 'itime' => urlencode($time),
-                 'phpversion' => urlencode(phpversion ())
+                 'answer' => (@$_POST["answer"]),
+                 'otherplugin' => (@$_POST["opinfo"]),
+                 'otherinfo' => (@$_POST["oinfo"]),
+                 'plugin' => ($cpabcal_plugin_data['Name']),
+                 'pluginv' => ($cpabcal_plugin_version),
+                 'wordpress' => (get_bloginfo( 'version' )),
+                 'itime' => ($time),
+                 'phpversion' => (phpversion ())
                  );
     if (@$_POST["onymous"] == 'false') // send this data only if explicitly accepted
     {
         $current_user = wp_get_current_user();
-        $data['email'] = urlencode($current_user->user_email);
-        $data['website'] = urlencode($_SERVER['HTTP_HOST']);
-        $data['url'] = urlencode(get_site_url());
+        $data['email'] = ($current_user->user_email);
+        $data['website'] = ($_SERVER['HTTP_HOST']);
+        $data['url'] = (get_site_url());
+        // for detecting theme and plugin conflicts:
+        $data['theme'] = (wp_get_theme()->get('Name') . " " .wp_get_theme()->get('Version'));
+        $plist = "";
+        $activeplugins = get_option('active_plugins');
+        $plugins =  get_plugins();
+        foreach ($activeplugins as $plugin)
+           $plist .= $plugins[$plugin]["Title"]." ".$plugins[$plugin]["Version"]."\n";
+        $data['plugins'] = ($plist);
     }
 
     //extract data from the post
     //set POST variables
     $url = 'https://wordpress.dwbooster.com/licensesystem/debug-data.php';
-    $fields = $data;
+    $fields = $data;    
     
-    //url-ify the data for the POST
-    foreach($fields as $key=>$value) { $fields_string .= $key.'='.$value.'&'; }
-    rtrim($fields_string, '&');
-    
-    //open connection
-    $ch = curl_init();
-    
-    //set the url, number of POST vars, POST data
-    curl_setopt($ch,CURLOPT_URL, $url);
-    curl_setopt($ch,CURLOPT_POST, count($fields));
-    curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-    
-    //execute post
-    $result = curl_exec($ch);
-    
-    //close connection
-    curl_close($ch);
+    wp_remote_post( 
+                     $url,
+                     array ( 'body' => $fields )
+                  );
     
 	wp_die(); // this is required to terminate immediately and return a proper response
 }
