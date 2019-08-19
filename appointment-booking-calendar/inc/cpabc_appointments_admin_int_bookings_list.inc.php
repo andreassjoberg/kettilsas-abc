@@ -17,9 +17,9 @@ $records_per_page = 50;
 
 function cpabc_bklist_verify_nonce() {
     if (isset($_GET['rsave']) && $_GET['rsave'] != '')
-        $nonce = $_GET['rsave'];
+        $nonce = sanitize_text_field($_GET['rsave']);
     else
-        $nonce = $_POST['rsave'];
+        $nonce = sanitize_text_field($_POST['rsave']);
     $verify_nonce = wp_verify_nonce( $nonce, 'uname_abc_bklist');
     if (!$verify_nonce)
     {
@@ -63,9 +63,13 @@ $current_page = intval($_GET["p"]);
 if (!$current_page) $current_page = 1;
 
 $cond = '';
-if ($_GET["search"] != '') $cond .= " AND (title like '%".esc_sql($_GET["search"])."%' OR description LIKE '%".esc_sql($_GET["search"])."%')";
-if ($_GET["dfrom"] != '') $cond .= " AND (datatime >= '".esc_sql($_GET["dfrom"])."')";
-if ($_GET["dto"] != '') $cond .= " AND (datatime <= '".esc_sql($_GET["dto"])." 23:59:59')";
+if ($_GET["search"] != '') 
+{
+    $search_text = sanitize_text_field($_GET["search"]);
+    $cond .= " AND (title like '%".esc_sql($search_text)."%' OR description LIKE '%".esc_sql($search_text)."%')";
+}
+if ($_GET["dfrom"] != '') $cond .= " AND (datatime >= '".esc_sql(sanitize_text_field($_GET["dfrom"]))."')";
+if ($_GET["dto"] != '') $cond .= " AND (datatime <= '".esc_sql(sanitize_text_field($_GET["dto"]))." 23:59:59')";
 
 
 $events = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME." WHERE appointment_calendar_id=".CP_CALENDAR_ID.$cond." ORDER BY datatime DESC" );
@@ -122,7 +126,7 @@ $nonce_un = wp_create_nonce( 'uname_abc_bklist' );
 
 
 echo paginate_links(  array(
-    'base'         => 'admin.php?page=cpabc_appointments.php&cal='.CP_CALENDAR_ID.'&list=1%_%&dfrom='.urlencode($_GET["dfrom"]).'&dto='.urlencode($_GET["dto"]).'&search='.urlencode($_GET["search"]),
+    'base'         => 'admin.php?page=cpabc_appointments.php&cal='.CP_CALENDAR_ID.'&list=1%_%&dfrom='.urlencode(sanitize_text_field($_GET["dfrom"])).'&dto='.urlencode(sanitize_text_field($_GET["dto"])).'&search='.urlencode(sanitize_text_field($_GET["search"])),
     'format'       => '&p=%#%',
     'total'        => $total_pages,
     'current'      => $current_page,

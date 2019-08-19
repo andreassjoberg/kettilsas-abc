@@ -3,7 +3,7 @@ Contributors: codepeople
 Donate link: https://abc.dwbooster.com/download
 Tags: appointment,booking,calendar,appointment calendar,booking calendar,booking form,paypal calendar,plugin,paypal bookings,paypal appointments,bookings,meeting,meet,scheduler,scheduler calendar,availability,availability calendar,agenda,reservation form,reservation calendar
 Requires at least: 3.0.5
-Tested up to: 5.0
+Tested up to: 5.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -918,7 +918,73 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.02 =
 * Fixed translation issue and optimized number of files
 
+= 1.3.03 =
+* Better integration with Elementor and Visual Composer
+
+= 1.3.04 =
+* Improved max slots validation
+
+= 1.3.05 =
+* Fixed cache issues
+
+= 1.3.06 =
+* Added Greek Language
+
+= 1.3.07 =
+* New calendar theme. Modern design.
+
+= 1.3.08 =
+* Email auto-config improvements. 
+
+= 1.3.09 =
+* Fixed bug in email settings
+
+= 1.3.10 =
+* Fixed conflict with lazy loading feature of Jetpack
+
+= 1.3.11 =
+* Added Arabic language
+
+= 1.3.12 =
+* Review link update
+
+= 1.3.14 =
+* Compatible with WordPress 5.2
+
+= 1.3.15 =
+* Fixed bug in iconv function 
+
+= 1.3.16 =
+* Compatible with Google Translate
+
+= 1.3.17 =
+* Update for compatibility with WordPress 5.2
+
+= 1.3.18 =
+* Code improvements
+
+= 1.3.19 =
+* Multiple validations and security improvements
+
+= 1.3.20 =
+* Additional sanitizations and validations
+
+= 1.3.21 =
+* New iCal link
+
+= 1.3.22 =
+* Fixed bug on adding bookings from dashboard
+
+= 1.3.23 =
+* Fix to table character encoding
+
+= 1.3.24 =
+* Updates to publish section
+
+= 1.3.25 =
+* Fixed bug in datetime processing
+
 == Upgrade Notice ==
 
-= 1.3.02 =
-* Fixed translation issue and optimized number of files
+= 1.3.25 =
+* Fixed bug in datetime processing

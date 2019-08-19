@@ -28,9 +28,9 @@ function cpabcal_feedback() {
     $cpabcal_plugin_version = $cpabcal_plugin_data['Version'];
     $time = time() - get_option('installed_'.$cpabcal_plugslug, '');
     $data = array(
-                 'answer' => (@$_POST["answer"]),
-                 'otherplugin' => (@$_POST["opinfo"]),
-                 'otherinfo' => (@$_POST["oinfo"]),
+                 'answer' => sanitize_textarea_field(@$_POST["answer"]),
+                 'otherplugin' => sanitize_textarea_field(@$_POST["opinfo"]),
+                 'otherinfo' => sanitize_textarea_field(@$_POST["oinfo"]),
                  'plugin' => ($cpabcal_plugin_data['Name']),
                  'pluginv' => ($cpabcal_plugin_version),
                  'wordpress' => (get_bloginfo( 'version' )),

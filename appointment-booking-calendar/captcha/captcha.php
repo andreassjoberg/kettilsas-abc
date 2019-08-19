@@ -62,9 +62,9 @@ $length = 0;
 for ($i = 0; $i < $letter_count; $i++) {
 	 $str .= chr(mt_rand(97, 122))." ";
 }
-$_SESSION['rand_code'.$_GET["ps"]] = str_replace(" ", "", $str);
+$_SESSION['rand_code'.sanitize_key($_GET["ps"])] = str_replace(" ", "", $str);
 
-setCookie('rand_code'.$_GET["ps"], md5(str_replace(" ", "", $str)), time()+36000,"/");
+setCookie('rand_code'.sanitize_key($_GET["ps"]), md5(str_replace(" ", "", $str)), time()+36000,"/");
 
 $image = imagecreatetruecolor($imgX, $imgY);
 $backgr_col = imagecolorallocate($image, $bcolor["r"],$bcolor["g"],$bcolor["b"]);

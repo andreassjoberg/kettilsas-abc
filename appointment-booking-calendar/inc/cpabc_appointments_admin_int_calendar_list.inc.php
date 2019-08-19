@@ -26,15 +26,15 @@ else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
         $message = "Access verification error. Cannot update settings.";
     else
     {
-        update_option( 'CPABC_CAL_TIME_ZONE_MODIFY_SET', $_GET["ict"] );
-        update_option( 'CPABC_CAL_TIME_SLOT_SIZE_SET', $_GET["ics"] );
-        update_option( 'CPABC_EXCLUDED_COLUMNS', $_GET["col"] );
+        update_option( 'CPABC_CAL_TIME_ZONE_MODIFY_SET', sanitize_text_field($_GET["ict"]) );
+        update_option( 'CPABC_CAL_TIME_SLOT_SIZE_SET', sanitize_text_field($_GET["ics"]) );
+        update_option( 'CPABC_EXCLUDED_COLUMNS', sanitize_text_field($_GET["col"]) );
         
-        update_option( 'CPABC_APPOINTMENTS_LOAD_SCRIPTS', ($_GET["scr"]=="1"?"1":"2") );   
+        update_option( 'CPABC_APPOINTMENTS_LOAD_SCRIPTS', (intval($_GET["scr"])==1?"1":"2") );   
         update_option( 'CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR', "1" );
         if ($_GET["chs"] != '')
         {
-            $target_charset = esc_sql($_GET["chs"]);
+            $target_charset = str_replace('`','``', sanitize_text_field($_GET["chs"]));
             $tables = array( $wpdb->prefix.CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX
                              , $wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_DISCOUNT_CODES_TABLE_NAME_NO_PREFIX );                
             foreach ($tables as $tab)
@@ -46,7 +46,7 @@ else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
 	    	        $type = $item->Type;
 	    	        if (preg_match("/^varchar\((\d+)\)$/i", $type, $mat) || !strcasecmp($type, "CHAR") || !strcasecmp($type, "TEXT") || !strcasecmp($type, "MEDIUMTEXT"))
 	    	        {
-	                    $wpdb->query("ALTER TABLE {$tab} CHANGE {$name} {$name} {$type} COLLATE {$target_charset}");	            
+	                    $wpdb->query("ALTER TABLE {$tab} CHANGE {$name} {$name} {$type} COLLATE `{$target_charset}`");	            
 	                }
 	            }
             }
@@ -158,13 +158,15 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
         </td>
     <?php }  ?>
        
-    <td nowrap><a href="<?php echo get_site_url(false); ?>?cpabc_app=calfeed&id=<?php echo $item->id; ?>&verify=<?php echo substr(md5($item->id.$_SERVER["DOCUMENT_ROOT"]),0,10); ?>">iCal Feed</a></td>
+    <td nowrap><a href="<?php echo get_site_url(false); ?>?cpabc_app=calfeed&id=<?php echo $item->id; ?>&verify=<?php echo substr(md5($item->id.get_option('ABC_RCODE',$_SERVER["DOCUMENT_ROOT"])),0,10); ?>">iCal Feed</a></td>
     <td style="padding-left:15px;"> 
                              <?php if (cpabc_appointment_is_administrator()) { ?> 
                                <input style="margin-bottom:3px" class="button"  type="button" name="calupdate_<?php echo $item->id; ?>" value="Update" onclick="cp_updateItem(<?php echo $item->id; ?>);" /> 
                              <?php } ?>    
                              <input style="margin-bottom:3px;" class="button-primary button" type="button" name="calmanage_<?php echo $item->id; ?>" value="Manage Settings" onclick="cp_manageSettings(<?php echo $item->id; ?>);" /> 
+                             <?php if (current_user_can('manage_options')) { ?>
                              <input style="margin-bottom:3px" class="button-primary button" type="button" name="calpublish_<?php echo $item->id; ?>" value="<?php _e('Publish','appointment-booking-calendar'); ?>" onclick="cp_publish(<?php echo $item->id; ?>);" />   
+                             <?php } ?>
                              <input style="margin-bottom:3px;" class="button" type="button" name="calbookings_<?php echo $item->id; ?>" value="Bookings List" onclick="cp_BookingsList(<?php echo $item->id; ?>);" /> 
                              <input style="margin-bottom:3px;" class="button" type="button" name="calschedule_<?php echo $item->id; ?>" value="Calendar Schedule" onclick="cp_calendarschedule(<?php echo $item->id; ?>);" /> 
                              <input style="margin-bottom:3px;" class="button" type="button" name="caladdbk_<?php echo $item->id; ?>" value="Add Booking" onclick="cp_addbk(<?php echo $item->id; ?>);" /> 
@@ -268,8 +270,6 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
   <div class="inside"> 
       <p>Use this area to add custom CSS styles or custom scripts. These styles and scripts will be keep safe even after updating the plugin.</p>
       <input type="button" onclick="cp_editArea('css');" name="gobtn3" value="Add Custom Styles" />
-      &nbsp; &nbsp; &nbsp;      
-      <input type="button" onclick="cp_editArea('js');" name="gobtn2" value="Add Custom JavaScript" />
   </div>    
  </div> 
   
