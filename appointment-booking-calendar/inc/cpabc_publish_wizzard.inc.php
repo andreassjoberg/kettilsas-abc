@@ -1,4 +1,10 @@
-<?php if ( !is_admin() ) {echo 'Direct access not allowed.';exit;} ?>
+<?php 
+
+if ( !is_admin() || !current_user_can('manage_options')) {echo 'Direct access not allowed.';exit;} 
+
+$nonce = wp_create_nonce( 'abc_update_actions_pwizard' );
+
+?>
 
 
 <h1>Publish Appointment Booking Calendar</h1>
@@ -39,6 +45,7 @@
 
 <form method="post" action="?page=cpabc_appointments.php&pwizard=1" name="regForm" id="regForm">          
  <input name="cpabc_do_action_loaded" type="hidden" value="wizard" />
+ <input name="nonce" type="hidden" value="<?php echo $nonce; ?>" />
 
 <?php 
 
@@ -55,7 +62,7 @@ if (@$_POST['cpabc_do_action_loaded'] == 'wizard') {
         <div style="clear:both"></div>
         <p class="cpmvcontainer">* Note: If the form was published in a new page or post it will be a 'draft', you have to publish the page/post in the future if needed.</p>
         <div style="clear:both"></div>
-        <button class="button button-primary cpmvcontainer" type="button" id="nextBtn" onclick="window.open('?page=cpabc_appointments.php&cal=<?php echo $_POST["cpabc_publish_id"]; ?>');">Edit the booking form settings</button>
+        <button class="button button-primary cpmvcontainer" type="button" id="nextBtn" onclick="window.open('?page=cpabc_appointments.php&cal=<?php echo intval($_POST["cpabc_publish_id"]); ?>');">Edit the booking form settings</button>
         <div style="clear:both"></div>
     </div>
 </div>
@@ -105,7 +112,7 @@ if (@$_POST['cpabc_do_action_loaded'] == 'wizard') {
                        <h3 style="background:#cccccc; padding:5px;">Classic way? Just copy and paste the following shortcode into the page/post:</h3>
                        
                        <div style="border: 1px dotted black; background-color: #FFFACD ;padding:15px; font-weight: bold; margin:10px;">
-                         [CPABC_APPOINTMENT_CALENDAR calendar="<?php echo @$_GET["cal"]; ?>"]
+                         [CPABC_APPOINTMENT_CALENDAR calendar="<?php echo @intval($_GET["cal"]); ?>"]
                        </div>
                        
                        <?php if (defined('ELEMENTOR_PATH')) { ?>

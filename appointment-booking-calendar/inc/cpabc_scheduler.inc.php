@@ -1,13 +1,10 @@
 <?php if ( !defined('CPABC_AUTH_INCLUDE') ) { echo 'Direct access not allowed.'; exit; } ?>
 <?php 
-  $custom_styles = base64_decode(get_option('CP_ABC_CSS', '')); 
+  $custom_styles = sanitize_textarea_field(base64_decode(get_option('CP_ABC_CSS', ''))); 
   if ($custom_styles != '')
-      echo '<style type="text/css">'.$custom_styles.'</style>';
-  $custom_scripts = base64_decode(get_option('CP_ABC_JS', '')); 
-  if ($custom_scripts != '')
-      echo '<script type="text/javascript">'.$custom_scripts.'</script>';  
+      echo '<style type="text/css">'.$custom_styles.'</style>';  
 ?>
-<form class="cpp_form" name="FormEdit" action="<?php get_site_url(); ?>" method="post" onsubmit="return doValidate(this);">
+<form class="cpp_form" id="cp_abcform_pform" name="FormEdit" action="<?php get_site_url(); ?>" method="post" onsubmit="return doValidate(this);">
 <input name="cpabc_appointments_post" type="hidden" value="1" /><input name="cpabc_appointments_utime" type="hidden"  value="" />
 <?php 
    echo $quant_buffer; 
@@ -18,7 +15,7 @@
 </div>
 <?php
   echo "<div class=\"abc_selectdate fields\"><label>".__("Select date and time",'appointment-booking-calendar').":</label></div>";
-  if (isset($_GET["fl_builder"]) || defined('ABC_ELEMENTOR_EDIT_MODE')) echo '<div style="border:1px dotted black;background-color:#ffffbb;padding:7px;">NOTE: <strong>The Appointment Calendar will be rendered here</strong>. Calendar is disabled while this visual editor is in use. Will appear again after closing edition.</div>';  
+  if (isset($_GET["fl_builder"]) ) echo '<div style="border:1px dotted black;background-color:#ffffbb;padding:7px;">NOTE: <strong>The Appointment Calendar will be rendered here</strong>. Calendar is disabled while this visual editor is in use. Will appear again after closing edition.</div>';  
   foreach ($myrows as $item)
   {
       $atlang = cpabc_auto_language($item->calendar_language);
@@ -103,7 +100,7 @@
 <textarea name="question" style="width:100%"></textarea><br />
 <?php if (!is_admin() && cpabc_get_option('dexcv_enable_captcha', CPABC_TDEAPP_DEFAULT_dexcv_enable_captcha) != 'false') { ?>
   <?php _e('Please enter the security code:','appointment-booking-calendar'); ?><br />
-  <img src="<?php echo cpabc_appointment_get_site_url().'/?cpabc_app=captcha'.cpabc_get_captcha_params(); ?>"  id="captchaimg" alt="security code" border="0"  />
+  <img src="<?php echo cpabc_appointment_get_site_url().'/?cpabc_app=captcha'.cpabc_get_captcha_params(); ?>"  id="captchaimg" alt="security code" border="0" class="skip-lazy"  />
   <br />
   <?php _e('Security Code:','appointment-booking-calendar'); ?><br />
   <div class="dfield">

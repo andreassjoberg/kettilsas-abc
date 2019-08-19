@@ -7,9 +7,12 @@ if ( ! defined( 'ABSPATH' ) )
     exit;
 }
 
+
 function _cpabc_appointments_install() {
     global $wpdb;
 
+    update_option('CP_ABC_JS', ''); // clean this option
+    
     $charset_collate = $wpdb->get_charset_collate();
     
     $table_name = $wpdb->prefix . CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX;
@@ -122,14 +125,40 @@ function _cpabc_appointments_install() {
     $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX."` ADD `reference` VARCHAR(20) DEFAULT '' NOT NULL;"; $wpdb->query($sql);
     $sql = "ALTER TABLE  `".$wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX."` ADD `quantity` VARCHAR(25) DEFAULT '1' NOT NULL;"; $wpdb->query($sql);
 
-    $sql = 'INSERT INTO `'.$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` (conwer,`form_structure`,`'.CPABC_TDEAPP_CONFIG_ID.'`,`'.CPABC_TDEAPP_CONFIG_TITLE.'`,`'.CPABC_TDEAPP_CONFIG_USER.'`,`'.CPABC_TDEAPP_CONFIG_PASS.'`,`'.CPABC_TDEAPP_CONFIG_LANG.'`,`'.CPABC_TDEAPP_CONFIG_CPAGES.'`,`'.CPABC_TDEAPP_CONFIG_TYPE.'`,`'.CPABC_TDEAPP_CONFIG_MSG.'`,`'.CPABC_TDEAPP_CONFIG_WORKINGDATES.'`,`'.CPABC_TDEAPP_CONFIG_RESTRICTEDDATES.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES0.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES1.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES2.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES3.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES4.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES5.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES6.'`,`'.CPABC_TDEAPP_CALDELETED_FIELD.'`) '.
-                                                                                ' VALUES(0,"'.esc_sql(CPABC_APPOINTMENTS_DEFAULT_form_structure).'","1","cal1","Calendar Item 1","","-","1","3","Please, select your appointment.","1,2,3,4,5","","","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","","0");';
+    $sql = 'INSERT INTO `'.$wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` (conwer,calendar_theme,`form_structure`,`'.CPABC_TDEAPP_CONFIG_ID.'`,`'.CPABC_TDEAPP_CONFIG_TITLE.'`,`'.CPABC_TDEAPP_CONFIG_USER.'`,`'.CPABC_TDEAPP_CONFIG_PASS.'`,`'.CPABC_TDEAPP_CONFIG_LANG.'`,`'.CPABC_TDEAPP_CONFIG_CPAGES.'`,`'.CPABC_TDEAPP_CONFIG_TYPE.'`,`'.CPABC_TDEAPP_CONFIG_MSG.'`,`'.CPABC_TDEAPP_CONFIG_WORKINGDATES.'`,`'.CPABC_TDEAPP_CONFIG_RESTRICTEDDATES.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES0.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES1.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES2.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES3.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES4.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES5.'`,`'.CPABC_TDEAPP_CONFIG_TIMEWORKINGDATES6.'`,`'.CPABC_TDEAPP_CALDELETED_FIELD.'`) '.
+                                                                                ' VALUES(0,"modern/","'.esc_sql(CPABC_APPOINTMENTS_DEFAULT_form_structure).'","1","cal1","Calendar Item 1","","-","1","3","Please, select your appointment.","1,2,3,4,5","","","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","9:0,10:0,11:0,12:0,13:0,14:0,15:0,16:0","","0");';
     $wpdb->query($sql);
 
+    $rcode = get_option('ABC_RCODE','');
+    if ($rcode == '')
+    {
+        $rcode = wp_generate_uuid4();
+        update_option( 'ABC_RCODE', $rcode);
+    }
+    
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
 }
 
+
+function _cpabc_appointments_get_default_paypal_email() 
+{
+    return get_the_author_meta('user_email', get_current_user_id());
+}
+
+
+function _cpabc_appointments_get_default_from_email() 
+{
+    $default_from = strtolower(get_the_author_meta('user_email', get_current_user_id()));
+    $domain = str_replace('www.','', strtolower($_SERVER["HTTP_HOST"]));                                  
+    while (substr_count($domain,".") > 1)
+        $domain = substr($domain, strpos($domain, ".")+1);            
+    $pos = strpos($default_from, $domain);
+    if (substr_count($domain,".") == 1 && $pos === false)
+        return 'admin@'.$domain;
+    else    
+        return $default_from;
+}
 
 
 /* Filter for placing the maps into the contents */
@@ -139,6 +168,7 @@ function cpabc_appointments_filter_content($atts) {
 		'calendar' => '',
 		'user' => '',
 	), $atts ) );
+    $calendar = 1;
     if ($calendar != '')
         define ('CPABC_CALENDAR_FIXED_ID',intval($calendar));
     else if ($user != '')
@@ -220,7 +250,7 @@ function cpabc_appointments_filter_list($atts) {
     if (!defined('CP_CALENDAR_ID')) define ('CP_CALENDAR_ID',$myrows[0]->id);
 
     ob_start();
-    echo '<link rel="stylesheet" type="text/css" href="'.plugins_url('../TDE_AppCalendar/'.cpabc_get_option('calendar_theme','').'all-css.css', __FILE__).'" />';
+    echo '<link rel="stylesheet" type="text/css" href="'.plugins_url('../TDE_AppCalendar/'.cpabc_get_option('calendar_theme','modern/').'all-css.css', __FILE__).'" />';
     $fields = explode(",",$fields);
     $last_date = '';
     $mycalendarrows = $wpdb->get_results( "SELECT * FROM ".CPABC_TDEAPP_CALENDAR_DATA_TABLE ." INNER JOIN  ".CPABC_APPOINTMENTS_TABLE_NAME." on  ".CPABC_APPOINTMENTS_TABLE_NAME.".id=".CPABC_TDEAPP_CALENDAR_DATA_TABLE.".reference WHERE datatime>='".$from."' AND datatime<='".$to."' AND appointment_calendar_id=".CP_CALENDAR_ID." ORDER BY datatime ASC");
@@ -282,6 +312,8 @@ function cpabc_appointments_get_public_form() {
     $next_label = __("Next",'appointment-booking-calendar');
 
     wp_enqueue_script( 'jquery' );
+    if (!isset($_GET["fl_builder"]))  
+        wp_enqueue_script( 'cpabc_calendarscript', plugins_url('../TDE_AppCalendar/all-scripts.js?nc=1', __FILE__));
 
     $calendar_items = '';
     foreach ($myrows as $item)
@@ -304,7 +336,7 @@ function cpabc_appointments_get_public_form() {
 
     ?>
 </p> <!-- this p tag fixes a IE bug -->
-<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('../TDE_AppCalendar/'.cpabc_get_option('calendar_theme','').'all-css.css', __FILE__); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo plugins_url('../TDE_AppCalendar/'.(is_admin()?'':cpabc_get_option('calendar_theme','modern/')).'all-css.css', __FILE__); ?>" />
 <script>
 var pathCalendar = "<?php echo cpabc_appointment_get_site_url(); ?>";
 var cpabc_global_date_format = '<?php echo cpabc_get_option('calendar_dateformat', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_DATEFORMAT); ?>';
@@ -322,11 +354,9 @@ var cpabc_global_pagedate = '<?php
     echo $sm."/".$sy;
 ?>';
 </script>
-<?php if (!isset($_GET["fl_builder"])) { ?>
-<!--noptimize--><script type="text/javascript" src="<?php echo plugins_url('../TDE_AppCalendar/all-scripts.js', __FILE__); ?>"></script><!--/noptimize-->
-<?php } ?>
 <script type="text/javascript">
  var cpabc_current_calendar_item;
+ var cpabc_current_calendar_initialized = false;
  function apc_clear_date()
  {
     document.getElementById("selDaycal"+cpabc_current_calendar_item ).value = "";
@@ -341,9 +371,12 @@ var cpabc_global_pagedate = '<?php
  }
  function cpabc_do_init(id)
  {
-    cpabc_current_calendar_item = id;
-    document.getElementById("calarea_"+cpabc_current_calendar_item).style.display = "";
-    <?php if (!isset($_GET["fl_builder"])) { ?>initAppCalendar("cal"+cpabc_current_calendar_item,<?php echo cpabc_get_option('calendar_pages', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_PAGES); ?>,2,"<?php echo cpabc_auto_language(cpabc_get_option('calendar_language', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_LANGUAGE)); ?>",{m1:"<?php _e('Please select the appointment time.','appointment-booking-calendar'); ?>"});<?php } ?>
+    try {
+        cpabc_current_calendar_item = id;
+        document.getElementById("calarea_"+cpabc_current_calendar_item).style.display = "";
+        <?php if (!isset($_GET["fl_builder"])) { ?>initAppCalendar("cal"+cpabc_current_calendar_item,<?php echo (is_admin()?'3':cpabc_get_option('calendar_pages', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_PAGES)); ?>,2,"<?php echo cpabc_auto_language(cpabc_get_option('calendar_language', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_LANGUAGE)); ?>",{m1:"<?php _e('Please select the appointment time.','appointment-booking-calendar'); ?>"});<?php } ?>
+        cpabc_current_calendar_initialized = true;
+    } catch (e) {}    
  }
  function updatedate()
  {
@@ -375,7 +408,12 @@ var cpabc_global_pagedate = '<?php
 ?>
 <script type="text/javascript">
  var cpabc_click_enabled = true;  
- cpabc_do_init(<?php echo $myrows[0]->id; ?>);
+ var cpabc_max_slots = <?php $opt = cpabc_get_option('max_slots', '1'); if ($opt == '') $opt = '1'; echo $opt; ?>;
+ var cpabc_max_slots_text = '<?php echo str_replace("'","\'",__('Please select a maximum of %1 time-slots. Currently selected: %2 time-slots.','appointment-booking-calendar')); ?>';
+ cpabc_max_slots_text = cpabc_max_slots_text.replace('%1',cpabc_max_slots);
+ cpabc_max_slots_text = cpabc_max_slots_text.replace('%2',cpabc_max_slots);
+ cpabc_current_calendar_item = <?php echo $myrows[0]->id; ?>;
+ cpabc_do_init(cpabc_current_calendar_item);
  setInterval('updatedate()',200);
  function doValidate(form)
  {
@@ -540,7 +578,26 @@ function set_cpabc_apps_insert_adminScripts($hook) {
         wp_enqueue_script( 'tinymce_js', includes_url( 'js/tinymce/' ) . 'wp-tinymce.php', array( 'jquery' ), false, true );
         
         if (isset($_GET["calschedule"]) && $_GET["calschedule"] == '1')
+        {
             wp_enqueue_script( 'jquery-ui-dialog' );
+
+            wp_enqueue_script( 'cpabc_mvuscore', plugins_url('../mv/js/underscore.js', __FILE__), array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ) );
+            wp_enqueue_script( 'cpabc_mvrrule', plugins_url('../mv/js/rrule.js', __FILE__), array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ) );
+            wp_enqueue_script( 'cpabc_mvcommon', plugins_url('../mv/js/Common.js', __FILE__), array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ) );                      
+            
+            if (file_exists(dirname( __FILE__ ).'../mv/language/multiview_lang_'.cpabc_mv_autodetect_language().'.js'))
+                $langscript = plugins_url('../mv/language/multiview_lang_'.cpabc_mv_autodetect_language().'.js', __FILE__);
+            else
+                $langscript = plugins_url('../mv/language/multiview_lang_en_GB.js', __FILE__);
+            wp_enqueue_script( 'cpabc_mvlanguage', $langscript, array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ) );     
+
+            wp_enqueue_script( 'cpabc_mvcalendar', plugins_url('../mv/js/jquery.calendar.js', __FILE__), array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ) );
+            wp_enqueue_script( 'cpabc_mvjalert', plugins_url('../mv/js/jquery.alert.js', __FILE__), array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ) );
+            wp_enqueue_script( 'cpabc_mvmsjs', plugins_url('../mv/js/multiview.js', __FILE__), array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ) );         
+            
+            wp_enqueue_style('cpabc-schedulecalendar', plugins_url('../mv/css/cupertino/calendar.css', __FILE__));
+            wp_enqueue_style('cpabc-schedulemain', plugins_url('../mv/css/main.css', __FILE__));
+        }
         
         if (isset($_GET["addbk"]) && $_GET["addbk"] == '1')
         {
@@ -550,7 +607,12 @@ function set_cpabc_apps_insert_adminScripts($hook) {
         wp_enqueue_style('jquery-ui-datepicker', plugins_url('../TDE_AppCalendar/cupertino/jquery-ui-1.8.20.custom.css', __FILE__));
         
         if (!isset($_GET["addbk"]))
+        {
             wp_enqueue_style('cpabc-allstyle', plugins_url('../TDE_AppCalendar/all-css.css', __FILE__));
+            wp_enqueue_script( 'cpabc_alljs', plugins_url('../TDE_AppCalendar/all-scripts.js', __FILE__));
+            wp_enqueue_script( 'cpabc_tabview', plugins_url('../TDE_AppCalendar/tabview.js', __FILE__), array('cpabc_alljs'));
+            wp_enqueue_script( 'cpabc_simpleeditor', plugins_url('../TDE_AppCalendar/simpleeditor-beta-min.js', __FILE__), array('cpabc_alljs'));
+        }
         wp_enqueue_style('cpabc-sestyle', plugins_url('../TDE_AppCalendar/simpleeditor.css', __FILE__));
         wp_enqueue_style('cpabc-tbstyle', plugins_url('../TDE_AppCalendar/tabview.css', __FILE__));  
     }
@@ -561,8 +623,8 @@ function set_cpabc_apps_insert_adminScripts($hook) {
 
 function cpabc_export_iCal() {
     global $wpdb;
-   // header("Content-type: application/octet-stream");
-   // header("Content-Disposition: attachment; filename=events".date("Y-M-D_H.i.s").".ics");
+    header("Content-type: application/octet-stream");
+    header("Content-Disposition: attachment; filename=events".date("Y-M-D_H.i.s").".ics");
 
     define('CPABC_CAL_TIME_ZONE_MODIFY',get_option('CPABC_CAL_TIME_ZONE_MODIFY_SET'," +0 hours"));
     define('CPABC_CAL_TIME_SLOT_SIZE'," +".get_option('CPABC_CAL_TIME_SLOT_SIZE_SET',"30")." minutes");
@@ -615,6 +677,29 @@ function cpabc_export_iCal() {
     }
     echo 'END:VCALENDAR';
     exit;
+}
+
+function cpabc_mv_autodetect_language()
+{
+        $basename = '/language/multiview_lang_';
+        
+        $binfo = str_replace('-','_',get_bloginfo('language'));
+        
+        $options = array ($binfo,
+                          strtolower($binfo),
+                          substr(strtolower($binfo),0,2)."_".substr(strtoupper($binfo),strlen(strtoupper($binfo))-2,2),
+                          substr(strtolower($binfo),0,2),
+                          substr(strtolower($binfo),strlen(strtolower($binfo))-2,2)                      
+                          );
+        foreach ($options as $option)
+        {
+            if (file_exists(dirname( __FILE__ ).$basename.$option.'.js'))
+                return $option;
+            $option = str_replace ("-","_", $option);    
+            if (file_exists(dirname( __FILE__ ).$basename.$option.'.js'))
+                return $option;
+        }  
+        return '';    
 }
 
 require_once 'cpabc_apps_go.inc.php';

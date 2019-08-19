@@ -69,6 +69,7 @@ for(var J in L){if(!this._configs[J]&&!YAHOO.lang.isUndefined(K[J])){this.setAtt
 
 function initAppCalendar(calendarId,pages,type,lang,m)
 {
+    try{document.getElementById(calendarId+"Container").classList.add("notranslate")} catch(e){}
 	var currentTime = new Date();
 	currentTime.setDate(currentTime.getDate() + 2);
 	var month = currentTime.getMonth() + 1;
@@ -133,12 +134,16 @@ function initAppCalendar(calendarId,pages,type,lang,m)
 					/** 2: Close automatically when you move the mouse out of the calendar */
 					/** 3: Close automatically when you move the mouse out of the cell */
 	
-
 	YAHOO.util.Event.onDOMReady(YAHOO.TDE.AppCalendar.initData,{id:calendarId,pages:pages,cfg:mCfg,language:lang,type:type});
 	//YAHOO.util.Event.onDOMReady(YAHOO.TDE.AppCalendar.initData2,calendarId);
 
 	//YAHOO.util.Event.onDOMReady(YAHOO.TDE.calendar.init,{id:calendarId,pages:pages,cfg:mCfg,language:lang,type:type});
-
+    try {
+        jQuery(function() {
+            YAHOO.util.Event.DOMReady=true;    
+            YAHOO.util.Event.DOMReadyEvent.fire();
+        });
+    } catch (e) {}
 	YAHOO.TDE.AppCalendar.typeCalendar[calendarId] = type;
 	YAHOO.TDE.AppCalendar.messagesCalendar[calendarId] = m;
 	if (YAHOO.TDE.AppCalendar.typeCalendar[calendarId]==1)
@@ -415,6 +420,14 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 						wm = ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"];
 						wl = ["Domingo", "Lunes", "Martes", "Mi&eacute;rcoles", "Jueves", "Viernes", "S&acute;bado"];
 					break;
+					case "GR":
+						ms = ["Ιαν", "Φεβ", "Μάρ", "Απρ", "Μάι", "Ιούν", "Ιούλ", "Αύγ", "Σεπ", "Οκτ", "Νοέ", "Δεκ"];
+						ml = ["Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"];
+						wc = ["Κ", "Δ", "Τ", "Τ", "Π", "Π", "Σ"];
+						ws = ["Κυ", "Δε", "Τρ", "Τε", "Πέ", "Πα", "Σά"];
+						wm = ["Κυρ", "Δευ", "Τρί", "Τετ", "Πέμ", "Παρ", "Σάβ"];
+						wl = ["Κυριακή", "Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο"];
+					break;                    
 					case "BG":
 						ms = ["яну", "фев", "март", "апр", "май", "юни", "юли", "авг", "сеп", "окт", "ное", "дек"];
 						ml = ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"];
@@ -574,7 +587,15 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 						ws = ['א\'','ב\'','ג\'','ד\'','ה\'','ו\'','שבת'];
 						wm = ['א\'','ב\'','ג\'','ד\'','ה\'','ו\'','שבת'];
 						wl = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
-                    break;                         
+                    break;      
+					case "AR":
+						ms = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سمتمبر", "أكتوبر", "نوفمبر", "ديسيمبر"];
+						ml = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سمتمبر", "أكتوبر", "نوفمبر", "ديسيمبر"];
+						wc = [ "ح", "ن", "ث", "ر", "خ", "ج", "س" ];
+						ws = [ "ح", "ن", "ث", "ر", "خ", "ج", "س" ];
+						wm = [ "ح", "ن", "ث", "ر", "خ", "ج", "س" ];
+						wl = ["يَوم الأحَد", "يَوم الإثنين", "يَوم الثلاثاء", "يَوم الأربعاء", "يَوم الخميس", "يَوم الجمعة", "يَوم السبت"];
+					break;                      
 					default:
 						return;
 					break;
@@ -1718,6 +1739,13 @@ function closeEventShow(evt, conf){
 	}catch(e){}
 }
 function selectAppointment(id_in, t, day, context_in, calendarId){
+    try {
+	    if (YAHOO.TDE.AppCalendar.reservedDate[calendarId].length>=cpabc_max_slots)
+	    {
+	        alert(cpabc_max_slots_text );
+	        return;
+	    }
+	} catch (e) {}
     dayString = day+" "+t;
     var popup = id_in.replace("editorCell", "PanelRemark");
 	popup = popup.replace(t.toString(), "");
@@ -1989,3 +2017,10 @@ function getTimeWithAMPM(calendarId,t)
 	else
 		return t;
 }
+try {
+    if (typeof cpabc_current_calendar_initialized !== 'undefined')
+    {    
+        if (!cpabc_current_calendar_initialized && cpabc_current_calendar_item)
+            cpabc_do_init(cpabc_current_calendar_item);
+    }
+} catch (e) {}

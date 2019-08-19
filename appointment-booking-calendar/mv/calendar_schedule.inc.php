@@ -19,30 +19,6 @@ $current_user = wp_get_current_user();
 
 if (cpabc_appointment_is_administrator() || $mycalendarrows[0]->conwer == $current_user->ID) {
 
-
-function cpabc_mv_autodetect_language()
-{
-        $basename = '/language/multiview_lang_';
-        
-        $binfo = str_replace('-','_',get_bloginfo('language'));
-        
-        $options = array ($binfo,
-                          strtolower($binfo),
-                          substr(strtolower($binfo),0,2)."_".substr(strtoupper($binfo),strlen(strtoupper($binfo))-2,2),
-                          substr(strtolower($binfo),0,2),
-                          substr(strtolower($binfo),strlen(strtolower($binfo))-2,2)                      
-                          );
-        foreach ($options as $option)
-        {
-            if (file_exists(dirname( __FILE__ ).$basename.$option.'.js'))
-                return $option;
-            $option = str_replace ("-","_", $option);    
-            if (file_exists(dirname( __FILE__ ).$basename.$option.'.js'))
-                return $option;
-        }  
-        return '';    
-}
-
 if ($message) echo "<div id='setting-error-settings_updated' class='updated settings-error'><p><strong>".$message."</strong></p></div>";
 
 $nonce_un = wp_create_nonce( 'uname_abc_bklist' );
@@ -63,25 +39,7 @@ $nonce_un = wp_create_nonce( 'uname_abc_bklist' );
 <br />
 
 
-<div id="cpabc_printable_contents">
-
-            <link rel="stylesheet" href="<?php echo plugins_url('css/cupertino/calendar.css', __FILE__); ?>" type="text/css" />
-            <link rel="stylesheet" href="<?php echo plugins_url('css/main.css', __FILE__); ?>" type="text/css" /> 
-            
-            <script type="text/javascript" src="<?php echo plugins_url('js/underscore.js', __FILE__); ?>"></script>
-            <script type="text/javascript" src="<?php echo plugins_url('js/rrule.js', __FILE__); ?>"></script>
-            <script type="text/javascript" src="<?php echo plugins_url('js/Common.js', __FILE__); ?>"></script>
-            
-<?php
-        if (file_exists(dirname( __FILE__ ).'/language/multiview_lang_'.cpabc_mv_autodetect_language().'.js'))
-            $langscript = plugins_url('/language/multiview_lang_'.cpabc_mv_autodetect_language().'.js', __FILE__);
-        else
-            $langscript = plugins_url('/language/multiview_lang_en_GB.js', __FILE__);
-?>        
-            <script type="text/javascript" src="<?php echo $langscript; ?>"></script>
-            <script type="text/javascript" src="<?php echo plugins_url('js/jquery.calendar.js', __FILE__); ?>"></script>
-            <script type="text/javascript" src="<?php echo plugins_url('js/jquery.alert.js', __FILE__); ?>"></script>
-            <script type="text/javascript" src="<?php echo plugins_url('js/multiview.js', __FILE__); ?>"></script>
+<div id="cpabc_printable_contents">                        
           
             <script type="text/javascript">
              var pathCalendar = "<?php echo cpabc_appointment_get_site_url(true); ?>/?cpabc_calendar_load2=1&id=<?php echo CP_CALENDAR_ID; ?>&cpabc_action=mvparse";

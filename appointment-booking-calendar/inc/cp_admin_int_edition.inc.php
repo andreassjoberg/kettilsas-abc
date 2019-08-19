@@ -79,20 +79,9 @@ jQuery(function(){
 <input type="button" name="backbtn" value="Back to items list..." onclick="document.location='admin.php?page=<?php echo $plugslug; ?>';">
 <br /><br />
 
-<form method="post" action="" name="cpformconf"> 
-<input name="<?php echo $cpid; ?>_post_edition" type="hidden" value="1" />
-<input name="cfwpp_edit" type="hidden" value="<?php echo $_GET["item"]; ?>" />
-   
-<div id="normal-sortables" class="meta-box-sortables">
 
-<div class="ahb-code-editor-container">
-<textarea name="editionarea" id="editionarea" style="width:100%" rows="20"><?php echo $saved_contents; ?></textarea> 
-</div> 
+Note: This section has been modified to improve security. Please edit the custom CSS in the theme. You can <a href="https://abc.dwbooster.com/contact-us">contact us for support and assistance</a>.
   
-</div> 
-
-
-<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"  /></p>
 
 
 </form>

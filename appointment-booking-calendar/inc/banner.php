@@ -15,19 +15,20 @@ if(!function_exists( 'codepeople_add_promote_banner' ))
 		// Take action over the banner
 		if(isset($_POST['codepeople_promote_banner_nonce']) && wp_verify_nonce($_POST['codepeople_promote_banner_nonce'], __FILE__))
 		{
+            $codepeople_promote_banner_plugin = sanitize_key($_POST['codepeople_promote_banner_plugin']);
 			if(
-				!empty($_POST['codepeople_promote_banner_plugin']) &&
-				!empty($codepeople_promote_banner_plugins[$_POST['codepeople_promote_banner_plugin']])
+				!empty($codepeople_promote_banner_plugin) &&
+				!empty($codepeople_promote_banner_plugins[$codepeople_promote_banner_plugin])
 			)
 			{
-				set_transient( 'codepeople_promote_banner_'.$_POST['codepeople_promote_banner_plugin'], -1, 0);
+				set_transient( 'codepeople_promote_banner_'.$codepeople_promote_banner_plugin, -1, 0);
 				if(
 					!empty($_POST['codepeople_promote_banner_action']) &&
 					$_POST['codepeople_promote_banner_action'] == 'set-review' &&
-					!empty($codepeople_promote_banner_plugins[$_POST['codepeople_promote_banner_plugin']]['plugin_url'])
+					!empty($codepeople_promote_banner_plugins[$codepeople_promote_banner_plugin]['plugin_url'])
 				)
 				{
-					print '<script>document.location.href="'.esc_js($codepeople_promote_banner_plugins[$_POST['codepeople_promote_banner_plugin']]['plugin_url']).'";</script>';
+					print '<script>document.location.href="'.esc_js($codepeople_promote_banner_plugins[$codepeople_promote_banner_plugin]['plugin_url']).'";</script>';
 				}
 			}
 		}

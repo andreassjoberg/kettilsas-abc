@@ -35,10 +35,6 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
 
 ?>
 
-<?php if (!CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING) { ?>
-<link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />   
-<?php } ?>
-
 <div class="wrap">
 <h1>Appointment Booking Calendar - Manage Calendar Availability</h1>
 
@@ -64,11 +60,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
    <script>
    var pathCalendar = "<?php echo cpabc_appointment_get_site_url(true); ?>";
    var cpabc_global_start_weekday = '<?php echo cpabc_get_option('calendar_weekday', CPABC_APPOINTMENTS_DEFAULT_CALENDAR_WEEKDAY); ?>';
-   </script>
-   <script type="text/javascript" src="<?php echo plugins_url('../TDE_AppCalendar/all-scripts.js', __FILE__); ?>"></script>
-   <script type="text/javascript" language="JavaScript" src="<?php echo plugins_url('../TDE_AppCalendar/tabview.js', __FILE__); ?>"></script>
-   <script type="text/javascript" language="JavaScript" src="<?php echo plugins_url('../TDE_AppCalendar/simpleeditor-beta-min.js', __FILE__); ?>"></script>
-   
+   </script>      
    <script>initAppCalendar("cal<?php echo CP_CALENDAR_ID; ?>","3","1","<?php echo CPABC_TDEAPP_DEFAULT_CALENDAR_LANGUAGE; ?>",{m1:"Please, select your appointment."});</script>
    
    <div style="padding:10px"><div id="caladmin"><div id="cal<?php echo CP_CALENDAR_ID; ?>Container"></div></div></div>
@@ -94,6 +86,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
              <?php $value = cpabc_get_option('calendar_language',CPABC_APPOINTMENTS_DEFAULT_CALENDAR_LANGUAGE); ?>
              <select name="calendar_language">               
                <option value="-" <?php if ($value == '-') echo ' selected="selected"'; ?>>- Auto detect -</option> 
+               <option value="AR" <?php if ($value == 'AR') echo ' selected="selected"'; ?>>Arabic</option>
                <option value="BG" <?php if ($value == 'BG') echo ' selected="selected"'; ?>>Bulgarian</option>
                <option value="CZ" <?php if ($value == 'CZ') echo ' selected="selected"'; ?>>Czech</option>
                <option value="DE" <?php if ($value == 'DE') echo ' selected="selected"'; ?>>German</option>
@@ -101,6 +94,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                <option value="DU" <?php if ($value == 'DU') echo ' selected="selected"'; ?>>Dutch</option>
                <option value="EN" <?php if ($value == 'EN') echo ' selected="selected"'; ?>>English</option>
                <option value="FR" <?php if ($value == 'FR') echo ' selected="selected"'; ?>>French</option>
+               <option value="GR" <?php if ($value == 'GR') echo ' selected="selected"'; ?>>Greek</option>
                <option value="HE" <?php if ($value == 'HE') echo ' selected="selected"'; ?>>Hebrew</option>
                <option value="HU" <?php if ($value == 'HU') echo ' selected="selected"'; ?>>Hungarian</option>
                <option value="IT" <?php if ($value == 'IT') echo ' selected="selected"'; ?>>Italian</option>
@@ -127,9 +121,10 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
         <tr valign="top">        
         <th scope="row">Calendar visual theme</th>
         <td>
-             <?php $value = cpabc_get_option('calendar_theme',''); ?>
-             <select name="calendar_theme">               
-               <option value="" <?php if ($value == '') echo ' selected="selected"'; ?>>Default - Classic</option>
+             <?php $value = cpabc_get_option('calendar_theme','modern/'); ?>
+             <select name="calendar_theme">     
+               <option value="modern/" <?php if ($value == 'modern/') echo ' selected="selected"'; ?>>Default - Modern</option>             
+               <option value="" <?php if ($value == '') echo ' selected="selected"'; ?>>Classic</option>
                <option value="light/" <?php if ($value == 'light/') echo ' selected="selected"'; ?>>Light</option>
                <option value="blue/" <?php if ($value == 'blue/') echo ' selected="selected"'; ?>>Blue</option>
             </select><br />
@@ -458,11 +453,11 @@ also support integration with other payment gateways.</p><br />
      <table class="form-table">    
         <tr valign="top">
         <th scope="row">Notification "from" email</th>
-        <td><input type="email" name="notification_from_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_from_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL)); ?>" required /></td>
+        <td><input type="email" name="notification_from_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_from_email', _cpabc_appointments_get_default_from_email() )); ?>" required /></td>
         </tr>             
         <tr valign="top">
         <th scope="row">Send notification to email</th>
-        <td><input type="text" name="notification_destination_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_destination_email', CPABC_APPOINTMENTS_DEFAULT_PAYPAL_EMAIL)); ?>" />
+        <td><input type="text" name="notification_destination_email" size="40" value="<?php echo esc_attr(cpabc_get_option('notification_destination_email', _cpabc_appointments_get_default_paypal_email() )); ?>" />
           <br />
           <em>Note: Comma separated list for adding more than one email address<em>
         </td>
