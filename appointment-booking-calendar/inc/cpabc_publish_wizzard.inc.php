@@ -1,6 +1,6 @@
 <?php 
 
-if ( !is_admin() ) {echo 'Direct access not allowed.';exit;} 
+if ( !is_admin() || !current_user_can('manage_options')) {echo 'Direct access not allowed.';exit;} 
 
 $nonce = wp_create_nonce( 'abc_update_actions_pwizard' );
 
