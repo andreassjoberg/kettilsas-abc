@@ -213,7 +213,7 @@ function cpabc_appointments_main_initialization()
         $rows_affected = $wpdb->insert( CPABC_APPOINTMENTS_TABLE_NAME, array( 'calendar' => $selectedCalendar,
                                                                         'time' => current_time('mysql'),
                                                                         'booked_time' => sanitize_text_field($pdate[$n]),
-                                                                        'booked_time_unformatted' => $pdateAndTime[$n],
+                                                                        'booked_time_unformatted' => $pdate[$n],
                                                                         'name' => "".sanitize_text_field(@$_POST["name"]),
                                                                         'email' => "".sanitize_email(@$_POST[$to]),
                                                                         'phone' => "".sanitize_text_field(@$_POST["phone"]),
@@ -1043,7 +1043,7 @@ function cpabc_data_management_loaded()
 
     if ($_POST['cpabc_publish_id']) $item = intval($_POST['cpabc_publish_id']);
 
-    if ($action == "wizard" && wp_verify_nonce( $_POST['nonce'], 'abc_update_actions_pwizard' ) && current_user_can('manage_options'))
+    if ($action == "wizard" && wp_verify_nonce( $_POST['nonce'], 'abc_update_actions_pwizard' ))
     {
         $shortcode = '[CPABC_APPOINTMENT_CALENDAR calendar="'.$item .'"]';
         $cpabc_postURL = cpabc_publish_on(    sanitize_text_field(@$_POST["whereto"]), 
