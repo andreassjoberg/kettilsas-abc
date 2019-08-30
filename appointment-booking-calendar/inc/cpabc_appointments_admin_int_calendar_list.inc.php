@@ -34,7 +34,7 @@ else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
         update_option( 'CPABC_APPOINTMENTS_DEFAULT_USE_EDITOR', "1" );
         if ($_GET["chs"] != '')
         {
-            $target_charset = esc_sql(sanitize_text_field($_GET["chs"]));
+            $target_charset = str_replace('`','``', sanitize_text_field($_GET["chs"]));
             $tables = array( $wpdb->prefix.CPABC_APPOINTMENTS_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME_NO_PREFIX
                              , $wpdb->prefix.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME_NO_PREFIX, $wpdb->prefix.CPABC_APPOINTMENTS_DISCOUNT_CODES_TABLE_NAME_NO_PREFIX );                
             foreach ($tables as $tab)
@@ -46,7 +46,7 @@ else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
 	    	        $type = $item->Type;
 	    	        if (preg_match("/^varchar\((\d+)\)$/i", $type, $mat) || !strcasecmp($type, "CHAR") || !strcasecmp($type, "TEXT") || !strcasecmp($type, "MEDIUMTEXT"))
 	    	        {
-	                    $wpdb->query("ALTER TABLE {$tab} CHANGE {$name} {$name} {$type} COLLATE {$target_charset}");	            
+	                    $wpdb->query("ALTER TABLE {$tab} CHANGE {$name} {$name} {$type} COLLATE `{$target_charset}`");	            
 	                }
 	            }
             }

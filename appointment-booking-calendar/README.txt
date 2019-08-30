@@ -975,7 +975,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.22 =
 * Fixed bug on adding bookings from dashboard
 
+= 1.3.23 =
+* Fix to table character encoding
+
 == Upgrade Notice ==
 
-= 1.3.22 =
-* Fixed bug on adding bookings from dashboard
+= 1.3.23 =
+* Fix to table character encoding
