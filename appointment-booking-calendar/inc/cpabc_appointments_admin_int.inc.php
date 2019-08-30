@@ -140,6 +140,7 @@ $nonce_un = wp_create_nonce( 'uname_abc' );
                <option value="0" <?php if ($value == '0') echo ' selected="selected"'; ?>>mm/dd/yyyy</option>
                <option value="1" <?php if ($value == '1') echo ' selected="selected"'; ?>>dd/mm/yyyy</option>  
                <option value="2" <?php if ($value == '2') echo ' selected="selected"'; ?>>dd.mm.yyyy</option>       
+               <option value="3" <?php if ($value == '3') echo ' selected="selected"'; ?>>yyyy-mm-dd</option>       
              </select>           
         </td>
         </tr>
@@ -654,7 +655,7 @@ also support integration with other payment gateways.</p><br />
 </div> 
 
 
-<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"  /></p>
+<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"  /></p>
 
 <?php if (!defined('CPABC_CALENDAR_ON_PUBLIC_WEBSITE')) { ?> 
 [<a href="https://wordpress.org/support/plugin/appointment-booking-calendar#new-post" target="_blank">Support</a>] | [<a href="https://abc.dwbooster.com/support?go=doc" target="_blank">Documentation</a>]

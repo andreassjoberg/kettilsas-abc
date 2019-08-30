@@ -9,6 +9,14 @@ License: GPL
 Text Domain: appointment-booking-calendar
 */
 
+/*
+	This plugin is a fork of the above mentioned credits.
+	Credits for this fork:
+		Author website: https://www.andreassjoberg.com/
+		Plugin github:  https://github.com/andreassjoberg/kettilsas-abc/
+		Plugin home:    https://www.kettilsas.se/
+*/
+
 /* initialization / install / uninstall functions */
 
 

@@ -98,6 +98,12 @@ function initAppCalendar(calendarId,pages,type,lang,m)
 		  mCfg.MDY_MONTH_POSITION = 2;
 		  mCfg.MDY_YEAR_POSITION = 3;
 		  mCfg.DATE_FIELD_DELIMITER = ".";
+	  } else if (cpabc_global_date_format == '3')
+	  {
+		mCfg.MDY_DAY_POSITION = 3;
+		mCfg.MDY_MONTH_POSITION = 2;
+		mCfg.MDY_YEAR_POSITION = 1;
+		mCfg.DATE_FIELD_DELIMITER = "-";
 	  }
 	} catch(e)   {}
 
@@ -492,7 +498,7 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 						wc = ["V","H","K","S","C","P","S"];
 						ws = ["Va","H&eacute;","Ke","Sz","Cs","P&eacute;","Sz"];
 						wm = ["Vas","H&eacute;t","Ked","Sze","Cs&ouml;","P&eacute;n","Szo"];
-						wl = ["Vasárnap","H&eacute;tfo","Kedd","Szerda","Cs&ouml;törtök","P&eacute;ntek","Szombat"];
+						wl = ["Vasï¿½rnap","H&eacute;tfo","Kedd","Szerda","Cs&ouml;tï¿½rtï¿½k","P&eacute;ntek","Szombat"];
 					break;					
 					case "JP":
 						ms = ["1\u6708", "2\u6708", "3\u6708", "4\u6708", "5\u6708", "6\u6708", "7\u6708", "8\u6708", "9\u6708", "10\u6708", "11\u6708", "12\u6708"];
@@ -540,7 +546,7 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 						wc = ["N","P", "&Uacute;", "S", "C", "P", "S"];
 						ws = ["Ne", "Po", "&Uacute;t", "St", "&#x10c;t", "P&aacute;", "So"];
 						wm = ["Ned", "Pon", "&Uacute;te", "Str", "&#x10c;tv", "P&aacute;t", "Sob"];
-						wl = ["Nedele", "Pondel&iacute;", "&Uacute;terý", "Streda", "&#x10c;tvrtek", "P&aacute;tek", "Sobota"];
+						wl = ["Nedele", "Pondel&iacute;", "&Uacute;terï¿½", "Streda", "&#x10c;tvrtek", "P&aacute;tek", "Sobota"];
 					break;
 					case "SK":
 						ms = ["Jan", "Fab", "Mar", "Apr", "M&aacute;j", "J&uacute;n", "J&uacute;l", "Aug", "Sep", "Okt", "Nov", "Dec"];
@@ -682,13 +688,15 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 			    for (var i=0;i<r.length;i++)
 			    {
 			 	    k = r[i].d;
-			 	    
-			        var sel_fdate = " "+getTimeWithAMPM(calendarId,r[i].t);
+					
+					var sel_fdate = " " + getTimeWithAMPM(calendarId,r[i].t);
 			        if (cpabc_global_date_format == '1')
                         sel_fdate = k.getDate() + "/" + (k.getMonth()+ 1) +"/" + k.getFullYear() + sel_fdate;
                     else if (cpabc_global_date_format == '2')
-                        sel_fdate = k.getDate() + "." + (k.getMonth()+ 1) +"." + k.getFullYear() + sel_fdate;
-                    else  
+						sel_fdate = k.getDate() + "." + (k.getMonth()+ 1) +"." + k.getFullYear() + sel_fdate;
+					else if (cpabc_global_date_format == '3')
+						sel_fdate = k.getFullYear() + "-" + ("0" + (k.getMonth() + 1)).slice(-2) + "-" + ("0" + k.getDate()).slice(-2) + sel_fdate;
+					else  
                         sel_fdate = (k.getMonth()+ 1) + "/" + k.getDate() +"/" + k.getFullYear() + sel_fdate;
                         			 	    
 			 	    strList += '<div>'+ sel_fdate +' <div class="cancel-btn"><a href="javascript:removeAppointment(\''+calendarId+'\',\''+r[i].str+'\');"><span>'+cpabc_global_cancel_text+'</span></a></div></div>';
@@ -1994,6 +2002,7 @@ function createEditorCell(id_in, title_in, d, context_in, calendarId){
 	 	hdwr[id_in][0].show();
 	  } */
 }  
+
 function getTimeWithAMPM(calendarId,t)
 {
 	var cal = YAHOO.TDE.calendar.calendarArray[calendarId];
@@ -2003,6 +2012,8 @@ function getTimeWithAMPM(calendarId,t)
 		m =  ((t.substring(1,2)==":")?t.substring(1,t.length):t.substring(2,t.length));
 		return ((h%12==0)?"12":h%12)+m+' '+((h<12)?"am":"pm");
 	}
+	else if (typeof cpabc_global_date_format === 'undefined' || !cpabc_global_date_format || cpabc_global_date_format == '3')
+		return ("0" + t).slice(-5);
 	else
 		return t;
 }

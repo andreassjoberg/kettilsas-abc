@@ -246,9 +246,9 @@ function cpabc_appointments_main_initialization()
 
 ?>
 <html>
-<head><title>Redirecting to Paypal...</title></head>
+<head><title>Redirecting...</title></head>
 <body>
-<form action="<?php echo $ppurl; ?>" name="ppform3" method="post">
+<form action="<?php echo cpabc_appointment_get_FULL_site_url(); ?>/?cpabc_ipncheck=<?php echo $item_number; ?>" name="ppform3" method="post">
 <input type="hidden" name="cmd" value="_xclick" />
 <input type="hidden" name="business" value="<?php echo sanitize_email(cpabc_get_option('paypal_email', _cpabc_appointments_get_default_paypal_email() )); ?>" />
 <input type="hidden" name="item_name" value="<?php echo sanitize_text_field(cpabc_get_option('paypal_product_name', CPABC_APPOINTMENTS_DEFAULT_PRODUCT_NAME)); ?>" />
@@ -316,7 +316,7 @@ function cpabc_appointments_check_IPN_verification() {
     $payment_type = sanitize_text_field($_POST['payment_type']);
     $txnid = sanitize_text_field($_POST['txn_id']);
 
-    if (CPABC_TDEAPP_CALENDAR_STEP2_VRFY)
+    if (false)
     {
 	    if ($payment_status != 'Completed' && $payment_type != 'echeck')
 	        return;
@@ -341,7 +341,7 @@ function cpabc_appointments_check_IPN_verification() {
     
     cpabc_process_ready_to_go_appointment( $itemparam, $payer_email);
 
-    echo 'OK';
+    header("Location: ".cpabc_get_option('url_ok', CPABC_APPOINTMENTS_DEFAULT_OK_URL));
 
     exit();
 
