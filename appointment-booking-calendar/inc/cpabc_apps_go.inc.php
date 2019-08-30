@@ -213,7 +213,7 @@ function cpabc_appointments_main_initialization()
         $rows_affected = $wpdb->insert( CPABC_APPOINTMENTS_TABLE_NAME, array( 'calendar' => $selectedCalendar,
                                                                         'time' => current_time('mysql'),
                                                                         'booked_time' => sanitize_text_field($pdate[$n]),
-                                                                        'booked_time_unformatted' => $pdate[$n],
+                                                                        'booked_time_unformatted' => $pdateAndTime[$n],
                                                                         'name' => "".sanitize_text_field(@$_POST["name"]),
                                                                         'email' => "".sanitize_email(@$_POST[$to]),
                                                                         'phone' => "".sanitize_text_field(@$_POST["phone"]),
