@@ -1043,7 +1043,7 @@ function cpabc_data_management_loaded()
 
     if ($_POST['cpabc_publish_id']) $item = intval($_POST['cpabc_publish_id']);
 
-    if ($action == "wizard" && wp_verify_nonce( $_POST['nonce'], 'abc_update_actions_pwizard' ))
+    if ($action == "wizard" && wp_verify_nonce( $_POST['nonce'], 'abc_update_actions_pwizard' ) && current_user_can('manage_options'))
     {
         $shortcode = '[CPABC_APPOINTMENT_CALENDAR calendar="'.$item .'"]';
         $cpabc_postURL = cpabc_publish_on(    sanitize_text_field(@$_POST["whereto"]), 

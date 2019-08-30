@@ -978,7 +978,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.23 =
 * Fix to table character encoding
 
+= 1.3.24 =
+* Updates to publish section
+
 == Upgrade Notice ==
 
-= 1.3.23 =
-* Fix to table character encoding
+= 1.3.24 =
+* Updates to publish section

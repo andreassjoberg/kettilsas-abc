@@ -164,7 +164,9 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
                                <input style="margin-bottom:3px" class="button"  type="button" name="calupdate_<?php echo $item->id; ?>" value="Update" onclick="cp_updateItem(<?php echo $item->id; ?>);" /> 
                              <?php } ?>    
                              <input style="margin-bottom:3px;" class="button-primary button" type="button" name="calmanage_<?php echo $item->id; ?>" value="Manage Settings" onclick="cp_manageSettings(<?php echo $item->id; ?>);" /> 
+                             <?php if (current_user_can('manage_options')) { ?>
                              <input style="margin-bottom:3px" class="button-primary button" type="button" name="calpublish_<?php echo $item->id; ?>" value="<?php _e('Publish','appointment-booking-calendar'); ?>" onclick="cp_publish(<?php echo $item->id; ?>);" />   
+                             <?php } ?>
                              <input style="margin-bottom:3px;" class="button" type="button" name="calbookings_<?php echo $item->id; ?>" value="Bookings List" onclick="cp_BookingsList(<?php echo $item->id; ?>);" /> 
                              <input style="margin-bottom:3px;" class="button" type="button" name="calschedule_<?php echo $item->id; ?>" value="Calendar Schedule" onclick="cp_calendarschedule(<?php echo $item->id; ?>);" /> 
                              <input style="margin-bottom:3px;" class="button" type="button" name="caladdbk_<?php echo $item->id; ?>" value="Add Booking" onclick="cp_addbk(<?php echo $item->id; ?>);" /> 
