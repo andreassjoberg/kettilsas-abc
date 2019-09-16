@@ -44,6 +44,8 @@ Features:
 
 Please note that this is a plugin originally designed to accept appointment bookings linked to PayPal payments. The feature for accepting appointments without PayPal is implemented/available in the commercial versions: https://abc.dwbooster.com/download
 
+Payments processed through the plugin are SCA ready (Strong Customer Authentication), compatible with the new Payment services (PSD 2) - Directive (EU) that comes into full effect on 14 September, 2019.
+
 = Available Languages and Adding New Languages / Translations = 
 
 The current translations are already available in the appointment calendar plugin:
@@ -984,7 +986,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.25 =
 * Fixed bug in datetime processing
 
+= 1.3.26 =
+* Documentation updates
+
 == Upgrade Notice ==
 
-= 1.3.25 =
-* Fixed bug in datetime processing
+= 1.3.26 =
+* Documentation updates
