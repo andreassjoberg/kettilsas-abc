@@ -1,3 +1,4 @@
+var minutes_before =0;
 tinyMCEPreInit = {
 			baseURL: "../wp-includes/js/tinymce",
 			suffix: ".min"
@@ -338,40 +339,58 @@ YAHOO.TDE.AppCalendar.appoiments = new Array();
 			  try {
 			      var people = parseInt(document.getElementById("abc_capacity").options[document.getElementById("abc_capacity").selectedIndex].value) ;
 			  } catch (e) {var people = 1;}
-			  for (i=0;i<t.length;i++) 
+			  var currentTime = new Date();
+			  var cal = YAHOO.TDE.calendar.calendarArray[calendarId];
+			  currentTime = new Date(currentTime.getTime() + minutes_before*60000);
+			  if (cal.mCfg.MINDATE!="")
 			  {
-				  time = (t[i].hour)+':'+((t[i].minute<9)?"0"+t[i].minute:t[i].minute);
-				  var cal = YAHOO.TDE.calendar.calendarArray[calendarId];
-				  if (cal.mCfg.MILITARY_TIME!=1)
-					  var cellClass = "cell12";
-				  else
-					  var cellClass = "cell";
-				  var class1 = cellClass;
-				  try {
-					   var a = YAHOO.TDE.AppCalendar.appoiments[calendarId][d][time];
-				  } catch (e) {
-					var a = new Array();
-				  }
-
-				  if (!a) a = new Array();
-                  var capacityOccupied = 0;
-		          for (var j=0;j<a.length;j++) 
-		              capacityOccupied += parseInt(a[j].capacity);
-		          if ((capacityOccupied == 0) || ((capacityOccupied < t[i].reservations) && YAHOO.TDE.AppCalendar.typeCalendar[calendarId]==2))
-					  class1 = cellClass;
-				  else
-				  {
-				  	  if (cal.mCfg.MILITARY_TIME!=1)
-						  class1 = "cellbusy12";
-					  else
-						  class1 = "cellbusy";
-				  }
-				  if (YAHOO.TDE.AppCalendar.typeCalendar[calendarId]!=2)
-				  str += '<a href="javascript:createEditorCell(\'editorCell'+cell+time+'\', \''+time+'\', \''+d+'\', \'button'+cell+time+'\', \''+calendarId+'\');" class="acell" ><div class="'+class1+'" id="button'+cell+time+'">'+getTimeWithAMPM(calendarId,time)+'</div></a>';
-				  else if (capacityOccupied+people <= t[i].reservations)
-				  {
-                      str += '<a href="javascript:selectAppointment(\'editorCell'+cell+time+'\', \''+time+'\', \''+d+'\', \'button'+cell+time+'\', \''+calendarId+'\');" class="acell" ><div class="'+(  (inArray(d+" "+time,YAHOO.TDE.AppCalendar.reservedDate[calendarId]))?"cellReserved"+((cal.mCfg.MILITARY_TIME!=1)?"12":""):class1  )+'" id="button'+(cell+time)+'">'+getTimeWithAMPM(calendarId,time)+'</div></a>';
-				  }
+			      var today = new Date(currentTime.getFullYear(),currentTime.getMonth(),currentTime.getDate());
+			      var hourminutes = currentTime.getTime() - today.getTime();
+			      var k = cal.mCfg.MINDATE.split("/");
+			      if (k.length==3)
+			      {
+			          currentTime = new Date(k[2],(k[0]-1),k[1]);
+			          currentTime = new Date(currentTime.getTime() + hourminutes);
+			      }
+			  }			  
+			  for (i=0;i<t.length;i++) 
+			  {   
+			      var checkTime = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate(),t[i].hour,t[i].minute);
+			      if (cal.mCfg.MINDATE=="" || ( dt.getTime()!=today.getTime() || (dt.getTime()==today.getTime() && currentTime<checkTime)))
+			      {
+				      time = (t[i].hour)+':'+((t[i].minute<9)?"0"+t[i].minute:t[i].minute);
+				      var cal = YAHOO.TDE.calendar.calendarArray[calendarId];
+				      if (cal.mCfg.MILITARY_TIME!=1)
+				  	    var cellClass = "cell12";
+				      else
+				  	    var cellClass = "cell";
+				      var class1 = cellClass;
+				      try {
+				  	     var a = YAHOO.TDE.AppCalendar.appoiments[calendarId][d][time];
+				      } catch (e) {
+				  	  var a = new Array();
+				      }
+                      
+				      if (!a) a = new Array();
+                      var capacityOccupied = 0;
+		              for (var j=0;j<a.length;j++) 
+		                  capacityOccupied += parseInt(a[j].capacity);
+		              if ((capacityOccupied == 0) || ((capacityOccupied < t[i].reservations) && YAHOO.TDE.AppCalendar.typeCalendar[calendarId]==2))
+				  	    class1 = cellClass;
+				      else
+				      {
+				      	  if (cal.mCfg.MILITARY_TIME!=1)
+				  	  	  class1 = "cellbusy12";
+				  	    else
+				  	  	  class1 = "cellbusy";
+				      }
+				      if (YAHOO.TDE.AppCalendar.typeCalendar[calendarId]!=2)
+				      str += '<a href="javascript:createEditorCell(\'editorCell'+cell+time+'\', \''+time+'\', \''+d+'\', \'button'+cell+time+'\', \''+calendarId+'\');" class="acell" ><div class="'+class1+'" id="button'+cell+time+'">'+getTimeWithAMPM(calendarId,time)+'</div></a>';
+				      else if (capacityOccupied+people <= t[i].reservations)
+				      {
+                          str += '<a href="javascript:selectAppointment(\'editorCell'+cell+time+'\', \''+time+'\', \''+d+'\', \'button'+cell+time+'\', \''+calendarId+'\');" class="acell" ><div class="'+(  (inArray(d+" "+time,YAHOO.TDE.AppCalendar.reservedDate[calendarId]))?"cellReserved"+((cal.mCfg.MILITARY_TIME!=1)?"12":""):class1  )+'" id="button'+(cell+time)+'">'+getTimeWithAMPM(calendarId,time)+'</div></a>';
+				      }
+				  }  
 
 			  }
 			  return str +'<div style="clear:both" >'+YAHOO.TDE.AppCalendar.messagesCalendar[calendarId].m1+'</div>';
