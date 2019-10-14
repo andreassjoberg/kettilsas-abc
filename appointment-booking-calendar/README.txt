@@ -989,7 +989,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.26 =
 * Documentation updates
 
+= 1.3.27 =
+* Fixed bug when minimum available date is now
+
 == Upgrade Notice ==
 
-= 1.3.26 =
-* Documentation updates
+= 1.3.27 =
+* Fixed bug when minimum available date is now
