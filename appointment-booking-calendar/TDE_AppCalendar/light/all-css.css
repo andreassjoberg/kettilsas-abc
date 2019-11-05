@@ -635,3 +635,4 @@ color:#ffffff;
 transition: all 0ms !important;
 }
 .yui-calendar {white-space: nowrap;}
+table.yui-calendar  th{padding:inherit}

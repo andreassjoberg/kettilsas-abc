@@ -995,7 +995,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.28 =
 * Compatible with WordPress 5.3
 
+= 1.3.29 =
+* Improved mobile views
+
 == Upgrade Notice ==
 
-= 1.3.28 =
-* Compatible with WordPress 5.3
+= 1.3.29 =
+* Improved mobile views
