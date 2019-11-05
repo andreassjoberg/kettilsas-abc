@@ -612,3 +612,4 @@ transition: all 0ms !important;
 }
 .yui-calendar {white-space: nowrap;}
 table.yui-calendar  td,table.yui-calendar  th{border:inherit}
+table.yui-calendar  th{padding:inherit}
