@@ -470,8 +470,8 @@ function cpabc_process_ready_to_go_appointment($itemnumber, $payer_email = "")
                     if (trim($item) != '')
                     {
                         wp_mail(trim($item), $email_subject2, $email_content2,
-                            "From: ".$SYSTEM_EMAIL."\r\n".
-                            ($replyto!=''?"Reply-To: \"$replyto\" <".$replyto.">\r\n":'').
+                            "From: ".$SYSTEM_EMAIL."\r\n".                            
+                            ($replyto!=''?"Reply-To: ".$replyto."\r\n":'').
                             $content_type.
                             "X-Mailer: PHP/" . phpversion(), $attachments);
                     }
