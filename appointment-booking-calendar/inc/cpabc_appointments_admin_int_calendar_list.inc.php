@@ -17,13 +17,13 @@ if (isset($_GET['u']) && $_GET['u'] != '')
     else
     {
         $wpdb->query( $wpdb->prepare( 'UPDATE `'.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` SET conwer=%d,`'.CPABC_TDEAPP_CONFIG_USER.'`=%s WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`=%d', $_GET["owner"], $_GET["name"], $_GET['u'] ) );           
-        $message = "Item updated";        
+        $message = __("Item updated",'appointment-booking-calendar');        
     }    
 }
 else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
 {   
     if (!wp_verify_nonce( $_REQUEST['_wpnonce'], 'uname_abc' ))    
-        $message = "Access verification error. Cannot update settings.";
+        $message = __("Access verification error. Cannot update settings.",'appointment-booking-calendar');
     else
     {
         update_option( 'CPABC_CAL_TIME_ZONE_MODIFY_SET', sanitize_text_field($_GET["ict"]) );
@@ -51,7 +51,7 @@ else if (isset($_GET['ac']) && $_GET['ac'] == 'st')
 	            }
             }
         }
-        $message = "Troubleshoot settings updated";
+        $message = __("Troubleshoot settings updated",'appointment-booking-calendar');
     }   
     
 }
@@ -121,13 +121,13 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
 
 
  <div id="metabox_basic_settings" class="postbox" >
-  <h3 class='hndle' style="padding:5px;"><span>Calendar List / Items List</span></h3>
+  <h3 class='hndle' style="padding:5px;"><span><?php _e('Calendar List','appointment-booking-calendar') ?> / <?php _e('Items List','appointment-booking-calendar') ?></span></h3>
   <div class="inside">
   
   
   <table cellspacing="2"> 
    <tr>
-    <th align="left">ID</th><th align="left">Calendar Name</th><th align="left">Owner</th><th align="left">iCal Link</th><th align="left">&nbsp; &nbsp; Options</th><th align="left">Shortcode</th>    
+    <th align="left"><?php _e('ID','appointment-booking-calendar') ?></th><th align="left"><?php _e('Calendar Name','appointment-booking-calendar') ?></th><th align="left"><?php _e('Owner','appointment-booking-calendar') ?></th><th align="left"><?php _e('iCal Link','appointment-booking-calendar') ?></th><th align="left">&nbsp; &nbsp; <?php _e('Options','appointment-booking-calendar') ?></th><th align="left"><?php _e('Shortcode','appointment-booking-calendar') ?></th>    
    </tr> 
 <?php  
 
@@ -158,18 +158,18 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
         </td>
     <?php }  ?>
        
-    <td nowrap><a href="<?php echo get_site_url(false); ?>?cpabc_app=calfeed&id=<?php echo $item->id; ?>&verify=<?php echo substr(md5($item->id.get_option('ABC_RCODE',$_SERVER["DOCUMENT_ROOT"])),0,10); ?>">iCal Feed</a></td>
+    <td nowrap><a href="<?php echo get_site_url(false); ?>?cpabc_app=calfeed&id=<?php echo $item->id; ?>&verify=<?php echo substr(md5($item->id.get_option('ABC_RCODE',$_SERVER["DOCUMENT_ROOT"])),0,10); ?>"><?php _e('iCal Feed','appointment-booking-calendar') ?></a></td>
     <td style="padding-left:15px;"> 
                              <?php if (cpabc_appointment_is_administrator()) { ?> 
-                               <input style="margin-bottom:3px" class="button"  type="button" name="calupdate_<?php echo $item->id; ?>" value="Update" onclick="cp_updateItem(<?php echo $item->id; ?>);" /> 
+                               <input style="margin-bottom:3px" class="button"  type="button" name="calupdate_<?php echo $item->id; ?>" value="<?php _e('Update','appointment-booking-calendar') ?>" onclick="cp_updateItem(<?php echo $item->id; ?>);" /> 
                              <?php } ?>    
-                             <input style="margin-bottom:3px;" class="button-primary button" type="button" name="calmanage_<?php echo $item->id; ?>" value="Manage Settings" onclick="cp_manageSettings(<?php echo $item->id; ?>);" /> 
+                             <input style="margin-bottom:3px;" class="button-primary button" type="button" name="calmanage_<?php echo $item->id; ?>" value="<?php _e('Manage Settings','appointment-booking-calendar') ?>" onclick="cp_manageSettings(<?php echo $item->id; ?>);" /> 
                              <?php if (current_user_can('manage_options')) { ?>
                              <input style="margin-bottom:3px" class="button-primary button" type="button" name="calpublish_<?php echo $item->id; ?>" value="<?php _e('Publish','appointment-booking-calendar'); ?>" onclick="cp_publish(<?php echo $item->id; ?>);" />   
                              <?php } ?>
-                             <input style="margin-bottom:3px;" class="button" type="button" name="calbookings_<?php echo $item->id; ?>" value="Bookings List" onclick="cp_BookingsList(<?php echo $item->id; ?>);" /> 
-                             <input style="margin-bottom:3px;" class="button" type="button" name="calschedule_<?php echo $item->id; ?>" value="Calendar Schedule" onclick="cp_calendarschedule(<?php echo $item->id; ?>);" /> 
-                             <input style="margin-bottom:3px;" class="button" type="button" name="caladdbk_<?php echo $item->id; ?>" value="Add Booking" onclick="cp_addbk(<?php echo $item->id; ?>);" /> 
+                             <input style="margin-bottom:3px;" class="button" type="button" name="calbookings_<?php echo $item->id; ?>" value="<?php _e('Bookings List','appointment-booking-calendar') ?>" onclick="cp_BookingsList(<?php echo $item->id; ?>);" /> 
+                             <input style="margin-bottom:3px;" class="button" type="button" name="calschedule_<?php echo $item->id; ?>" value="<?php _e('Calendar Schedule','appointment-booking-calendar') ?>" onclick="cp_calendarschedule(<?php echo $item->id; ?>);" /> 
+                             <input style="margin-bottom:3px;" class="button" type="button" name="caladdbk_<?php echo $item->id; ?>" value="<?php _e('Add Booking','appointment-booking-calendar') ?>" onclick="cp_addbk(<?php echo $item->id; ?>);" /> 
     </td>
      <td style="font-size:10px;">[CPABC_APPOINTMENT_CALENDAR calendar="<?php echo $item->id; ?>"]</td>
    </tr>
@@ -187,10 +187,10 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
 <?php if (cpabc_appointment_is_administrator()) { ?> 
  
  <div id="metabox_basic_settings" class="postbox" >
-  <h3 class='hndle' style="padding:5px;"><span>New Calendar / Item</span></h3>
+  <h3 class='hndle' style="padding:5px;"><span><?php _e('New Calendar','appointment-booking-calendar') ?> / <?php _e('Item','appointment-booking-calendar') ?></span></h3>
   <div class="inside"> 
    
-       This version supports one calendar. <a href="https://abc.dwbooster.com/download">Check the upgrade options</a>.
+       <?php _e('This version supports one calendar','appointment-booking-calendar') ?>. <a href="https://abc.dwbooster.com/download"><?php _e('Check the upgrade option','appointment-booking-calendar') ?>s</a>.
 
   </div>    
  </div>
@@ -198,56 +198,56 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
 
 
  <div id="metabox_basic_settings" class="postbox" >
-  <h3 class='hndle' style="padding:5px;"><span>Form Builder Settings & Troubleshoot Area</span></h3>
+  <h3 class='hndle' style="padding:5px;"><span><?php _e('Form Builder Settings & Troubleshoot Area','appointment-booking-calendar') ?></span></h3>
   <div class="inside"> 
-    <p><strong>Important!</strong>: Use this area <strong>only</strong> if you want to activate the form builder or if you are experiencing conflicts with third party plugins, with the theme scripts or with the character encoding.</p>
+    <p><strong><?php _e('Important!','appointment-booking-calendar') ?></strong>: <?php _e('Use this area <strong>only</strong> if you want to activate the form builder or if you are experiencing conflicts with third party plugins, with the theme scripts or with the character encoding.','appointment-booking-calendar') ?> </p>
     <form name="updatesettings">
     
-      Form rendering:<br />
+      <?php _e('Form rendering','appointment-booking-calendar') ?>:<br />
        <select id="ccformrender" name="ccformrender">
-        <option value="1" selected>Use classic predefined form</option>        
+        <option value="1" selected><?php _e('Use classic predefined form','appointment-booking-calendar') ?></option>        
        </select><br />
-       <em>* The <strong>Visual Form Builder</strong> is available in the <a href="https://abc.dwbooster.com/download">commercial versions</a>. To edit the form in this basic version you should manually edit the file 'cpabc_scheduler.inc.php'.</em>
+       <em>* <?php _e('The <strong>Visual Form Builder</strong> is available in the','appointment-booking-calendar') ?> <a href="https://abc.dwbooster.com/download"><?php _e('commercial versions','appointment-booking-calendar') ?></a>. <?php _e('To edit the form in this basic version you should manually edit the file','appointment-booking-calendar') ?> 'cpabc_scheduler.inc.php'.</em>
       
       <br /><br />
           
     
-      Script load method:<br />
+      <?php _e('Script load method','appointment-booking-calendar') ?>:<br />
        <select id="ccscriptload" name="ccscriptload">
-        <option value="1" <?php if (get_option('CPABC_APPOINTMENTS_LOAD_SCRIPTS',(CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING?"1":"0")) == "1") echo 'selected'; ?>>Classic (Recommended)</option>
-        <option value="2" <?php if (get_option('CPABC_APPOINTMENTS_LOAD_SCRIPTS',(CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING?"1":"0")) != "1") echo 'selected'; ?>>Direct</option>
+        <option value="1" <?php if (get_option('CPABC_APPOINTMENTS_LOAD_SCRIPTS',(CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING?"1":"0")) == "1") echo 'selected'; ?>><?php _e('Classic (Recommended)','appointment-booking-calendar') ?></option>
+        <option value="2" <?php if (get_option('CPABC_APPOINTMENTS_LOAD_SCRIPTS',(CPABC_APPOINTMENTS_DEFAULT_DEFER_SCRIPTS_LOADING?"1":"0")) != "1") echo 'selected'; ?>><?php _e('Direct','appointment-booking-calendar') ?></option>
        </select><br />
-       <em>* Change the script load method if the form doesn't appear in the public website.</em>
+       <em>* <?php _e('Change the script load method if the form doesn\'t appear in the public website','appointment-booking-calendar') ?>.</em>
       
       <br /><br />
-      Character encoding:<br />
+      <?php _e('Character encoding','appointment-booking-calendar') ?>:<br />
        <select id="cccharsets" name="cccharsets">
-        <option value="">Keep current charset (Recommended)</option>
+        <option value=""><?php _e('Keep current charset (Recommended)','appointment-booking-calendar') ?></option>
         <option value="utf8_general_ci">UTF-8 (try this first)</option>
         <option value="latin1_swedish_ci">latin1_swedish_ci</option>
        </select><br />
-       <em>* Update the charset if you are getting problems displaying special/non-latin characters. After updated you need to edit the special characters again.</em>
+       <em>* <?php _e('Update the charset if you are getting problems displaying special/non-latin characters. After updated you need to edit the special characters again','appointment-booking-calendar') ?>.</em>
              
        <br /><br />
-       iCal timezone difference vs server time:<br />
+       <?php _e('iCal timezone difference vs server time','appointment-booking-calendar') ?>:<br />
        <select id="icaltimediff" name="icaltimediff">
         <?php for ($i=-23;$i<24; $i++) { ?>        
         <option value="<?php $text = " ".($i<0?"":"+").$i." hours"; echo urlencode($text); ?>" <?php if (get_option('CPABC_CAL_TIME_ZONE_MODIFY_SET'," +2 hours") == $text) echo ' selected'; ?>><?php echo $text; ?></option>
         <?php } ?>
        </select><br />
-       <em>* Update this, if needed, to match the desired timezone. The difference is calculated referred to the server time. Current server time is <?php echo date("Y-m-d H:i"); ?></em>
+       <em>* <?php _e('Update this, if needed, to match the desired timezone. The difference is calculated referred to the server time. Current server time is','appointment-booking-calendar') ?> <?php echo date("Y-m-d H:i"); ?></em>
        
        <br /><br />
-       iCal timeslot size in minutes:<br />
-        <input type="text" size="2" name="icaltimeslotsize" id="icaltimeslotsize" value="<?php echo get_option('CPABC_CAL_TIME_SLOT_SIZE_SET',"30"); ?>" /> minutes
+       <?php _e('iCal timeslot size in minutes','appointment-booking-calendar') ?>:<br />
+        <input type="text" size="2" name="icaltimeslotsize" id="icaltimeslotsize" value="<?php echo get_option('CPABC_CAL_TIME_SLOT_SIZE_SET',"30"); ?>" /> <?php _e('minutes','appointment-booking-calendar') ?>
         <br />
-       <em>* Update this, if needed, to have a specific slot time in the exported iCal file.</em>
+       <em>* <?php _e('Update this, if needed, to have a specific slot time in the exported iCal file','appointment-booking-calendar') ?>.</em>
       
        <br /><br />
-       Exclude columns from CSV exported files:<br />
+       <?php _e('Exclude columns from CSV exported files','appointment-booking-calendar') ?>:<br />
         <input type="text" size="50" name="excludecolumns" id="excludecolumns" value="<?php echo get_option('CPABC_EXCLUDED_COLUMNS',""); ?>" /> 
         <br />
-       <em>* Names of the columns to be excluded, comma separated.</em>
+       <em>* <?php _e('Names of the columns to be excluded, comma separated','appointment-booking-calendar') ?>.</em>
       
       
         <br /><br />         
@@ -266,9 +266,9 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
    }
   </script>
   <div id="metabox_basic_settings_custom" class="postbox" >
-  <h3 class='hndle' style="padding:5px;"><span>Customization Area</span></h3>
+  <h3 class='hndle' style="padding:5px;"><span><?php _e('Customization Area','appointment-booking-calendar') ?></span></h3>
   <div class="inside"> 
-      <p>Use this area to add custom CSS styles or custom scripts. These styles and scripts will be keep safe even after updating the plugin.</p>
+      <p><?php _e('Use this area to add custom CSS styles or custom scripts. These styles and scripts will be keep safe even after updating the plugin','appointment-booking-calendar') ?>.</p>
       <input type="button" onclick="cp_editArea('css');" name="gobtn3" value="Add Custom Styles" />
   </div>    
  </div> 
@@ -278,6 +278,6 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
 </div> 
 
 
-[<a href="https://wordpress.org/support/plugin/appointment-booking-calendar#new-post" target="_blank">Support</a>] | [<a href="https://abc.dwbooster.com/support?ref=callist" target="_blank">Documentation</a>]
+[<a href="https://wordpress.org/support/plugin/appointment-booking-calendar#new-post" target="_blank"><?php _e('Support','appointment-booking-calendar') ?></a>] | [<a href="https://abc.dwbooster.com/support?ref=callist" target="_blank"><?php _e('Documentation','appointment-booking-calendar') ?></a>]
 </form>
 </div>

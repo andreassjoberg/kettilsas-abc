@@ -1004,7 +1004,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.31 =
 * WP 5.3 compatibility update
 
+= 1.3.32 =
+* Preparing plugin for additional translations
+
 == Upgrade Notice ==
 
-= 1.3.31 =
-* WP 5.3 compatibility update
+= 1.3.32 =
+* Preparing plugin for additional translations
