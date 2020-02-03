@@ -30,7 +30,7 @@ function _cpabc_appointments_install() {
     $wpdb->query($sql);
 
     $sql = "CREATE TABLE $table_name (
-         id mediumint(9) NOT NULL AUTO_INCREMENT,
+         id int(10) NOT NULL AUTO_INCREMENT,
          time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
          booked_time VARCHAR(250) DEFAULT '' NOT NULL,
          booked_time_unformatted VARCHAR(250) DEFAULT '' NOT NULL,

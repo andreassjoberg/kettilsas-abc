@@ -229,10 +229,10 @@ if ($message) echo "<div id='setting-error-settings_updated' class='updated sett
        <em>* <?php _e('Update the charset if you are getting problems displaying special/non-latin characters. After updated you need to edit the special characters again','appointment-booking-calendar') ?>.</em>
              
        <br /><br />
-       <?php _e('iCal timezone difference vs server time','appointment-booking-calendar') ?>:<br />
+       <?php echo "".get_option('CPABC_CAL_TIME_ZONE_MODIFY_SET'," +2 hours")."*"; _e('iCal timezone difference vs server time','appointment-booking-calendar') ?>:<br />
        <select id="icaltimediff" name="icaltimediff">
         <?php for ($i=-23;$i<24; $i++) { ?>        
-        <option value="<?php $text = " ".($i<0?"":"+").$i." hours"; echo urlencode($text); ?>" <?php if (get_option('CPABC_CAL_TIME_ZONE_MODIFY_SET'," +2 hours") == $text) echo ' selected'; ?>><?php echo $text; ?></option>
+        <option value="<?php $text = " ".($i<0?"":"+").$i." hours"; echo urlencode($text); ?>" <?php if (trim(get_option('CPABC_CAL_TIME_ZONE_MODIFY_SET'," +2 hours")) == trim($text)) echo ' selected'; ?>><?php echo $text; ?></option>
         <?php } ?>
        </select><br />
        <em>* <?php _e('Update this, if needed, to match the desired timezone. The difference is calculated referred to the server time. Current server time is','appointment-booking-calendar') ?> <?php echo date("Y-m-d H:i"); ?></em>
