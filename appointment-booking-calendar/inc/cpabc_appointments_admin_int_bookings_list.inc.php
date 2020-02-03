@@ -113,8 +113,8 @@ $nonce_un = wp_create_nonce( 'uname_abc_bklist' );
  <input type="hidden" name="cal" value="<?php echo CP_CALENDAR_ID; ?>" />
  <input type="hidden" name="list" value="1" />
  Search for: <input type="text" name="search" value="<?php echo esc_attr($_GET["search"]); ?>" /> &nbsp; &nbsp; &nbsp; 
- From: <input type="text" id="dfrom" name="dfrom" value="<?php echo esc_attr($_GET["dfrom"]); ?>" /> &nbsp; &nbsp; &nbsp; 
- To: <input type="text" id="dto" name="dto" value="<?php echo esc_attr($_GET["dto"]); ?>" /> &nbsp; &nbsp; &nbsp;  
+ From: <input autocomplete="off" type="text" id="dfrom" name="dfrom" value="<?php echo esc_attr($_GET["dfrom"]); ?>" /> &nbsp; &nbsp; &nbsp; 
+ To: <input autocomplete="off" type="text" id="dto" name="dto" value="<?php echo esc_attr($_GET["dto"]); ?>" /> &nbsp; &nbsp; &nbsp;  
 <nobr><span class="submit"><input type="submit" name="ds" value="Filter" /></span> &nbsp; &nbsp; &nbsp; 
  <span class="submit"><input type="submit" name="cpabc_appointments_csv" value="Export to CSV" /></span></nobr>
   
