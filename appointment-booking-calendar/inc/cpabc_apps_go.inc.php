@@ -200,6 +200,12 @@ function cpabc_appointments_main_initialization()
     $_SESSION['rand_code'] = '';
     setCookie('rand_code', '', time()+36000,"/");
 
+	/**
+	 * Action called before insert the data into database.
+	 * To the function is passed an array with submitted data.
+	 */
+	do_action_ref_array( 'cpabc_process_data_before_insert', array(&$params) );
+
     // insert into database
     //---------------------------
 
@@ -232,6 +238,19 @@ function cpabc_appointments_main_initialization()
         $item_number[] = $wpdb->insert_id;
     }
     $item_number = implode(";", $item_number);
+    
+	// Call action for data processing
+	//---------------------------------
+	$params[ 'itemnumber' ] = $item_number[0];
+	$params[ 'itemnumbers' ] = $item_number;
+	$params[ 'useremail' ] = "".sanitize_email(@$_POST[$to]);
+	$params[ 'formid' ] = $selectedCalendar;    
+	/**
+	 * Action called after inserted the data into database.
+	 * To the function is passed an array with submitted data.
+	 */
+	do_action( 'cpabc_process_data', $params );
+    
     
     if ( is_admin() && current_user_can('edit_posts') )
     {
@@ -734,6 +753,12 @@ function cpabc_appointments_export_csv ()
 
 function cpabc_appointments_iconv($from, $to, $text)
 {
+    $text = trim($text);
+    if ( strlen($text) > 1 && (in_array(substr($text,0,1), array('=','@','+','-'))) )
+    {
+        if (substr($text,0,1) != '-' || floatval($text)."" != $text)
+            $text = chr(9).$text;
+    }
     if (function_exists('iconv'))
         return iconv($from, $to, $text);
     else

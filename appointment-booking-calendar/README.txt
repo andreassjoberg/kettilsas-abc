@@ -1013,7 +1013,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.34 =
 * Fixed bug in iCal settings
 
+= 1.3.35 =
+* Additional sanitization and new hooks
+
 == Upgrade Notice ==
 
-= 1.3.34 =
-* Fixed bug in iCal settings
+= 1.3.35 =
+* Additional sanitization and new hooks
