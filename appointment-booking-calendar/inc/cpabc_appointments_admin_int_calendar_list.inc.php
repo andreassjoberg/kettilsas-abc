@@ -16,7 +16,7 @@ if (isset($_GET['u']) && $_GET['u'] != '')
         $message = "Access verification error. Cannot update settings.";
     else
     {
-        $wpdb->query( $wpdb->prepare( 'UPDATE `'.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` SET conwer=%d,`'.CPABC_TDEAPP_CONFIG_USER.'`=%s WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`=%d', $_GET["owner"], $_GET["name"], $_GET['u'] ) );           
+        $wpdb->query( $wpdb->prepare( 'UPDATE `'.CPABC_APPOINTMENTS_CONFIG_TABLE_NAME.'` SET conwer=%d,`'.CPABC_TDEAPP_CONFIG_USER.'`=%s WHERE `'.CPABC_TDEAPP_CONFIG_ID.'`=%d', intval($_GET["owner"]), sanitize_text_field($_GET["name"]), intval($_GET['u']) ) );           
         $message = __("Item updated",'appointment-booking-calendar');        
     }    
 }
