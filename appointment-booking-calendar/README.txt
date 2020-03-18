@@ -3,7 +3,7 @@ Contributors: codepeople
 Donate link: https://abc.dwbooster.com/download
 Tags: appointment,booking,calendar,appointment calendar,booking calendar,booking form,paypal calendar,plugin,paypal bookings,paypal appointments,bookings,meeting,meet,scheduler,scheduler calendar,availability,availability calendar,agenda,reservation form,reservation calendar
 Requires at least: 3.0.5
-Tested up to: 5.3
+Tested up to: 5.4
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -1016,7 +1016,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.35 =
 * Additional sanitization and new hooks
 
+= 1.3.36 =
+* Compatible with WordPress 5.4
+
 == Upgrade Notice ==
 
-= 1.3.35 =
-* Additional sanitization and new hooks
+= 1.3.36 =
+* Compatible with WordPress 5.4
