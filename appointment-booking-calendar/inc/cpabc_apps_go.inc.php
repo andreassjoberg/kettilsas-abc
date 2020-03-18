@@ -236,8 +236,7 @@ function cpabc_appointments_main_initialization()
 
  	    // save data here
         $item_number[] = $wpdb->insert_id;
-    }
-    $item_number = implode(";", $item_number);
+    }    
     
 	// Call action for data processing
 	//---------------------------------
@@ -249,8 +248,10 @@ function cpabc_appointments_main_initialization()
 	 * Action called after inserted the data into database.
 	 * To the function is passed an array with submitted data.
 	 */
+     
 	do_action( 'cpabc_process_data', $params );
     
+    $item_number = implode(";", $item_number);
     
     if ( is_admin() && current_user_can('edit_posts') )
     {
