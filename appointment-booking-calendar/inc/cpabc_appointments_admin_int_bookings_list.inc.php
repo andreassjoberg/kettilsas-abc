@@ -59,17 +59,17 @@ $current_user = wp_get_current_user();
 
 if (cpabc_appointment_is_administrator() || $mycalendarrows[0]->conwer == $current_user->ID) {
 
-$current_page = intval($_GET["p"]);
+$current_page = intval(cpabc_get_get_param("p"));
 if (!$current_page) $current_page = 1;
 
 $cond = '';
-if ($_GET["search"] != '') 
+if (cpabc_get_get_param("search") != '') 
 {
     $search_text = sanitize_text_field($_GET["search"]);
     $cond .= " AND (title like '%".esc_sql($search_text)."%' OR description LIKE '%".esc_sql($search_text)."%')";
 }
-if ($_GET["dfrom"] != '') $cond .= " AND (datatime >= '".esc_sql(sanitize_text_field($_GET["dfrom"]))."')";
-if ($_GET["dto"] != '') $cond .= " AND (datatime <= '".esc_sql(sanitize_text_field($_GET["dto"]))." 23:59:59')";
+if (cpabc_get_get_param("dfrom") != '') $cond .= " AND (datatime >= '".esc_sql(sanitize_text_field($_GET["dfrom"]))."')";
+if (cpabc_get_get_param("dto") != '') $cond .= " AND (datatime <= '".esc_sql(sanitize_text_field($_GET["dto"]))." 23:59:59')";
 
 
 $events = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CALENDARS_TABLE_NAME." WHERE appointment_calendar_id=".CP_CALENDAR_ID.$cond." ORDER BY datatime DESC" );
@@ -112,9 +112,9 @@ $nonce_un = wp_create_nonce( 'uname_abc_bklist' );
  <input type="hidden" name="page" value="cpabc_appointments.php" />
  <input type="hidden" name="cal" value="<?php echo CP_CALENDAR_ID; ?>" />
  <input type="hidden" name="list" value="1" />
- Search for: <input type="text" name="search" value="<?php echo esc_attr($_GET["search"]); ?>" /> &nbsp; &nbsp; &nbsp; 
- From: <input autocomplete="off" type="text" id="dfrom" name="dfrom" value="<?php echo esc_attr($_GET["dfrom"]); ?>" /> &nbsp; &nbsp; &nbsp; 
- To: <input autocomplete="off" type="text" id="dto" name="dto" value="<?php echo esc_attr($_GET["dto"]); ?>" /> &nbsp; &nbsp; &nbsp;  
+ Search for: <input type="text" name="search" value="<?php echo esc_attr(cpabc_get_get_param("search")); ?>" /> &nbsp; &nbsp; &nbsp; 
+ From: <input autocomplete="off" type="text" id="dfrom" name="dfrom" value="<?php echo esc_attr(cpabc_get_get_param("dfrom")); ?>" /> &nbsp; &nbsp; &nbsp; 
+ To: <input autocomplete="off" type="text" id="dto" name="dto" value="<?php echo esc_attr(cpabc_get_get_param("dto")); ?>" /> &nbsp; &nbsp; &nbsp;  
 <nobr><span class="submit"><input type="submit" name="ds" value="Filter" /></span> &nbsp; &nbsp; &nbsp; 
  <span class="submit"><input type="submit" name="cpabc_appointments_csv" value="Export to CSV" /></span></nobr>
   
@@ -126,7 +126,7 @@ $nonce_un = wp_create_nonce( 'uname_abc_bklist' );
 
 
 echo paginate_links(  array(
-    'base'         => 'admin.php?page=cpabc_appointments.php&cal='.CP_CALENDAR_ID.'&list=1%_%&dfrom='.urlencode(sanitize_text_field($_GET["dfrom"])).'&dto='.urlencode(sanitize_text_field($_GET["dto"])).'&search='.urlencode(sanitize_text_field($_GET["search"])),
+    'base'         => 'admin.php?page=cpabc_appointments.php&cal='.CP_CALENDAR_ID.'&list=1%_%&dfrom='.urlencode(sanitize_text_field(cpabc_get_get_param("dfrom"))).'&dto='.urlencode(sanitize_text_field(cpabc_get_get_param("dto"))).'&search='.urlencode(sanitize_text_field(cpabc_get_get_param("search"))),
     'format'       => '&p=%#%',
     'total'        => $total_pages,
     'current'      => $current_page,

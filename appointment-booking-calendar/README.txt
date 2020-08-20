@@ -204,6 +204,10 @@ A: Please check if after the completing the payment at PayPal the appointment ap
 
 * **If the appointment purchase isn't registered and you are testing it on an online website**, then check if the payment appears as "completed" at the PayPal seller account (no red flags, no pending mark). Check also if your PayPal account is setup to automatically accept payments in the selected currency. The payment must be "accepted" and "completed" in the PayPal seller account.
 
+= Q: Is referral / conversion tracking available? =
+
+A: Yes, it can be done through the automatic integration with the [CP Referrer and Conversion Tracking plugin](https://wordpress.org/plugins/cp-referrer-and-conversions-tracking/).
+
 = Q: How to make the appointment calendar 100% width? =
 
 A: Add this CSS rule into the "Customization area >> Add Custom Styles" (at the bottom of the page that contains the list of calendars):
@@ -1019,7 +1023,25 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.36 =
 * Compatible with WordPress 5.4
 
+= 1.3.37 =
+* Interface improvements
+
+= 1.3.38 =
+* Gutenberg integration update
+
+= 1.3.39 =
+* PHP compatibility updates
+
+= 1.3.40 =
+* Improved captcha
+
+= 1.3.41 =
+* Load speed optimization
+
+= 1.3.42 =
+* Compatible with WordPress 5.5
+
 == Upgrade Notice ==
 
-= 1.3.36 =
-* Compatible with WordPress 5.4
+= 1.3.42 =
+* Compatible with WordPress 5.5

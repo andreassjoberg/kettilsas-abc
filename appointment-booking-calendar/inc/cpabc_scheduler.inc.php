@@ -14,7 +14,7 @@
   <select name="cpabc_item" id="cpabc_item" onchange="cpabc_updateItem()"><?php echo $calendar_items; ?></select><br /><br />
 </div>
 <?php
-  echo "<div class=\"abc_selectdate fields\"><label>".__("Select date and time",'appointment-booking-calendar').":</label></div>";
+  echo "<div class=\"abc_selectdate fields\">".__("Select date and time",'appointment-booking-calendar').":</div>";
   if (isset($_GET["fl_builder"]) ) echo '<div style="border:1px dotted black;background-color:#ffffbb;padding:7px;">NOTE: <strong>The Appointment Calendar will be rendered here</strong>. Calendar is disabled while this visual editor is in use. Will appear again after closing edition.</div>';  
   foreach ($myrows as $item)
   {
@@ -22,7 +22,7 @@
       echo '<div id="calarea_'.$item->id.'" style="display:none'.(is_rtl()?';float:right;':'').'"><input name="selDaycal'.$item->id.'" type="hidden" id="selDaycal'.$item->id.'" /><input name="selMonthcal'.$item->id.'" type="hidden" id="selMonthcal'.$item->id.'" /><input name="selYearcal'.$item->id.'" type="hidden" id="selYearcal'.$item->id.'" /><input name="selHourcal'.$item->id.'" type="hidden" id="selHourcal'.$item->id.'" /><input name="selMinutecal'.$item->id.'" type="hidden" id="selMinutecal'.$item->id.'" /><div class="appContainer"><div style="z-index:1000;" class="appContainer2"><div id="cal'.$item->id.'Container"></div></div></div> <div style="clear:both;"></div><div id="listcal'.$item->id.'"></div></div>';
   }
 ?>
-<?php if (is_admin() && !defined('ABC_ELEMENTOR_EDIT_MODE') && @$_GET["action"] != 'edit') { ?>
+<?php if (is_admin() && !defined('ABC_ELEMENTOR_EDIT_MODE') && cpabc_get_get_param("action") != 'edit') { ?>
   <fieldset style="border: 1px solid black; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; padding:15px;">
    <legend>Administrator options</legend>
     <input type="checkbox" name="sendemails_admin" value="1" vt="1" checked /> Send notification emails for this booking<br /><br />

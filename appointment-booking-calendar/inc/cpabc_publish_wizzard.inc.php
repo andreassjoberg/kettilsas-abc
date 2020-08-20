@@ -49,7 +49,7 @@ $nonce = wp_create_nonce( 'abc_update_actions_pwizard' );
 
 <?php 
 
-if (@$_POST['cpabc_do_action_loaded'] == 'wizard') {
+if (cpabc_get_post_param('cpabc_do_action_loaded') == 'wizard') {
     global $cpabc_postURL;
 ?>
 <div class="ahb-section-container">

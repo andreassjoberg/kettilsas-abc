@@ -3,8 +3,8 @@ jQuery(function()
 		(function( blocks, element ) {
             var el = wp.element.createElement,
                 source 		= blocks.source,
-	            InspectorControls = wp.editor.InspectorControls,
-				category 	= {slug:'appointment-booking-calendar', title : 'Appointment Booking Calendar'};
+	            InspectorControls   = ('blockEditor' in wp) ? wp.blockEditor.InspectorControls : wp.editor.InspectorControls;
+		    var category 	= {slug:'appointment-booking-calendar', title : 'Appointment Booking Calendar'};
 
 			/* Plugin Category */
 			blocks.getCategories().push({slug: 'appointment-booking-calendar', title: 'Appointment Booking Calendar'}) ;
