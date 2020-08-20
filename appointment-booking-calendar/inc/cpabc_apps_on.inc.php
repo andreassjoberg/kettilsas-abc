@@ -303,7 +303,8 @@ function cpabc_appointments_get_public_form() {
 
     $myrows = $wpdb->get_results( "SELECT * FROM ".CPABC_APPOINTMENTS_CONFIG_TABLE_NAME." WHERE id=1" );
 
-    define ('CP_CALENDAR_ID',1);
+    if (!defined('CP_CALENDAR_ID'))
+        define ('CP_CALENDAR_ID',1);
 
     $button_label = cpabc_get_option('vs_text_submitbtn', 'Continue');
     $button_label = ($button_label==''?'Continue':$button_label);
@@ -313,7 +314,7 @@ function cpabc_appointments_get_public_form() {
 
     wp_enqueue_script( 'jquery' );
     if (!isset($_GET["fl_builder"]))  
-        wp_enqueue_script( 'cpabc_calendarscript', plugins_url('../TDE_AppCalendar/all-scripts.js?nc=1', __FILE__));
+        wp_enqueue_script( 'cpabc_calendarscript', plugins_url('../TDE_AppCalendar/all-scripts.min.js?nc=1', __FILE__));
 
     $calendar_items = '';
     foreach ($myrows as $item)
@@ -530,16 +531,16 @@ function cpabc_customAdjustmentsLink($links) {
 
 function cpabc_appointments_html_post_page() {
     global $wpdb;
-    if ((isset($_GET["cal"]) && $_GET["cal"] != '') || ( @$_GET["cal"] == '0' || @$_GET["pwizard"] == '1'))
+    if ((cpabc_get_get_param("cal") != '') || ( cpabc_get_get_param("cal") == '0' || cpabc_get_get_param("pwizard") == '1'))
     {
-        $_GET["cal"] = intval(@$_GET["cal"]);
+        $_GET["cal"] = intval(cpabc_get_get_param("cal"));
         if (isset($_GET["edit"]) && $_GET["edit"] == '1')
             @include_once dirname( __FILE__ ) . '/cp_admin_int_edition.inc.php';
         else if (isset($_GET["list"]) && $_GET["list"] == '1')
             @include_once dirname( __FILE__ ) . '/cpabc_appointments_admin_int_bookings_list.inc.php';
         else if (isset($_GET["calschedule"]) && $_GET["calschedule"] == '1')
             @include_once dirname( __FILE__ ) . '/../mv/calendar_schedule.inc.php';        
-        else if (@$_GET["pwizard"] == '1')
+        else if (cpabc_get_get_param("pwizard") == '1')
             @include_once dirname( __FILE__ ) . '/cpabc_publish_wizzard.inc.php';
         else if (isset($_GET["addbk"]) && $_GET["addbk"] == '1')
             @include_once dirname( __FILE__ ) . '/cpabc_appointments_admin_addbk.inc.php';
@@ -551,6 +552,11 @@ function cpabc_appointments_html_post_page() {
         if (isset($_GET["page"]) &&$_GET["page"] == 'cpabc_appointments_upgrade')
         {
             echo("Redirecting to upgrade page...<script type='text/javascript'>document.location='https://abc.dwbooster.com/download';</script>");
+            exit;
+        }
+        else if (isset($_GET["page"]) &&$_GET["page"] == 'cpabc_appointments_support')
+        {
+            echo("Redirecting to support page...<script type='text/javascript'>document.location='https://wordpress.org/support/plugin/appointment-booking-calendar#new-post';</script>");
             exit;
         }
         else if (isset($_GET["page"]) &&$_GET["page"] == 'cpabc_appointments_demo')
@@ -609,7 +615,7 @@ function set_cpabc_apps_insert_adminScripts($hook) {
         if (!isset($_GET["addbk"]))
         {
             wp_enqueue_style('cpabc-allstyle', plugins_url('../TDE_AppCalendar/all-css.css', __FILE__));
-            wp_enqueue_script( 'cpabc_alljs', plugins_url('../TDE_AppCalendar/all-scripts.js', __FILE__));
+            wp_enqueue_script( 'cpabc_alljs', plugins_url('../TDE_AppCalendar/all-scripts.min.js', __FILE__));
             wp_enqueue_script( 'cpabc_tabview', plugins_url('../TDE_AppCalendar/tabview.js', __FILE__), array('cpabc_alljs'));
             wp_enqueue_script( 'cpabc_simpleeditor', plugins_url('../TDE_AppCalendar/simpleeditor-beta-min.js', __FILE__), array('cpabc_alljs'));
         }

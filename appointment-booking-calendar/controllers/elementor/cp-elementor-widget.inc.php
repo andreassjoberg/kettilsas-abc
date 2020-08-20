@@ -22,8 +22,7 @@ if (!class_exists('CP_AppBookingCalendar_Elementor'))
       }      
          
       function enqueue_frontend_styles() {
-          wp_enqueue_script( 'cpabc_calendarscript', plugins_url('../../TDE_AppCalendar/all-scripts.js?nc=1', __FILE__));
-          //wp_enqueue_style('abc-calscripts', plugins_url('/../../TDE_AppCalendar/all-scripts.js', __FILE__) );
+          wp_enqueue_script( 'cpabc_calendarscript', plugins_url('../../TDE_AppCalendar/all-scripts.min.js?nc=1', __FILE__));          
       }      
     
       /**

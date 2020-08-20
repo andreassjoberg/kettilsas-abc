@@ -599,7 +599,7 @@ function cpabc_appointments_save_options()
          'vs_text_min' => sanitize_text_field($_POST['vs_text_min']),
          'vs_text_submitbtn' => sanitize_text_field($_POST['vs_text_submitbtn']),
 
-         'cu_user_email_field' => sanitize_text_field(@$_POST["cu_user_email_field"]),
+         'cu_user_email_field' => sanitize_text_field(cpabc_get_post_param("cu_user_email_field")),
 
          'notification_from_email' => sanitize_text_field($_POST["notification_from_email"]),
          'notification_destination_email' => sanitize_text_field($_POST["notification_destination_email"]),
@@ -608,10 +608,10 @@ function cpabc_appointments_save_options()
          'email_subject_notification_to_admin' => sanitize_text_field($_POST["email_subject_notification_to_admin"]),
          'email_notification_to_admin' => cpabc_clean_and_sanitize($_POST["email_notification_to_admin"]),
 
-         'enable_reminder' => sanitize_text_field(@$_POST["enable_reminder"]),
-         'reminder_hours' => sanitize_text_field(@$_POST["reminder_hours"]),
-         'reminder_subject' => sanitize_text_field(@$_POST["reminder_subject"]),
-         'reminder_content' => cpabc_clean_and_sanitize(@$_POST["reminder_content"]),
+         'enable_reminder' => sanitize_text_field(cpabc_get_post_param("enable_reminder")),
+         'reminder_hours' => sanitize_text_field(cpabc_get_post_param("reminder_hours")),
+         'reminder_subject' => sanitize_text_field(cpabc_get_post_param("reminder_subject")),
+         'reminder_content' => cpabc_clean_and_sanitize(cpabc_get_post_param("reminder_content")),
 
          'dexcv_enable_captcha' => sanitize_text_field($_POST["dexcv_enable_captcha"]),
          'dexcv_width' => sanitize_text_field($_POST["dexcv_width"]),
@@ -625,7 +625,7 @@ function cpabc_appointments_save_options()
          'dexcv_border' => sanitize_text_field(str_replace('#','',$_POST['dexcv_border'])),
          'dexcv_font' => sanitize_text_field($_POST["dexcv_font"]),
          'cv_text_enter_valid_captcha' => sanitize_text_field($_POST['cv_text_enter_valid_captcha']),
-         'cp_cal_checkboxes' => sanitize_text_field(@$_POST["cp_cal_checkboxes"])
+         'cp_cal_checkboxes' => sanitize_text_field(cpabc_get_post_param("cp_cal_checkboxes"))
 	);
     $wpdb->update ( CPABC_APPOINTMENTS_CONFIG_TABLE_NAME, $data, array( 'id' => CP_CALENDAR_ID ));
 }
@@ -1064,7 +1064,7 @@ function cpabc_data_management_loaded()
 {
     global $wpdb, $cpabc_postURL;
 
-    $action = sanitize_text_field(@$_POST['cpabc_do_action_loaded']);
+    $action = sanitize_text_field(cpabc_get_post_param('cpabc_do_action_loaded'));
 	if (!$action) return; // go out if the call isn't for this one
 
     if ($_POST['cpabc_publish_id']) $item = intval($_POST['cpabc_publish_id']);
@@ -1072,11 +1072,11 @@ function cpabc_data_management_loaded()
     if ($action == "wizard" && wp_verify_nonce( $_POST['nonce'], 'abc_update_actions_pwizard' ) && current_user_can('manage_options'))
     {
         $shortcode = '[CPABC_APPOINTMENT_CALENDAR calendar="'.$item .'"]';
-        $cpabc_postURL = cpabc_publish_on(    sanitize_text_field(@$_POST["whereto"]), 
-                                              sanitize_text_field(@$_POST["publishpage"]), 
-                                              sanitize_text_field(@$_POST["publishpost"]), 
+        $cpabc_postURL = cpabc_publish_on(    sanitize_text_field(cpabc_get_post_param("whereto")), 
+                                              sanitize_text_field(cpabc_get_post_param("publishpage")), 
+                                              sanitize_text_field(cpabc_get_post_param("publishpost")), 
                                               @$shortcode, 
-                                              sanitize_text_field(@$_POST["posttitle"]));            
+                                              sanitize_text_field(cpabc_get_post_param("posttitle")));            
         return;
     }
 
@@ -1156,6 +1156,21 @@ function cpabc_appointment_get_FULL_site_url($admin = false)
     return $url;
 }
 
+function cpabc_get_get_param ($key)
+{
+    if (isset($_GET[$key]))
+        return $_GET[$key];
+    else
+        return "";
+}
+
+function cpabc_get_post_param ($key)
+{
+    if (isset($_POST[$key]))
+        return $_POST[$key];
+    else
+        return "";
+}
 
 // cpabc_cpabc_get_option:
 $cpabc_option_buffered_item = false;

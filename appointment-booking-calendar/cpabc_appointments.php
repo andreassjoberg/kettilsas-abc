@@ -3,7 +3,7 @@
 Plugin Name: Appointment Booking Calendar
 Plugin URI: https://abc.dwbooster.com
 Description: This plugin allows you to easily insert appointments forms into your WP website.
-Version: 1.3.36
+Version: 1.3.42
 Author URI: https://abc.dwbooster.com
 License: GPL
 Text Domain: appointment-booking-calendar
@@ -121,7 +121,7 @@ define('CPABC_TDEAPP_DEFAULT_dexcv_enable_captcha', 'true');
 define('CPABC_TDEAPP_DEFAULT_dexcv_width', '180');
 define('CPABC_TDEAPP_DEFAULT_dexcv_height', '60');
 define('CPABC_TDEAPP_DEFAULT_dexcv_chars', '5');
-define('CPABC_TDEAPP_DEFAULT_dexcv_font', 'font-1.ttf');
+define('CPABC_TDEAPP_DEFAULT_dexcv_font', 'font1');
 define('CPABC_TDEAPP_DEFAULT_dexcv_min_font_size', '25');
 define('CPABC_TDEAPP_DEFAULT_dexcv_max_font_size', '35');
 define('CPABC_TDEAPP_DEFAULT_dexcv_noise', '200');
@@ -183,6 +183,7 @@ if ( is_admin() ) {
 
         add_submenu_page( 'cpabc_appointments.php', 'Manage Calendars', 'Manage Calendars', 'read', "cpabc_appointments",  'cpabc_appointments_html_post_page' );
         add_submenu_page( 'cpabc_appointments.php', 'Help: Online demo', 'Help: Online demo', 'read', "cpabc_appointments_demo", 'cpabc_appointments_html_post_page' );
+        add_submenu_page( 'cpabc_appointments.php', 'I Need Help', 'I Need Help', 'read', "cpabc_appointments_support", 'cpabc_appointments_html_post_page' );
         add_submenu_page( 'cpabc_appointments.php', 'Upgrade', 'Upgrade', 'read', "cpabc_appointments_upgrade", 'cpabc_appointments_html_post_page' );
 
     }
@@ -229,6 +230,7 @@ function cpabc_appointments_install($networkwide)  {
 add_filter( 'rocket_exclude_js', 'cpabc_wprockert_exclude_js_minify' );
 function cpabc_wprockert_exclude_js_minify( $js_files ) {
 	$js_files[] = plugins_url('/TDE_AppCalendar/all-scripts.js', __FILE__);
+    $js_files[] = plugins_url('/TDE_AppCalendar/all-scripts.min.js', __FILE__);
 	$js_files[] = plugins_url('/js/(.*).js', __FILE__);    
 	return $js_files;
 }

@@ -572,10 +572,10 @@ also support integration with other payment gateways.</p><br />
          <th scope="row">Font:</th>
          <td>
             <select name="dexcv_font" onchange="generateCaptcha();" >
-              <option value="font-1.ttf"<?php if ("font-1.ttf" == cpabc_get_option('dexcv_font', CPABC_TDEAPP_DEFAULT_dexcv_font)) echo " selected"; ?>>Font 1</option>
-              <option value="font-2.ttf"<?php if ("font-2.ttf" == cpabc_get_option('dexcv_font', CPABC_TDEAPP_DEFAULT_dexcv_font)) echo " selected"; ?>>Font 2</option>
-              <option value="font-3.ttf"<?php if ("font-3.ttf" == cpabc_get_option('dexcv_font', CPABC_TDEAPP_DEFAULT_dexcv_font)) echo " selected"; ?>>Font 3</option>
-              <option value="font-4.ttf"<?php if ("font-4.ttf" == cpabc_get_option('dexcv_font', CPABC_TDEAPP_DEFAULT_dexcv_font)) echo " selected"; ?>>Font 4</option>
+              <option value="font1"<?php if ("font1" == cpabc_get_option('dexcv_font', CPABC_TDEAPP_DEFAULT_dexcv_font)) echo " selected"; ?>>Font 1</option>
+              <option value="font2"<?php if ("font2" == cpabc_get_option('dexcv_font', CPABC_TDEAPP_DEFAULT_dexcv_font)) echo " selected"; ?>>Font 2</option>
+              <option value="font3"<?php if ("font3" == cpabc_get_option('dexcv_font', CPABC_TDEAPP_DEFAULT_dexcv_font)) echo " selected"; ?>>Font 3</option>
+              <option value="font4"<?php if ("font4" == cpabc_get_option('dexcv_font', CPABC_TDEAPP_DEFAULT_dexcv_font)) echo " selected"; ?>>Font 4</option>
             </select>            
          </td>              
         </tr>                          
