@@ -141,20 +141,20 @@
                 prevent = p;
             if (prevent) {
                 return this.each(function() {
-                    if ($.browser.msie || $.browser.safari) $(this).bind('selectstart', function(e) { return false; });
-                    else if ($.browser.mozilla) {
+                    if ($.cpeoplebrowser.msie || $.cpeoplebrowser.safari) $(this).bind('selectstart', function(e) { return false; });
+                    else if ($.cpeoplebrowser.mozilla) {
                         $(this).css('MozUserSelect', 'none');
                         $('body').trigger('focus');
                     }
-                    else if ($.browser.opera) $(this).bind('mousedown', function(e) { e.stopPropagation(); });
+                    else if ($.cpeoplebrowser.opera) $(this).bind('mousedown', function(e) { e.stopPropagation(); });
                     else $(this).attr('unselectable', 'on');
                 });
 
             } else {
                 return this.each(function() {
-                    if ($.browser.msie || $.browser.safari) $(this).unbind('selectstart');
-                    else if ($.browser.mozilla) $(this).css('MozUserSelect', 'inherit');
-                    else if ($.browser.opera) $(this).unbind('mousedown');
+                    if ($.cpeoplebrowser.msie || $.cpeoplebrowser.safari) $(this).unbind('selectstart');
+                    else if ($.cpeoplebrowser.mozilla) $(this).css('MozUserSelect', 'inherit');
+                    else if ($.cpeoplebrowser.opera) $(this).unbind('mousedown');
                     else $(this).removeAttr('unselectable', 'on');
                 });
 
@@ -1272,7 +1272,7 @@
 
             if (option.rowsList=="" || (option.dayWithTime && option.view=="day"))
             {
-                html.push("<div id=\"dvtec"+config.thecontainer+"\"  class=\"scolltimeevent\"><table style=\"table-layout: fixed;", $.browser.msie ? "" : "width:100%", "\" cellspacing=\"0\" cellpadding=\"0\"><tbody><tr><td>");
+                html.push("<div id=\"dvtec"+config.thecontainer+"\"  class=\"scolltimeevent\"><table style=\"table-layout: fixed;", $.cpeoplebrowser.msie ? "" : "width:100%", "\" cellspacing=\"0\" cellpadding=\"0\"><tbody><tr><td>");
                 html.push("<table style=\"height: "+((option.hoursEnd-option.hoursStart+1)*option.cellheight)+"px\" id=\"tgTable"+config.thecontainer+"\" class=\"tg-timedevents\" cellspacing=\"0\" cellpadding=\"0\"><tbody>");
                 BuildDayScollEventheader(html, days, scollDayEvents,config);
                 if (option.columnsList!="" && option.view=="day") //draw columns
@@ -1842,20 +1842,20 @@
             var startformat = getymformat(event[2], null, showtime, true);
             var endformat = getymformat(event[3], event[2], showtime, true);
             timeshow = dateFormat.call(event[2], startformat) + " - " + dateFormat.call(event[3], endformat);
-            locationshow = (event[9] != undefined && event[9] != "") ? ($.browser.mozilla?"":"\r\n")+i18n.dcmvcal.location + ":" + event[9] : "";
+            locationshow = (event[9] != undefined && event[9] != "") ? ($.cpeoplebrowser.mozilla?"":"\r\n")+i18n.dcmvcal.location + ":" + event[9] : "";
             attendsshow = (event[10] != undefined && event[10] != "") ? event[10] : "";
             var ret = [];
             if (event[4] == 1) {
-                ret.push("[" + i18n.dcmvcal.allday_event + "]",$.browser.mozilla?"":"\r\n" );
+                ret.push("[" + i18n.dcmvcal.allday_event + "]",$.cpeoplebrowser.mozilla?"":"\r\n" );
             }
             else {
                 if (event[5] == 1) {
-                    ret.push("[" + i18n.dcmvcal.repeat_event + "]",$.browser.mozilla?"":"\r\n");
+                    ret.push("[" + i18n.dcmvcal.repeat_event + "]",$.cpeoplebrowser.mozilla?"":"\r\n");
                 }
             }
-            ret.push(i18n.dcmvcal.time + ":", timeshow, $.browser.mozilla?"":"\r\n", i18n.dcmvcal.event + ":", eventshow, locationshow);
+            ret.push(i18n.dcmvcal.time + ":", timeshow, $.cpeoplebrowser.mozilla?"":"\r\n", i18n.dcmvcal.event + ":", eventshow, locationshow);
             if (attendsshow != "") {
-                ret.push($.browser.mozilla?"":"\r\n", i18n.dcmvcal.participant + ":", attendsshow);
+                ret.push($.cpeoplebrowser.mozilla?"":"\r\n", i18n.dcmvcal.participant + ":", attendsshow);
             }
             return ret.join("");
         }
