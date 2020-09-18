@@ -73,7 +73,7 @@ function cpabcal_feedback_javascript() {
 	<script type="text/javascript">
 
 $ = jQuery.noConflict()
-$( window ).load(function() {
+$(window).on('load',function () {
         document.querySelector('[data-slug="<?php echo $cpabcal_plugslug; ?>"] .deactivate a').addEventListener('click', function(event){
             event.preventDefault()
             var urlRedirect = document.querySelector('[data-slug="<?php echo $cpabcal_plugslug; ?>"] .deactivate a').getAttribute('href');

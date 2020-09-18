@@ -1,5 +1,5 @@
 (function($) {
-    $.browser = {};
+    $.cpeoplebrowser = {};
     uaMatch= function(ua) {
             var ret = { browser: "" };
 
@@ -24,13 +24,13 @@
         };
     browserMatch = uaMatch(navigator.userAgent);
     if (browserMatch.browser) {
-        $.browser[browserMatch.browser] = true;
-        $.browser.version = browserMatch.version;
+        $.cpeoplebrowser[browserMatch.browser] = true;
+        $.cpeoplebrowser.version = browserMatch.version;
     }
 
     // Deprecated, use jQuery.browser.webkit instead
-    if ($.browser.webkit) {
-        $.browser.safari = true;
+    if ($.cpeoplebrowser.webkit) {
+        $.cpeoplebrowser.safari = true;
     }
 })(jQuery);
 try { document.execCommand("BackgroundImageCache", false, true); } catch (e) { }
@@ -108,17 +108,17 @@ function StrFormatNoEncode(temp, dataarry) {
 }
 function getiev($) {
     var userAgent = window.navigator.userAgent.toLowerCase();
-    $.browser.msie8 = $.browser.msie && /msie 8\.0/i.test(userAgent);
-    $.browser.msie7 = $.browser.msie && /msie 7\.0/i.test(userAgent);
-    $.browser.msie6 = !$.browser.msie8 && !$.browser.msie7 && $.browser.msie && /msie 6\.0/i.test(userAgent);
+    $.cpeoplebrowser.msie8 = $.cpeoplebrowser.msie && /msie 8\.0/i.test(userAgent);
+    $.cpeoplebrowser.msie7 = $.cpeoplebrowser.msie && /msie 7\.0/i.test(userAgent);
+    $.cpeoplebrowser.msie6 = !$.cpeoplebrowser.msie8 && !$.cpeoplebrowser.msie7 && $.cpeoplebrowser.msie && /msie 6\.0/i.test(userAgent);
     var v;
-    if ($.browser.msie8) {
+    if ($.cpeoplebrowser.msie8) {
         v = 8;
     }
-    else if ($.browser.msie7) {
+    else if ($.cpeoplebrowser.msie7) {
         v = 7;
     }
-    else if ($.browser.msie6) {
+    else if ($.cpeoplebrowser.msie6) {
         v = 6;
     }
     else { v = -1; }
