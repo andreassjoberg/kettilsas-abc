@@ -594,8 +594,8 @@ transition: all 0ms !important;
 .yui-panel{border:0px;margin-top:2px}
 .yui-panel .hd{padding:5px 15px;color:#ffffff;font-weight:bold;background-color:#0073aa;border-top-left-radius:10px;border-top-right-radius:10px;border-width:0px}
 .yui-panel .bd{border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-width:0px;padding:15px}
-.yui-panel .bd .cell{border-radius:10px;background-color:#0073aa;border:0px}
-.yui-panel .bd .cellReserved{border-radius:10px;border:0px;padding:0px 10px;}
+.yui-panel .bd .cell,.yui-panel .bd .cell12{border-radius:10px;background-color:#0073aa;border:0px}
+.yui-panel .bd .cellReserved,.yui-panel .bd .cellReserved12{border-radius:10px;border:0px;padding:0px 10px;}
 .yui-panel-container a{color:#ffffff}
 #listcal1{margin-top:25px}
 #listcal1 div{color:#ffffff;background-color:#0073aa;display:inline-block;padding:2px 10px;border:1px solid #ffffff;border-radius:5px;font-weight:bold}
