@@ -1047,7 +1047,10 @@ Please note that the pro features aren't advised as part of the free plugin in t
 = 1.3.44 =
 * Captcha GD image library automatic detection
 
+= 1.3.45 =
+* Fixed CSS in non-military time mode
+
 == Upgrade Notice ==
 
-= 1.3.44 =
-* Captcha GD image library automatic detection
+= 1.3.45 =
+* Fixed CSS in non-military time mode
